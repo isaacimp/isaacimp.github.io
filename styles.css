@@ -8,14 +8,7 @@ Author URI: http://www.mlpdesign.net/
 /* Global Settings */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 body {
-background: #000;
-background: -moz-linear-gradient(top, #7c803d 0%, #000000 75%, #000000 100%);
-background: -webkit-gradient(left top, left bottom, color-stop(0%, #7c803d), color-stop(75%, #000000), color-stop(100%, #000000));
-background: -webkit-linear-gradient(top, #7c803d 0%, #000000 75%, #000000 100%);
-background: -o-linear-gradient(top, #7c803d 0%, #000000 75%, #000000 100%);
-background: -ms-linear-gradient(top, #7c803d 0%, #000000 75%, #000000 100%);
-background: linear-gradient(to bottom, #7c803d 0%, #000000 75%, #000000 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7c803d', endColorstr='#000000', GradientType=0 );
+background: #db0000;
 	color: #111;
 	margin: 0;
 	font-family: 'Open Sans', sans-serif;
