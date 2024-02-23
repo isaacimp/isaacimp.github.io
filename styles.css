@@ -8,14 +8,14 @@ Author URI: http://www.mlpdesign.net/
 /* Global Settings */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 body {
-background: #db0000;
+background: #f54444;
 	color: #111;
 	margin: 0;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 14px;
 	line-height: 18px;
 	min-width: 600px;
-	background-image: 'backggrass.jpeg';
+	
 }
 h1 {
 	font-size: 20px;
