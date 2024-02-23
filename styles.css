@@ -31,10 +31,9 @@ h3 {
 	line-height: 20px;
 }
 a {
-	background-color: inherit;
-	color: rgb(236, 193, 163);
+	
 	text-decoration: none;
-	background-image: 'backggrass.jpeg';
+	background-image: 'isaacimp/isaacimp.github.io/backggrass.jpeg';
 }
 a:hover {
 	text-decoration: underline;
