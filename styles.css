@@ -8,7 +8,7 @@ html, body, div, h1, h2, h3, p, ul, li, a, label, input, span, code {
 
 /* Global Styles */
 body {
-    background-color: #db0000;
+    background-image: 'backggrass.jpeg';
     color: #111;
     font-size: 14px;
     line-height: 1.5;
