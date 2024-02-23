@@ -213,5 +213,128 @@ ul#topnav li a:hover {
 
 #content .item {
     line-height: 1.25em;
-    margin
+    margin: 0;
+}
+
+#content .item p {
+    text-align: justify;
+}
+
+#content .item span {
+    background-color: inherit;
+    color: #999;
+    font-size: 11px;
+}
+
+#footer {
+    padding: 10px;
+    height: 20px;
+    border: 0px;
+    color: #333;
+    font-size: 12px;
+    background: #abab83;
+    background: -moz-linear-gradient(top, #abab83 0%, #abab83 0%, #abab83 50%, #a1a172 51%, #a1a172 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #abab83), color-stop(0%, #abab83), color-stop(50%, #abab83), color-stop(51%, #a1a172), color-stop(100%, #a1a172));
+    background: -webkit-linear-gradient(top, #abab83 0%, #abab83 0%, #abab83 50%, #a1a172 51%, #a1a172 100%);
+    background: -o-linear-gradient(top, #abab83 0%, #abab83 0%, #abab83 50%, #a1a172 51%, #a1a172 100%);
+    background: -ms-linear-gradient(top, #abab83 0%, #abab83 0%, #abab83 50%, #a1a172 51%, #a1a172 100%);
+    background: linear-gradient(to bottom, #abab83 0%, #abab83 0%, #abab83 50%, #a1a172 51%, #a1a172 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#abab83', endColorstr='#a1a172', GradientType=0 );
+    clear: both;
+}
+
+#footer a {
+    background-color: inherit;
+    color: #333;
+}
+
+#footer a:hover {
+    background-color: inherit;
+    color: #fff;
+    text-decoration: none;
+}
+
+#footer span.left {
+    text-align: left;
+    padding-left: 15px;
+    float: left;
+}
+
+#footer span.right {
+    text-align: right;
+    padding-right: 15px;
+    float: right;
+}
+
+#footer p.show-footer {
+    margin: 0;
+    display: none;
+}
+
+#credits {
+    width: 90%;
+    background-color: inherit;
+    color: #999;
+    position: relative;
+    bottom: 0;
+    padding: 10px 0;
+    font: normal 11px Arial, sans-serif;
+    text-align: right;
+    margin: 0 auto;
+}
+
+#credits a {
+    background-color: inherit;
+    color: #999;
+    text-decoration: none;
+}
+
+#credits a:hover {
+    background-color: inherit;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Begin responsive styles */
+@media screen and (max-width : 700px){
+
+    body { font-size:12px; }
+    blockquote {
+        font-size: 13px;
+        border-left-width: 3px;
+        padding: 1px 5px 1px 10px;
+        margin: 0;
+    }
+    /* banner */
+    /*#banner { height:170px;}*/
+    #banner h1 {font-size:28px;}
+    #banner p {width:60%;}
+
+    /* menu */
+    ul#topnav {display:none;}
+    .responsive { display:block;}
+    #show-menu:checked ~ ul#topnav {display: block; position: absolute; top:100%; width:50%; margin:0 0 0 -8%; overflow:visible;}
+    ul#topnav li { display: block; text-align:left; margin:0 0 1px 15%;}
+    ul#topnav li a { padding-left:20px; border-radius: 0px; -moz-border-radius: 0px; -webkit-border-radius: 0px; font-size:10px;}
+    /*ul#topnav li a:hover { background: rgba(255,0,85,1); color:rgba(255,255,255,255);}*/
+    ul#topnav li a.active, ul#topnav li a.active:hover {    background: #eee;  color: #000;}
+
+
+    /* sidebar */
+    #sidebar { width: 28%; padding:5px; font-size:10px; line-height:1.25em; }
+    #sidebar h2 { font-size:12px; }
+
+    /* content */
+    #content { margin-right: 33%;}
+    #content h1 { font-size:14px; font-weight:bold;}
+    #content .item span { font-size:10px;}
+    #content ul {margin-left:0; padding-left:0;}
+    #content ul li {margin-left:0; padding-left:0;}
+
+
+    /* footer */
+    #footer { font-size:10px; text-align: center; padding-bottom:20px;}
+    #footer span {display:none;}
+    #footer p.show-footer {display: block; }
+    #credits { font-size:80%; text-align:center;}
 }
