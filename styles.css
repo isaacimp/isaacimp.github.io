@@ -12,7 +12,7 @@ body {
 	background-size: cover; /* Adjusts the background image size to cover the entire body */
     background-repeat: no-repeat; /* Prevents the background image from repeating */
     background-attachment: fixed; 
-    color: #111;
+    color: #ffffff;
     font-size: 14px;
     line-height: 1.5;
 }
