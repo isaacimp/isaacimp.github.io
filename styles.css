@@ -8,7 +8,7 @@ html, body, div, h1, h2, h3, p, ul, li, a, label, input, span, code {
 
 /* Global Styles */
 body {
-    background-image: url('space.jpeg');
+    background-image: url('space.jpg');
 	background-size: cover; /* Adjusts the background image size to cover the entire body */
     background-repeat: no-repeat; /* Prevents the background image from repeating */
     background-attachment: fixed; 
