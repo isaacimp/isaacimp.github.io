@@ -47,7 +47,6 @@ a:hover
 { float: left;
   width: auto;
   margin-right: 10px;}
-
 .right
 { float: right; 
   width: auto;
@@ -173,7 +172,7 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
 .sidebar li a, .sidebar li a:hover
 { padding: 0 0 0 40px;
   display: block;
-  background: transparent url(link.png) no-repeat left center;} 
+  background: transparent url(link2.png) no-repeat left center;} 
 
 .sidebar li a.selected
 { color: #7E2451;
