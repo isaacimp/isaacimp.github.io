@@ -21,16 +21,33 @@ body {
 header {
   background-color: #333;
   color: #fff;
-  text-align: center;
-  padding: 40px 0;
+  padding: 15px 0;
 }
 
 header h1 {
   font-size: 2.5rem;
+  margin-bottom: 10px;
 }
 
-header p {
+nav ul {
+  list-style-type: none;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
   font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #e0e0e0;
 }
 
 main {
@@ -39,6 +56,9 @@ main {
 
 section {
   margin-bottom: 30px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
 }
 
 h2 {
@@ -48,9 +68,6 @@ h2 {
 }
 
 .project, .article {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 15px;
   margin-bottom: 15px;
 }
 
