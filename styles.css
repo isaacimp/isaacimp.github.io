@@ -4,7 +4,7 @@
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  background-color: #f0f0f0;
+  background-color: #fff4ec;
   color: #333;
 }
 
@@ -15,8 +15,6 @@ body {
 }
 
 header {
-  background-color: #22009e;
-  color: #fff;
   padding: 15px 0;
 }
 
@@ -36,7 +34,7 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #fff;
+  color: #00880b;
   text-decoration: none;
   font-size: 1.2rem;
   transition: color 0.3s ease;
@@ -48,12 +46,11 @@ nav ul li a:hover {
 
 main {
   padding: 20px 0;
+  
 }
 
 section {
   margin-bottom: 30px;
-  background-color: #fff;
-  border: 1px solid #ccc;
   padding: 20px;
 }
 
