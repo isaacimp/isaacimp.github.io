@@ -76,13 +76,13 @@ h2 {
   line-height: 1.4;
 }
 
-.article a {
+.writing a {
   color: #333;
   text-decoration: none;
   font-weight: bold;
 }
 
-.article a:hover {
+.writing a:hover {
   text-decoration: underline;
 }
 
