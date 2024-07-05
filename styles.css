@@ -98,11 +98,19 @@ footer {
 
 /* Dropdown Button */
 .dropbtn {
-  color: #00880b;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
+  color: #00880b; /* Text color */
+  font-size: 1.2rem; /* Font size */
+  border: none; /* Remove border */
+  background: none; /* Remove background */
+  cursor: pointer; /* Change cursor on hover */
+  padding: 0; /* Remove padding to avoid extra spacing */
+  margin: 0; /* Remove margin */
 }
+
+.dropbtn:hover {
+  color: #e0e0e0; /* Text color on hover */
+}
+
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
@@ -131,5 +139,8 @@ footer {
 .dropdown-content a:hover {background-color: #00880b;}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+  
+}
 
