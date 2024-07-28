@@ -177,6 +177,7 @@ a:visited {
     height: 100vh;
     overflow: hidden;
     z-index: 1000; /* Ensure it appears on top */
+    pointer-events: none;
 }
 
 .line {
