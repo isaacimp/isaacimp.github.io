@@ -193,7 +193,7 @@ a:visited {
         transform: translateZ(0) scale(0.1);
         opacity: 1;
     }
-    100%{
+    100% {
         transform: translateZ(0) scale(2);
         opacity: 0;
     }
