@@ -12,7 +12,7 @@ body {
     width: auto;
     height: 100vh;
     /* border: 1px solid #0F0; */
-    padding: 2px;
+    padding: 20px;
     box-shadow: 0 0 5px 1px #0F0;
     background: black;
     position: relative;
@@ -38,6 +38,9 @@ body {
     box-sizing: border-box;
 }
 
+* {
+    font-family: 'palantino', serif; /* Set font */
+}
 /* Text styles */
 h1, p {
     margin: 0;
@@ -56,10 +59,11 @@ p {
 a {
     text-decoration: none; /* Remove underline */
     color: #0F0; /* Set link color */
-    font-family: 'Courier New', Courier, monospace; /* Set font */
     transition: color 0.3s, text-shadow 0.3s; /* Smooth transition */
+    font-family: 'luminari', fantasy;
+    letter-spacing: 2px;
+    font-weight: normal;
 }
-
 /* Hover state */
 a:hover {
     color: #00FF00; /* Lighter green on hover */
