@@ -190,7 +190,7 @@ a:visited {
 
 @keyframes tunnel {
     0% {
-        transform: translateZ(0) scale(0.1);
+        transform: translateZ(0) scale(5);
         opacity: 1;
     }
     100% {
