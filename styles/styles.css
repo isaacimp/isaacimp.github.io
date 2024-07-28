@@ -189,11 +189,11 @@ a:visited {
 }
 
 @keyframes tunnel {
-    
-    100% {
-        transform: translateZ(0) scale(2);
-        opacity: 0;
+    0% {
+        transform: translateZ(0) scale(0.1);
+        opacity: 1;
     }
+    
 }
 
 /* Hide tunnel animation after 3s */
