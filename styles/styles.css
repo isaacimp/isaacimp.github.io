@@ -4,7 +4,7 @@ body {
     font-family: 'Courier New', Courier, monospace;
     background: black;
     color: #0F0;
-    overflow: auto;
+    overflow: hidden;
 }
 
 /* CRT screen effect */
