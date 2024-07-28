@@ -131,7 +131,7 @@ a:visited {
     box-shadow: 0 0 10px #0F0;
 }
 
-..connection.left-top {
+.connection.left-top {
     width: 15px; /* Adjust width of left-top connection */
     height: 15px; /* Adjust height of left-top connection */
     top: 22.5px; /* Adjust top position */
