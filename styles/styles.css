@@ -93,7 +93,8 @@ a {
     color: #0F0; /* Set link color */
     transition: color 0.3s, text-shadow 0.3s; /* Smooth transition */
     letter-spacing: 2px;
-     border: 1px solid #0F0;
+    border: 1px solid #0F0;
+    padding: 2px 5px; 
 }
 /* Hover state */
 a:hover {
