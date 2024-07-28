@@ -35,11 +35,14 @@
         </div>
     </div>
     <script>
-        // Hide the tunnel animation after it completes
         window.addEventListener('load', () => {
             setTimeout(() => {
-                document.querySelector('.tunnel').classList.add('hide-tunnel');
-            }, 3000);
+                const tunnel = document.querySelector('.tunnel');
+                tunnel.classList.add('hide-tunnel');
+                setTimeout(() => {
+                    tunnel.style.display = 'none'; // Completely hide the tunnel after the animation
+                }, 1000);
+            }, 3000); // Adjust this timeout to match the duration of the animation
         });
     </script>
 </body>
