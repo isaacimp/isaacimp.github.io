@@ -131,32 +131,32 @@ a:visited {
     box-shadow: 0 0 10px #0F0;
 }
 
-.connection.left-top {
-    width: 30px; /* Adjust width of left-top connection */
-    height: 30px; /* Adjust height of left-top connection */
-    top: 45px; /* Adjust top position */
-    left: 30px; /* Adjust left position */
+..connection.left-top {
+    width: 15px; /* Adjust width of left-top connection */
+    height: 15px; /* Adjust height of left-top connection */
+    top: 22.5px; /* Adjust top position */
+    left: 15px; /* Adjust left position */
 }
 
 .connection.right-top {
-    width: 30px; /* Adjust width of right-top connection */
-    height: 30px; /* Adjust height of right-top connection */
-    top: 45px; /* Adjust top position */
-    right: 30px; /* Adjust right position */
+    width: 15px; /* Adjust width of right-top connection */
+    height: 15px; /* Adjust height of right-top connection */
+    top: 22.5px; /* Adjust top position */
+    right: 15px; /* Adjust right position */
 }
 
 .connection.left-bottom {
-    width: 30px; /* Adjust width of left-bottom connection */
-    height: 30px; /* Adjust height of left-bottom connection */
-    bottom: 10px; /* Adjust bottom position */
-    left: 20px; /* Adjust left position */
+    width: 15px; /* Adjust width of left-bottom connection */
+    height: 15px; /* Adjust height of left-bottom connection */
+    bottom: 5px; /* Adjust bottom position */
+    left: 10px; /* Adjust left position */
 }
 
 .connection.right-bottom {
-    width: 30px; /* Adjust width of right-bottom connection */
-    height: 30px; /* Adjust height of right-bottom connection */
-    bottom: 10px; /* Adjust bottom position */
-    right: 20px; /* Adjust right position */
+    width: 15px; /* Adjust width of right-bottom connection */
+    height: 15px; /* Adjust height of right-bottom connection */
+    bottom: 5px; /* Adjust bottom position */
+    right: 10px; /* Adjust right position */
 }
 
 /* Optional: Add flicker effect for more CRT authenticity */
