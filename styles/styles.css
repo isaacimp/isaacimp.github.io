@@ -95,7 +95,7 @@ a {
     letter-spacing: 2px;
     /* border: 1px solid #0F0; */
     transition: color 0.3s, background 0.3s, text-shadow 0.3s;
-    background: rgba(0, 255, 0, 0.5);
+    background: rgba(0, 255, 0, 0.2);
 }
 /* Hover state */
 a:hover {
