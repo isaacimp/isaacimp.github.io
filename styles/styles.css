@@ -169,3 +169,43 @@ a:visited {
 .crt-screen {
     animation: flicker 1s infinite;
 }
+
+
+.tunnel {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1000; /* Ensure it appears on top */
+}
+
+.line {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    border: 1px solid rgba(0, 255, 0, 0.5);
+    box-sizing: border-box;
+    animation: tunnel 3s linear infinite;
+}
+
+@keyframes tunnel {
+    0% {
+        transform: translateZ(0) scale(0.1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateZ(0) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Hide tunnel animation after 3s */
+@keyframes hideTunnel {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.hide-tunnel {
+    animation: hideTunnel 1s forwards;
+    animation-delay: 3s;
+}
