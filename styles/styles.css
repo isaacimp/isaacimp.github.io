@@ -6,6 +6,9 @@ body {
     color: #0F0;
     overflow: auto;
     font-family: 'Times New Roman', Times, serif;
+    font-size: 2rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* CRT screen effect */
