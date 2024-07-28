@@ -11,6 +11,28 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+@media (max-width: 600px) {
+    body {
+        font-size: 1rem; /* Smaller font size for phones */
+    }
+    
+    /*h1 {
+        font-size: 1.5em;
+    }
+    
+    h2 {
+        font-size: 1.2em;
+    }
+    
+    p {
+        font-size: 0.9em;
+    }
+    
+    a {
+        font-size: 0.9em;
+    }
+}
+*/
 /* CRT screen effect */
 .crt-screen {
     width: auto;
