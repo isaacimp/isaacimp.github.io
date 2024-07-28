@@ -183,14 +183,14 @@ a:visited {
     position: absolute;
     width: 100vw;
     height: 100vh;
-    border: 1px solid rgba(0, 255, 0, 0.5);
+    border: 100px solid rgba(0, 255, 0, 0.5);
     box-sizing: border-box;
     animation: tunnel 3s linear forwards;
 }
 
 @keyframes tunnel {
     0% {
-        transform: translateZ(5) scale(0.1);
+        transform: translateZ(0) scale(0.1);
         opacity: 1;
     }
     100% {
