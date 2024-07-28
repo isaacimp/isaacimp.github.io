@@ -69,7 +69,7 @@ a:hover {
 /* Active state */
 a:active {
     color: #0F0; /* Darker green when active */
-    text-shadow: 0 0 10px #00FF00; /* Stronger glow when active */
+    text-shadow: 0 0 10px #bdffbd; /* Stronger glow when active */
 }
 
 /* Visited state */
