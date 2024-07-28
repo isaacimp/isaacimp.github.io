@@ -1,10 +1,11 @@
 /* General body styles */
 body {
     margin: 0;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Courier New', Courier, monospace; */
     background: black;
     color: #0F0;
     overflow: auto;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 /* CRT screen effect */
@@ -39,7 +40,8 @@ body {
 }
 
 * {
-    font-family: 'palantino', serif; /* Set font */
+    /*font-family: 'palantino', serif;  Set font */
+    font-family: 'Times New Roman', Times, serif;
 }
 /* Text styles */
 h1, p {
@@ -52,17 +54,20 @@ h1 {
     font-size: 2em;
 }
 
+h2 {
+    font-weight: lighter;
+}
+
 p {
     font-size: 1em;
+    font-weight: 100;
 }
 
 a {
     text-decoration: none; /* Remove underline */
     color: #0F0; /* Set link color */
     transition: color 0.3s, text-shadow 0.3s; /* Smooth transition */
-    font-family: 'luminari', fantasy;
     letter-spacing: 2px;
-    font-weight: bold;
 }
 /* Hover state */
 a:hover {
@@ -88,9 +93,6 @@ a:visited {
     100% { opacity: 1; }
 }
 
-.crt-screen {
-    animation: flicker 1s infinite;
-}
 
 .tech-brain {
     position: fixed; /* Fixes the position of the tech brain relative to the viewport */
@@ -99,6 +101,7 @@ a:visited {
     width: 75px; /* Decrease the width of the tech brain */
     height: 56px; /* Decrease the height proportionally */
     z-index: 10; /* Ensure it stays on top of other content */
+    animation: flicker 1s infinite;
 }
 
 .brain {
