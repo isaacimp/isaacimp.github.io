@@ -183,7 +183,7 @@ a:visited {
     position: absolute;
     width: 100vw;
     height: 100vh;
-    border: 1px solid rgba(0, 255, 0, 0.5);
+    border: 2px solid rgba(0, 255, 0, 0.5);
     box-sizing: border-box;
     animation: tunnel 3s linear forwards;
 }
