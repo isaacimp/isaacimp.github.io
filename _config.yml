@@ -8,29 +8,20 @@ url: https://hacked-jekyll.netlify.app
 # this information is shown on the homepage, all fields are optional and
 # can be declared either as a single string or as a string array/hash
 json:
-  name: Sanyam Mittal
+  name: Isaac Morris-Perrott
   description:
-    - Hello!
-    - I am a computer engineer
-    - I am a champian
+    - Hello
+    - I am interested in computers, health, epistimology and philosophy
+    - I aim to dive deep into my interests and share what I learn
   cv: assets/cv.pdf
   address:
-    - Vellore Institute of Technology
-    - Department of Themes
-    - 123 Main St, Anytown, USA
+    - Melbourne, Australia
   contact:
-    office: Foobar Hall 1.23
-    phone: +1 234 567 890
-    email: username@domain.com
-  demo: https://hacked-jekyll.netlify.app
-  source: https://github.com/piazzai/hacked-jekyll
+    email: imorrisperrott@gmail.com
   profiles:
-    facebook: https://www.facebook.com
-    twitter: https://twitter.com
-    instagram: https://www.instagram.com
-    linkedin: https://www.linkedin.com
-    stackoverflow: https://stackoverflow.com
+    twitter: https://twitter.com/urbrainonsugar
     github: https://github.com
+    youtube: https://youtube.com/@isaac-morris-perrott
 
 exclude:
   - LICENSE
