@@ -118,7 +118,6 @@ a {
       }
     }
   }
-
   &.external .external-icon {
     height: 1ex;
     margin: 0 0.15em;
@@ -160,7 +159,7 @@ a {
 }
 
 .page {
-  max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
+  max-width: calc(#{map.get($breakpoints, desktop)} + 200px);
   margin: 0 auto;
   & article {
     & > h1 {
