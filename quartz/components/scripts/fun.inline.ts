@@ -59,22 +59,33 @@ document.addEventListener("nav", () => {
   }
 
   // Animation loop
+  let isPaused = false
+
   function animate() {
+    if (isPaused) {
+      requestAnimationFrame(animate)
+      return
+    }
+
     const dx = targetX - currentX
     const dy = targetY - currentY
     const distance = Math.sqrt(dx * dx + dy * dy)
 
     if (distance < 5) {
-      // Reached target, pick a new one after a pause
-      setTimeout(() => pickNewEdgeTarget(), 3000 + Math.random() * 4000)
+      // Reached target, pause for much longer
+      isPaused = true
+      setTimeout(() => {
+        pickNewEdgeTarget()
+        isPaused = false
+      }, 8000 + Math.random() * 7000) // 8-15 seconds pause
     }
 
-    // Very slow, gentle movement
-    currentX += dx * 0.005
-    currentY += dy * 0.005
+    // Extremely slow movement - barely perceptible
+    currentX += dx * 0.001
+    currentY += dy * 0.001
 
-    // Gentle rotation as it moves
-    rotation += distance > 5 ? 0.5 : 0.1
+    // Very gentle rotation
+    rotation += distance > 5 ? 0.2 : 0.05
 
     if (companion) {
       companion.style.left = `${currentX}px`
