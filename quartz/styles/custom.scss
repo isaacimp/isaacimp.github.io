@@ -8,7 +8,7 @@
 body {
   position: relative;
 
-  // Fibonacci spiral dots background (very subtle)
+  // Dot grid background (works in both modes)
   &::before {
     content: "";
     position: fixed;
@@ -17,9 +17,9 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.4;
+    opacity: 0.5;
     background-image:
-      radial-gradient(circle at 1px 1px, var(--lightgray) 1px, transparent 1px);
+      radial-gradient(circle at 1px 1px, var(--gray) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none;
   }
@@ -32,6 +32,17 @@ article {
   & > p:first-of-type {
     font-size: 1.05em;
     line-height: 1.7;
+
+    // STATEMENT PIECE #1: Elegant drop cap on first letter
+    &::first-letter {
+      float: left;
+      font-size: 3.5em;
+      line-height: 0.85;
+      margin: 0.05em 0.1em 0 0;
+      color: var(--secondary);
+      font-weight: 700;
+      font-family: var(--headerFont);
+    }
   }
 }
 
@@ -201,5 +212,41 @@ p {
   & a {
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
+  }
+}
+
+// STATEMENT PIECE #2: Unique article title presentation
+h1.article-title {
+  position: relative;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary), var(--tertiary));
+    border-radius: 2px;
+  }
+}
+
+// Alternative: if your articles use different class
+.article-title, article > h1:first-child {
+  position: relative;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary), var(--tertiary));
+    border-radius: 2px;
   }
 }
