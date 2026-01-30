@@ -203,12 +203,3 @@ p {
     text-underline-offset: 2px;
   }
 }
-
-// ================================================
-// MAGNETIC CURSOR - Elements attracted to mouse
-// ================================================
-
-a, button, .magnetic {
-  transition: transform 0.05s cubic-bezier(0.23, 1, 0.32, 1);
-  will-change: transform;
-}
