@@ -32,7 +32,7 @@ article {
   & > p:first-of-type {
     font-size: 1.05em;
     line-height: 1.7;
-  }
+    }
 }
 
 @keyframes fadeIn {
@@ -205,142 +205,10 @@ p {
 }
 
 // ================================================
-// GEOMETRIC COMPANION - Simple Modular Form
+// MAGNETIC CURSOR - Elements attracted to mouse
 // ================================================
 
-#geo-companion {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  z-index: 9999;
-  pointer-events: auto;
-  cursor: pointer;
-  opacity: 0.3;
-
-  // Main square - just an outline
-  border: 2px solid var(--dark);
-  background: transparent;
-
-  // Cross pattern inside (like Big Hero 6 microbots)
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--dark);
-    transform: translateY(-50%);
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: var(--dark);
-    transform: translateX(-50%);
-  }
-
-  // Small modules (eyes turn into corner modules)
-  .eye {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    border: 1px solid var(--dark);
-    background: transparent;
-
-    &.eye-left {
-      top: -5px;
-      left: -5px;
-    }
-
-    &.eye-right {
-      bottom: -5px;
-      right: -5px;
-    }
-  }
-
-  // Hover - modules separate slightly
-  &.hovered {
-    opacity: 0.5;
-
-    .eye {
-      &.eye-left {
-        animation: float-tl 2s ease-in-out infinite;
-      }
-      &.eye-right {
-        animation: float-br 2s ease-in-out infinite;
-      }
-    }
-  }
-
-  // Click - breaks apart and reforms
-  &.spinning {
-    animation: disassemble 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-    .eye {
-      &.eye-left {
-        animation: scatter-tl 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      }
-      &.eye-right {
-        animation: scatter-br 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      }
-    }
-  }
-}
-
-// Subtle floating animation for modules
-@keyframes float-tl {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(-2px, -2px);
-  }
-}
-
-@keyframes float-br {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(2px, 2px);
-  }
-}
-
-// Scatter and reform on click
-@keyframes disassemble {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(180deg) scale(1.3);
-  }
-  50% {
-    transform: rotate(360deg) scale(0.8);
-  }
-  75% {
-    transform: rotate(540deg) scale(1.2);
-  }
-}
-
-@keyframes scatter-tl {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(-15px, -15px) rotate(360deg);
-  }
-}
-
-@keyframes scatter-br {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(15px, 15px) rotate(-360deg);
-  }
+a, button, .magnetic {
+  transition: transform 0.05s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
 }
