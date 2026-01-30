@@ -205,86 +205,84 @@ p {
 }
 
 // ================================================
-// FUN INTERACTIVE ELEMENTS
+// GEOMETRIC COMPANION - Unique Interactive Element
 // ================================================
 
-// Cursor follower dot
-#cursor-follower {
+#geo-companion {
   position: fixed;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--tertiary);
-  pointer-events: none;
+  width: 30px;
+  height: 30px;
   z-index: 9999;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  box-shadow: 0 0 10px var(--tertiary);
-  mix-blend-mode: screen;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.1s ease;
 
-  &.active {
-    opacity: 0.6;
-  }
-}
+  // Create a 3D-looking folding cube
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.1);
 
-// Click ripple effect
-.click-ripple {
-  position: fixed;
-  border-radius: 50%;
-  border: 2px solid var(--tertiary);
-  pointer-events: none;
-  z-index: 9998;
-  animation: ripple 0.6s ease-out forwards;
-}
-
-@keyframes ripple {
-  from {
-    width: 0;
-    height: 0;
-    opacity: 1;
-  }
-  to {
-    width: 50px;
-    height: 50px;
-    opacity: 0;
-  }
-}
-
-// Interactive heading hover - creates a subtle bounce
-h1, h2, h3 {
-  transition: transform 0.2s ease;
-  cursor: default;
-
-  &:hover {
-    transform: translateX(2px);
-  }
-}
-
-// Fun link interaction - slight rotation on hover
-a {
-  display: inline-block;
-  transition: transform 0.15s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-}
-
-// Emoji reactions on code blocks (appear on hover)
-pre {
-  position: relative;
-
-  &::after {
-    content: "✨";
+  // Add some geometric detail
+  &::before {
+    content: "";
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    font-size: 1.2em;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      linear-gradient(45deg, transparent 48%, var(--light) 48%, var(--light) 52%, transparent 52%),
+      linear-gradient(-45deg, transparent 48%, var(--light) 48%, var(--light) 52%, transparent 52%);
+    opacity: 0.1;
   }
 
-  &:hover::after {
-    opacity: 0.3;
+  // Animated corner accent
+  &::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background: var(--tertiary);
+    opacity: 0.6;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  &:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 6px 12px rgba(0, 0, 0, 0.3),
+      inset -2px -2px 4px rgba(0, 0, 0, 0.1),
+      inset 2px 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  &.spinning {
+    animation: spin 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.3);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
   }
 }
