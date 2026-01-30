@@ -30,13 +30,13 @@ article {
   animation: fadeIn 0.3s ease-out;
 
   & > p:first-of-type {
-    font-size: 1.03em;
+    font-size: 1.05em;
     line-height: 1.7;
 
     // STATEMENT PIECE #1: Elegant drop cap on first letter
     &::first-letter {
       float: left;
-      font-size: 3.5em;
+      font-size: 2em;
       line-height: 0.85;
       margin: 0.05em 0.1em 0 0;
       color: var(--secondary);
