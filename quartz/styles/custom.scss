@@ -1,1 +1,198 @@
 @use "./base.scss";
+
+// ================================================
+// CUSTOM ENHANCEMENTS: Modern, Clean, Interesting
+// ================================================
+
+// Smooth page transitions
+body {
+  transition: background-color 0.3s ease;
+}
+
+// Enhanced article styling with better visual hierarchy
+article {
+  // Add subtle fade-in animation
+  animation: fadeIn 0.4s ease-in;
+
+  // Better spacing for readability
+  & > * + * {
+    margin-top: 1.5rem;
+  }
+
+  // Make first paragraph stand out slightly
+  & > p:first-of-type {
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: var(--dark);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Enhanced link styling with gradient underline effect
+a:not(.internal):not(.tag-link) {
+  position: relative;
+  background-image: linear-gradient(120deg, rgba(132, 165, 157, 0.3) 0%, rgba(132, 165, 157, 0.5) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 0.2em;
+  background-position: 0 88%;
+  transition: background-size 0.25s ease-in;
+
+  &:hover {
+    background-size: 100% 88%;
+  }
+}
+
+// Better internal link styling
+a.internal {
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateX(2px);
+    background-color: color-mix(in srgb, var(--tertiary) 20%, transparent);
+  }
+}
+
+// Elevated card-like feel for certain elements
+blockquote {
+  background: color-mix(in srgb, var(--tertiary) 5%, transparent);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin: 1.5rem 0;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+  }
+}
+
+// Code blocks with better visual hierarchy
+pre {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Inline code with subtle highlight
+code:not(pre code) {
+  background: color-mix(in srgb, var(--secondary) 10%, var(--lightgray));
+  padding: 0.15rem 0.4rem;
+  font-size: 0.88em;
+  border-radius: 4px;
+}
+
+// Better heading hierarchy with subtle animations
+h1, h2, h3 {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 0;
+    background: linear-gradient(180deg, var(--secondary), var(--tertiary));
+    border-radius: 2px;
+    transition: height 0.3s ease;
+  }
+
+  &:hover::before {
+    height: 60%;
+  }
+}
+
+// Smooth image loading with subtle shadow
+img {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+// Better table styling
+.table-container > table {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+
+  th {
+    background: color-mix(in srgb, var(--secondary) 8%, transparent);
+    font-weight: 600;
+  }
+
+  tr {
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: color-mix(in srgb, var(--tertiary) 5%, transparent);
+    }
+  }
+}
+
+// Tag styling improvements
+.tag-link {
+  display: inline-block;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// Smooth horizontal rule
+hr {
+  background: linear-gradient(90deg, transparent, var(--lightgray), transparent);
+  height: 2px;
+}
+
+// Better selection styling
+::selection {
+  background: color-mix(in srgb, var(--tertiary) 40%, rgba(255, 255, 255, 0.5));
+  color: var(--dark);
+}
+
+// Add subtle page background texture (optional - very light)
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.015;
+  z-index: -1;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 2px, var(--darkgray) 2px, var(--darkgray) 3px);
+  pointer-events: none;
+}
+
+// Footer styling
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--lightgray);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
