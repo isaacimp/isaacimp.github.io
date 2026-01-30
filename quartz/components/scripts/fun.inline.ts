@@ -1,4 +1,4 @@
-// Geometric companion that moves around the screen
+// Geometric companion that stays on the edges
 
 document.addEventListener("nav", () => {
   // Create the geometric companion
@@ -6,27 +6,51 @@ document.addEventListener("nav", () => {
   if (!companion) {
     companion = document.createElement("div")
     companion.id = "geo-companion"
+
+    // Add eyes for cuteness
+    const eye1 = document.createElement("div")
+    eye1.className = "eye eye-left"
+    const eye2 = document.createElement("div")
+    eye2.className = "eye eye-right"
+
+    companion.appendChild(eye1)
+    companion.appendChild(eye2)
     document.body.appendChild(companion)
   }
 
-  let currentX = Math.random() * (window.innerWidth - 40)
-  let currentY = Math.random() * (window.innerHeight - 40)
+  let currentX = 20
+  let currentY = 20
   let targetX = currentX
   let targetY = currentY
   let rotation = 0
+  let isHovered = false
 
   companion.style.left = `${currentX}px`
   companion.style.top = `${currentY}px`
 
-  // Pick a new random position to move to
-  function pickNewTarget() {
+  // Only pick edge positions (perimeter of screen)
+  function pickNewEdgeTarget() {
+    const margin = 20
     const positions = [
-      { x: 20, y: 20 }, // top left
-      { x: window.innerWidth - 60, y: 20 }, // top right
-      { x: 20, y: window.innerHeight - 60 }, // bottom left
-      { x: window.innerWidth - 60, y: window.innerHeight - 60 }, // bottom right
-      { x: window.innerWidth / 2 - 20, y: 20 }, // top center
-      { x: window.innerWidth / 2 - 20, y: window.innerHeight - 60 }, // bottom center
+      // Top edge
+      { x: margin, y: margin },
+      { x: window.innerWidth / 2, y: margin },
+      { x: window.innerWidth - 40, y: margin },
+
+      // Right edge
+      { x: window.innerWidth - 40, y: window.innerHeight / 3 },
+      { x: window.innerWidth - 40, y: (window.innerHeight * 2) / 3 },
+      { x: window.innerWidth - 40, y: window.innerHeight - 40 },
+
+      // Bottom edge
+      { x: window.innerWidth - 40, y: window.innerHeight - 40 },
+      { x: window.innerWidth / 2, y: window.innerHeight - 40 },
+      { x: margin, y: window.innerHeight - 40 },
+
+      // Left edge
+      { x: margin, y: window.innerHeight - 40 },
+      { x: margin, y: (window.innerHeight * 2) / 3 },
+      { x: margin, y: window.innerHeight / 3 },
     ]
 
     const target = positions[Math.floor(Math.random() * positions.length)]
@@ -42,15 +66,15 @@ document.addEventListener("nav", () => {
 
     if (distance < 5) {
       // Reached target, pick a new one after a pause
-      setTimeout(() => pickNewTarget(), 2000 + Math.random() * 3000)
+      setTimeout(() => pickNewEdgeTarget(), 3000 + Math.random() * 4000)
     }
 
-    // Smooth movement
-    currentX += dx * 0.01
-    currentY += dy * 0.01
+    // Very slow, gentle movement
+    currentX += dx * 0.005
+    currentY += dy * 0.005
 
-    // Rotate as it moves
-    rotation += distance > 5 ? 1 : 0.2
+    // Gentle rotation as it moves
+    rotation += distance > 5 ? 0.5 : 0.1
 
     if (companion) {
       companion.style.left = `${currentX}px`
@@ -62,13 +86,23 @@ document.addEventListener("nav", () => {
   }
 
   // Start moving
-  pickNewTarget()
+  pickNewEdgeTarget()
   animate()
 
-  // Make it interactive - jump to mouse on click
+  // Hover interactions
+  companion.addEventListener("mouseenter", () => {
+    isHovered = true
+    companion!.classList.add("hovered")
+  })
+
+  companion.addEventListener("mouseleave", () => {
+    isHovered = false
+    companion!.classList.remove("hovered")
+  })
+
+  // Click to spin
   companion.addEventListener("click", (e) => {
     e.stopPropagation()
-    // Do a little spin
     rotation += 360
     companion!.classList.add("spinning")
     setTimeout(() => companion!.classList.remove("spinning"), 600)
