@@ -32,17 +32,6 @@ article {
   & > p:first-of-type {
     font-size: 1.05em;
     line-height: 1.7;
-
-    // STATEMENT PIECE #1: Elegant drop cap on first letter
-    &::first-letter {
-      float: left;
-      font-size: 2em;
-      line-height: 0.85;
-      margin: 0.05em 0.1em 0 0;
-      color: var(--secondary);
-      font-weight: 700;
-      font-family: var(--headerFont);
-    }
   }
 }
 
@@ -215,21 +204,87 @@ p {
   }
 }
 
+// ================================================
+// FUN INTERACTIVE ELEMENTS
+// ================================================
 
-// Alternative: if your articles use different class
-.article-title, article > h1:first-child {
+// Cursor follower dot
+#cursor-follower {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tertiary);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 0 10px var(--tertiary);
+  mix-blend-mode: screen;
+
+  &.active {
+    opacity: 0.6;
+  }
+}
+
+// Click ripple effect
+.click-ripple {
+  position: fixed;
+  border-radius: 50%;
+  border: 2px solid var(--tertiary);
+  pointer-events: none;
+  z-index: 9998;
+  animation: ripple 0.6s ease-out forwards;
+}
+
+@keyframes ripple {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  to {
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+  }
+}
+
+// Interactive heading hover - creates a subtle bounce
+h1, h2, h3 {
+  transition: transform 0.2s ease;
+  cursor: default;
+
+  &:hover {
+    transform: translateX(2px);
+  }
+}
+
+// Fun link interaction - slight rotation on hover
+a {
+  display: inline-block;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// Emoji reactions on code blocks (appear on hover)
+pre {
   position: relative;
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
 
   &::after {
-    content: "";
+    content: "✨";
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--secondary), var(--tertiary));
-    border-radius: 2px;
+    top: 0.5rem;
+    right: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-size: 1.2em;
+  }
+
+  &:hover::after {
+    opacity: 0.3;
   }
 }
