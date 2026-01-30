@@ -205,118 +205,142 @@ p {
 }
 
 // ================================================
-// GEOMETRIC COMPANION - Cute Little Edge Explorer
+// GEOMETRIC COMPANION - Simple Modular Form
 // ================================================
 
 #geo-companion {
   position: fixed;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   z-index: 9999;
   pointer-events: auto;
   cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0.35;
-  border-radius: 4px;
+  opacity: 0.3;
 
-  // Cute robot-like appearance
-  background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.15),
-    inset -1px -1px 2px rgba(0, 0, 0, 0.2),
-    inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+  // Main square - just an outline
+  border: 2px solid var(--dark);
+  background: transparent;
 
-  // Antenna on top
+  // Cross pattern inside (like Big Hero 6 microbots)
   &::before {
     content: "";
     position: absolute;
-    top: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 6px;
-    background: var(--secondary);
-    border-radius: 1px;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--dark);
+    transform: translateY(-50%);
   }
 
-  // Antenna tip (glowing dot)
   &::after {
     content: "";
     position: absolute;
-    top: -9px;
     left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--dark);
     transform: translateX(-50%);
-    width: 4px;
-    height: 4px;
-    background: var(--tertiary);
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
   }
 
-  // Eyes
+  // Small modules (eyes turn into corner modules)
   .eye {
     position: absolute;
     width: 3px;
     height: 3px;
-    background: var(--dark);
-    border-radius: 50%;
-    top: 8px;
-    opacity: 0.8;
+    border: 1px solid var(--dark);
+    background: transparent;
 
     &.eye-left {
-      left: 6px;
+      top: -5px;
+      left: -5px;
     }
 
     &.eye-right {
-      right: 6px;
+      bottom: -5px;
+      right: -5px;
     }
   }
 
-  // Hover state - becomes more visible and friendly
+  // Hover - modules separate slightly
   &.hovered {
-    opacity: 0.7;
-    transform: scale(1.15);
+    opacity: 0.5;
 
     .eye {
-      animation: blink 3s infinite;
+      &.eye-left {
+        animation: float-tl 2s ease-in-out infinite;
+      }
+      &.eye-right {
+        animation: float-br 2s ease-in-out infinite;
+      }
     }
   }
 
-  // Spinning animation when clicked
+  // Click - breaks apart and reforms
   &.spinning {
-    animation: spin 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    opacity: 0.9;
+    animation: disassemble 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    .eye {
+      &.eye-left {
+        animation: scatter-tl 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+      &.eye-right {
+        animation: scatter-br 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+    }
   }
 }
 
-@keyframes pulse {
+// Subtle floating animation for modules
+@keyframes float-tl {
   0%, 100% {
-    opacity: 0.4;
-    transform: translateX(-50%) scale(1);
+    transform: translate(0, 0);
   }
   50% {
-    opacity: 1;
-    transform: translateX(-50%) scale(1.3);
+    transform: translate(-2px, -2px);
   }
 }
 
-@keyframes blink {
+@keyframes float-br {
   0%, 100% {
-    transform: scaleY(1);
-  }
-  48%, 52% {
-    transform: scaleY(0.1);
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg) scale(1);
+    transform: translate(0, 0);
   }
   50% {
-    transform: rotate(180deg) scale(1.4);
+    transform: translate(2px, 2px);
   }
-  100% {
-    transform: rotate(360deg) scale(1);
+}
+
+// Scatter and reform on click
+@keyframes disassemble {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(180deg) scale(1.3);
+  }
+  50% {
+    transform: rotate(360deg) scale(0.8);
+  }
+  75% {
+    transform: rotate(540deg) scale(1.2);
+  }
+}
+
+@keyframes scatter-tl {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-15px, -15px) rotate(360deg);
+  }
+}
+
+@keyframes scatter-br {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(15px, 15px) rotate(-360deg);
   }
 }
