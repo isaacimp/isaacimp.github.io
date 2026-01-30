@@ -1,36 +1,106 @@
 @use "./base.scss";
 
 // ================================================
-// CUSTOM ENHANCEMENTS: Modern, Clean, Interesting
+// TECH-INSPIRED DESIGN: Cool, Modern, Minimal
 // ================================================
 
-// Smooth page transitions
+// Animated tech grid background
 body {
+  position: relative;
   transition: background-color 0.3s ease;
+
+  // Animated gradient background
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(96, 165, 250, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(96, 165, 250, 0.03) 0%, transparent 50%);
+    animation: gradientShift 20s ease infinite;
+  }
+
+  // Tech grid overlay
+  &::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgba(96, 165, 250, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(96, 165, 250, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
 }
 
-// Enhanced article styling with better visual hierarchy
+@keyframes gradientShift {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+// Subtle scan line effect
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.3), transparent);
+  z-index: 9999;
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+  opacity: 0.3;
+}
+
+// Enhanced article styling with tech vibes
 article {
-  // Add subtle fade-in animation
-  animation: fadeIn 0.4s ease-in;
+  animation: fadeIn 0.5s ease-in;
+  position: relative;
 
   // Better spacing for readability
   & > * + * {
     margin-top: 1.5rem;
   }
 
-  // Make first paragraph stand out slightly
+  // Make first paragraph stand out
   & > p:first-of-type {
     font-size: 1.1em;
     line-height: 1.8;
     color: var(--dark);
+    position: relative;
+    padding-left: 1rem;
+    border-left: 3px solid var(--secondary);
   }
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(15px);
   }
   to {
     opacity: 1;
@@ -38,63 +108,128 @@ article {
   }
 }
 
-// Enhanced link styling with gradient underline effect
+// Tech-style link hover with yellow glow
 a:not(.internal):not(.tag-link) {
   position: relative;
-  background-image: linear-gradient(120deg, rgba(132, 165, 157, 0.3) 0%, rgba(132, 165, 157, 0.5) 100%);
+  background-image: linear-gradient(120deg, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.3) 100%);
   background-repeat: no-repeat;
   background-size: 100% 0.2em;
   background-position: 0 88%;
-  transition: background-size 0.25s ease-in;
+  transition: all 0.3s ease;
 
   &:hover {
     background-size: 100% 88%;
+    background-image: linear-gradient(120deg, rgba(251, 191, 36, 0.3) 0%, rgba(251, 191, 36, 0.5) 100%);
+    color: var(--tertiary);
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
   }
 }
 
-// Better internal link styling
+// Internal links with yellow glow on hover
 a.internal {
+  transition: all 0.3s ease;
+  position: relative;
+
+  &:hover {
+    transform: translateX(3px);
+    background-color: color-mix(in srgb, var(--tertiary) 15%, transparent);
+    color: var(--tertiary);
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.2);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--tertiary), transparent);
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+// Tech card styling for blockquotes
+blockquote {
+  background: color-mix(in srgb, var(--secondary) 3%, transparent);
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--secondary);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    inset 0 0 20px rgba(96, 165, 250, 0.03);
+  margin: 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+    opacity: 0.5;
+  }
+
+  &:hover {
+    box-shadow:
+      0 2px 12px rgba(0, 0, 0, 0.08),
+      inset 0 0 30px rgba(96, 165, 250, 0.05);
+    border-left-color: var(--tertiary);
+    transition: all 0.3s ease;
+  }
+}
+
+// Code blocks with terminal aesthetic
+pre {
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(96, 165, 250, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(180deg, rgba(96, 165, 250, 0.05), transparent);
+    pointer-events: none;
+  }
+
+  &:hover {
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.15),
+      inset 0 0 0 1px rgba(251, 191, 36, 0.2),
+      0 0 30px rgba(251, 191, 36, 0.1);
+  }
+}
+
+// Inline code with tech highlight
+code:not(pre code) {
+  background: color-mix(in srgb, var(--secondary) 12%, var(--lightgray));
+  padding: 0.2rem 0.4rem;
+  font-size: 0.88em;
+  border-radius: 4px;
+  border: 1px solid rgba(96, 165, 250, 0.1);
   transition: all 0.2s ease;
 
   &:hover {
-    transform: translateX(2px);
-    background-color: color-mix(in srgb, var(--tertiary) 20%, transparent);
+    background: color-mix(in srgb, var(--tertiary) 15%, var(--lightgray));
+    border-color: rgba(251, 191, 36, 0.3);
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.2);
   }
 }
 
-// Elevated card-like feel for certain elements
-blockquote {
-  background: color-mix(in srgb, var(--tertiary) 5%, transparent);
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  margin: 1.5rem 0;
-
-  &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.3s ease;
-  }
-}
-
-// Code blocks with better visual hierarchy
-pre {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transition: box-shadow 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-}
-
-// Inline code with subtle highlight
-code:not(pre code) {
-  background: color-mix(in srgb, var(--secondary) 10%, var(--lightgray));
-  padding: 0.15rem 0.4rem;
-  font-size: 0.88em;
-  border-radius: 4px;
-}
-
-// Better heading hierarchy with subtle animations
+// Headings with glowing accent bars
 h1, h2, h3 {
   position: relative;
 
@@ -109,90 +244,172 @@ h1, h2, h3 {
     background: linear-gradient(180deg, var(--secondary), var(--tertiary));
     border-radius: 2px;
     transition: height 0.3s ease;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0);
   }
 
   &:hover::before {
-    height: 60%;
+    height: 70%;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
   }
 }
 
-// Smooth image loading with subtle shadow
+// Images with tech glow effect
 img {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  border: 1px solid rgba(96, 165, 250, 0.1);
 
   &:hover {
     transform: scale(1.02);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.15),
+      0 0 30px rgba(251, 191, 36, 0.15);
+    border-color: rgba(251, 191, 36, 0.3);
   }
 }
 
-// Better table styling
+// Enhanced table with tech styling
 .table-container > table {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   overflow: hidden;
+  border: 1px solid rgba(96, 165, 250, 0.1);
 
   th {
-    background: color-mix(in srgb, var(--secondary) 8%, transparent);
+    background: color-mix(in srgb, var(--secondary) 10%, transparent);
     font-weight: 600;
+    border-bottom: 2px solid var(--secondary);
   }
 
   tr {
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 
     &:hover {
-      background: color-mix(in srgb, var(--tertiary) 5%, transparent);
+      background: color-mix(in srgb, var(--tertiary) 8%, transparent);
+      box-shadow: inset 0 0 20px rgba(251, 191, 36, 0.1);
     }
   }
 }
 
-// Tag styling improvements
+// Tags with yellow glow on hover
 .tag-link {
   display: inline-block;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  padding: 0.1rem 0.3rem;
 
   &:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    background: color-mix(in srgb, var(--tertiary) 15%, transparent);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
   }
 }
 
-// Smooth horizontal rule
+// Tech-style horizontal rule
 hr {
-  background: linear-gradient(90deg, transparent, var(--lightgray), transparent);
+  background: linear-gradient(90deg,
+    transparent,
+    var(--secondary),
+    var(--tertiary),
+    var(--secondary),
+    transparent
+  );
   height: 2px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--tertiary), transparent);
+    filter: blur(3px);
+  }
 }
 
-// Better selection styling
+// Yellow selection highlight
 ::selection {
-  background: color-mix(in srgb, var(--tertiary) 40%, rgba(255, 255, 255, 0.5));
+  background: color-mix(in srgb, var(--tertiary) 30%, rgba(255, 255, 255, 0.3));
   color: var(--dark);
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
 }
 
-// Add subtle page background texture (optional - very light)
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.015;
-  z-index: -1;
-  background-image:
-    repeating-linear-gradient(45deg, transparent, transparent 2px, var(--darkgray) 2px, var(--darkgray) 3px);
-  pointer-events: none;
-}
-
-// Footer styling
+// Enhanced footer with tech styling
 footer {
   margin-top: 4rem;
   padding-top: 2rem;
-  border-top: 2px solid var(--lightgray);
+  border-top: 2px solid;
+  border-image: linear-gradient(90deg, transparent, var(--secondary), var(--tertiary), transparent) 1;
   opacity: 0.8;
   transition: opacity 0.3s ease;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--tertiary), transparent);
+    filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 
   &:hover {
     opacity: 1;
+
+    &::before {
+      opacity: 0.6;
+    }
+  }
+}
+
+// Glowing cursor effect on hover (subtle)
+a, button, .clickable {
+  cursor: pointer;
+
+  &:hover {
+    position: relative;
+  }
+}
+
+// Add subtle glow to page title
+.page-title {
+  position: relative;
+
+  &:hover {
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+  }
+}
+
+// Tech-inspired focus states
+*:focus-visible {
+  outline: 2px solid var(--tertiary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.1);
+}
+
+// Smooth scrollbar styling
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--lightgray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 5px;
+
+  &:hover {
+    background: var(--tertiary);
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
   }
 }
