@@ -1,11 +1,14 @@
-Last updated 27/01/2026
+Last updated 03/02/2026
 
-We are in Vietnam for the second time now. This time we are taking it slower and enjoying each place more and relaxing more then last time when we were younger and thought we had to do everything all at once. We are here for a few more days and then are flying to Singapore for a few days and then finally to Bali on the way back home to Melbourne.
+I am in Singapore. I love this city and how it got to be the thriving and wealthy place that it is today. It's my first time here but I have no doubts that I will come back. Walking the streets alone is an inspiration let alone visiting the architectural marvels or the bustling CBD or bookshops or startup hubs. It's very cool. Although, talking to people here does make me appreciate my home city of Melbourne more as many Singaporeans seem to love Melbourne and many would love to live there. I guess that's the classic story of not appreciating what you've got but I do wish Melbourne had more of the 'progress good' energy. Besides that Melbourne really isn't a bad place and I'm sure I can find that energy somewhere.
 
-I am typing this now in a hotel room in Ho Chi Minh City, Vietnam with my steam deck which is setup on a phone stand and i'm using a [fold out keyboard](https://www.protoarc.com/en-gb/products/xk01-tri-fold-bluetooth-keyboard-uk-layout?variant=40593446338649) that I bought for this trip.
+We are only here for a few more days until moving on again to our next stop but we have been so busy here that it feels like the city is ours already. I hope that I can create things with the quality and speed that you find commonplace here and I am inspired to do so when I return home.
 
-Right now the main thing that I am working on is this very site. I recently came across [Quartz](https://quartz.jzhao.xyz/) which is the software that I am using to create this site and right away I loved how it looked and since I use obsidian quite regularly, it seemed like a great fit.
+*Health*
+I'm not doing so good health-wise as I've had to resort to eating chips here when I can't find safe gluten free food. I really need to just accept that maybe i'll have to be OK with lots of liquids while travelling because the chips really make me flare up. 
 
-I also just watched a video by [Sylvan Franklin](https://www.youtube.com/@sylvanfranklin) which was basically a casual interview/ showing of someones obsidian vault (this is also where I learned of Quartz) and the video really showed me how much further I could go with obsidian. I definitely prefer to keep things more simple then the guy in the video because I don't really like the whole second brain idea, that's not what I use obsidian for and neither is for memory keeping so I wont go as far as him but I can definitely make it better and faster for me to work with. That video is [here.](https://www.youtube.com/watch?v=NSTT2iBSwZs)
+*Interesting purchase*
+I bought a [Garmin Venu 4 - 45mm](https://www.garmin.com.sg/products/wearables/venu-4-45-black/) here in Singapore yesterday. So far it's been great. The main reason I went with Garmin was due to the lack of subscription model for using the device and the fact that the data is accessible to the public so I can use my data from the watch for my own personal databases and uses. This along with the sensors and features made it seem worthwhile. The venu 3 looks pretty good too as well as some other Garmin watches but this was the top of the line so I just got it so I wouldn't feel the need to upgrade any time soon.
+
 
 See my previous now pages on the [[archive]]
