@@ -11,4 +11,4 @@ I'm not doing so good health-wise as I've had to resort to eating chips here whe
 I bought a [Garmin Venu 4 - 45mm](https://www.garmin.com.sg/products/wearables/venu-4-45-black/) here in Singapore yesterday. So far it's been great. The main reason I went with Garmin was due to the lack of subscription model for using the device and the fact that the data is accessible to the public so I can use my data from the watch for my own personal databases and uses. This along with the sensors and features made it seem worthwhile. The venu 3 looks pretty good too as well as some other Garmin watches but this was the top of the line so I just got it so I wouldn't feel the need to upgrade any time soon.
 
 
-See my previous now pages on the [[archive]]
+See my previous now pages on the [[Archive]]

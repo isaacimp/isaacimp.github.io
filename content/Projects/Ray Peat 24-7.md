@@ -1,0 +1,3 @@
+I made a 24/7 radio that just plays interviews from the Dr. Raymond Peat called [bioenergetic.live](https://bioenergetic.live). I have learned a lot in relation to health from Ray Peat and when his work helped me to get over some serious digestive issues a few years ago I decided to make a little site that played his old interviews on repeat as there are so many and it's nice to be able to tune in like its a radio show. 
+
+![[Screenshot_20260204_203652.png]]
