@@ -39,7 +39,7 @@ export default ((opts?: Options) => {
     )
   }
 
-  Footer.css =
+  Footer.css = `
   ${style}
 
   .social-links {
@@ -62,6 +62,6 @@ export default ((opts?: Options) => {
     text-decoration: underline;
   }
 
-
+`
   return Footer
 }) satisfies QuartzComponentConstructor
