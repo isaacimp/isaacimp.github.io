@@ -203,26 +203,3 @@ p {
     text-underline-offset: 2px;
   }
 }
-
-/* Hide all horizontal rules above footer */
-footer {
-  & ~ hr,   /* siblings before footer */
-  & + hr,
-  hr + footer,
-  .page:last-child hr {  /* common selector if multiple */
-    display: none !important;
-  }
-}
-
-/* Or target specifically if you find a class via inspect */
-hr.divider,
-.horizontal-rule,
-.separator-line {
-  display: none;
-}
-
-/* If it's borders instead of <hr> */
-.content-end,
-.page-body > *:last-child {
-  border-bottom: none !important;
-}
