@@ -33,6 +33,20 @@ export const defaultContentPageLayout: PageLayout = {
     Component.DesktopOnly(Component.Explorer({
       folderClickBehavior: "collapse",
       folderDefaultState: "open",
+      sortFn: (a, b) => {
+        // Define custom order for main files
+        const order = ["Now", "Health", "Projects", "Archive"]
+        const aIndex = order.indexOf(a.displayName)
+        const bIndex = order.indexOf(b.displayName)
+
+        // If both are in the custom order list, sort by that
+        if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex
+        // If only one is in the list, it comes first
+        if (aIndex !== -1) return -1
+        if (bIndex !== -1) return 1
+        // Otherwise, alphabetical
+        return a.displayName.localeCompare(b.displayName)
+      },
     })),
   ],
   right: [],
