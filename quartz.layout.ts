@@ -35,7 +35,7 @@ export const defaultContentPageLayout: PageLayout = {
       folderDefaultState: "open",
       sortFn: (a, b) => {
         // Define custom order for main files
-        const order = ["Now", "Health", "Projects", "Archive"]
+        const order = ["Now", "Health", "Projects", "Archive", "Archive"]
         const aIndex = order.indexOf(a.displayName)
         const bIndex = order.indexOf(b.displayName)
 
