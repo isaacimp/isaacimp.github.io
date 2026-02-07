@@ -33,9 +33,18 @@ export const defaultContentPageLayout: PageLayout = {
     Component.DesktopOnly(Component.Explorer({
       folderClickBehavior: "collapse",
       folderDefaultState: "open",
+      filterFn: (node) => {
+        // Hide the Archive folder
+        if (node.isFolder && node.displayName === "Archive") return false
+
+        // Hide date-formatted pages (DD-MM-YYYY pattern)
+        if (!node.isFolder && /^\d{2}-\d{2}-\d{4}$/.test(node.displayName)) return false
+
+        return true
+      },
       sortFn: (a, b) => {
         // Define custom order for main files
-        const order = ["Now", "Health", "Projects", "Archive"]
+        const order = ["Now", "Health", "Projects", "Archives"]
         const aIndex = order.indexOf(a.displayName)
         const bIndex = order.indexOf(b.displayName)
 
