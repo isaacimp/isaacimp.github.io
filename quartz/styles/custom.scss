@@ -9,6 +9,19 @@ body {
   font-size: 17px;
 }
 
+// Override base.scss to make page use full width
+.page {
+  max-width: none !important;
+
+  & .center {
+    max-width: none !important;
+  }
+
+  & article {
+    max-width: none !important;
+  }
+}
+
 // Subtle mathematical background pattern
 body {
   position: relative;
