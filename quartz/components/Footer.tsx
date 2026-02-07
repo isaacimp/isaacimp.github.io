@@ -11,7 +11,6 @@ export default ((opts?: Options) => {
   const Footer: QuartzComponent = ({ displayClass, cfg }: QuartzComponentProps) => {
     const year = new Date().getFullYear()
 
-
     const socialLinks = [
       { text: "X", href: "https://x.com/ubrainonsugar" },
       { text: "Email", href: "mailto:" },
@@ -20,48 +19,55 @@ export default ((opts?: Options) => {
 
     return (
       <footer class={`${displayClass ?? ""}`}>
-      <p>
-      {i18n(cfg.locale).components.footer.createdWith}{" "}
-      <a href="https://quartz.jzhao.xyz/">Quartz v{version}</a> © {year}
-      </p>
+        <p>
+          {i18n(cfg.locale).components.footer.createdWith}{" "}
+          <a href="https://quartz.jzhao.xyz/">Quartz v{version}</a> © {year}
+        </p>
 
-      {/**/}
-      <ul class="social-links">
-      {socialLinks.map((link) => (
-        <li key={link.text}>
-        <a href={link.href} target="_blank" rel="noopener noreferrer">
-        {link.text}
-        </a>
-        </li>
-      ))}
-      </ul>
+        {/**/}
+        <ul class="social-links">
+          {socialLinks.map((link) => (
+            <li key={link.text}>
+              <a href={link.href} target="_blank" rel="noopener noreferrer">
+                {link.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <img src="./banner-image.png" alt="Banner" class="footer-banner" />
       </footer>
     )
   }
 
   Footer.css = `
-  ${style}
+    ${style}
 
-  .social-links {
-    list-style: none;
-    padding: 0;
-    margin: 0.75rem 0 0;
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    font-size: 0.95rem;
-  }
+    .social-links {
+      list-style: none;
+      padding: 0;
+      margin: 0.75rem 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      font-size: 0.95rem;
+    }
 
-  .social-links a {
-    color: var(--gray);
-    text-decoration: none;
-  }
+    .social-links a {
+      color: var(--gray);
+      text-decoration: none;
+    }
 
-  .social-links a:hover {
-    color: var(--secondary);
-    text-decoration: underline;
-  }
+    .social-links a:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
 
-`
+    .footer-banner {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-top: 1rem;
+    }
+  `
   return Footer
 }) satisfies QuartzComponentConstructor
