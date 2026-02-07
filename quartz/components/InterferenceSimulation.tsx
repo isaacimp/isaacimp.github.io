@@ -1,4 +1,6 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
+// @ts-ignore
+import script from "./scripts/interference.inline"
 
 export default (() => {
   const InterferenceSimulation: QuartzComponent = ({ displayClass }: QuartzComponentProps) => {
@@ -26,7 +28,7 @@ export default (() => {
     )
   }
 
-  InterferenceSimulation.afterDOMLoaded = "./scripts/interference.inline"
+  InterferenceSimulation.afterDOMLoaded = script
 
   InterferenceSimulation.css = `
     .interference-simulation {
