@@ -211,3 +211,19 @@ p {
     line-height: 1.2;
   }
 }
+
+// Make Explorer always visible on desktop (no dropdown)
+@media (min-width: 800px) {
+  .explorer {
+    .desktop-explorer {
+      display: none !important; // Hide the dropdown button
+    }
+
+    .explorer-content {
+      display: block !important;
+      visibility: visible !important;
+      overflow-y: auto !important;
+      max-height: none !important;
+    }
+  }
+}
