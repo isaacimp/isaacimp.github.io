@@ -36,17 +36,45 @@ body {
 }
 
 // Remove excessive bottom spacing
+html, body {
+  min-height: auto !important;
+  height: auto !important;
+}
+
 .page {
   min-height: auto !important;
+  height: auto !important;
+}
+
+#quartz-body {
+  min-height: auto !important;
+  height: auto !important;
 }
 
 .center {
   min-height: auto !important;
+  height: auto !important;
   padding-bottom: 2rem !important;
 }
 
 article {
   margin-bottom: 2rem !important;
+}
+
+// Reduce graph container size
+.graph {
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+
+  .graph-outer {
+    max-height: 400px !important;
+  }
+}
+
+footer {
+  margin-top: 2rem !important;
+  padding-top: 1rem !important;
+  margin-bottom: 1rem !important;
 }
 
 // Subtle mathematical background pattern
