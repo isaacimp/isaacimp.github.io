@@ -1,11 +1,13 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
-import StarsBackground from "./components/StarsBackground"
+
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [
+    Component.Graph(),
+  ],
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/jackyzha0/quartz",
@@ -38,20 +40,11 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer({
-      folderDefaultState: "open",
-      filterFn: (node) => {
-        // Show everything except tags folder and hidden files
-        return node.name !== "tags" && !node.name.startsWith(".")
-      },
-    }),
+    Component.Explorer(),
     Component.DesktopOnly(Component.RecentNotes({ limit: 5 })),
   ],
   right: [
     Component.DesktopOnly(Component.TableOfContents()),
-  ],
-  afterBody: [
-    Component.Graph(),
   ],
 }
 
@@ -70,13 +63,7 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer({
-      folderDefaultState: "open",
-      filterFn: (node) => {
-        // Show everything except tags folder and hidden files
-        return node.name !== "tags" && !node.name.startsWith(".")
-      },
-    }),
+    Component.Explorer(),
   ],
   right: [],
 }
