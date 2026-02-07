@@ -207,7 +207,21 @@ p {
 // Tighter spacing for recent notes
 .recent-notes {
   li {
-    margin: 0.1rem 0;
-    line-height: 0.5;
+    margin: 0.3rem 0;
+    line-height: 1.2;
+  }
+}
+
+// Fix Explorer content visibility on desktop
+@media (min-width: 1200px) {
+  .explorer:not(.collapsed) .explorer-content {
+    display: block !important;
+    visibility: visible !important;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  .explorer.collapsed .explorer-content {
+    display: none;
   }
 }
