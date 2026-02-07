@@ -12,7 +12,7 @@ $mobile: "(max-width: #{map.get($breakpoints, mobile)})";
 $tablet: "(min-width: #{map.get($breakpoints, mobile)}) and (max-width: #{map.get($breakpoints, desktop)})";
 $desktop: "(min-width: #{map.get($breakpoints, desktop)})";
 $pageWidth: #{map.get($breakpoints, mobile)};
-$sidePanelWidth: 320px;
+$sidePanelWidth: 400px;
 $topSpacing: 6rem;
 $boldWeight: 700;
 $semiBoldWeight: 600;
@@ -60,7 +60,7 @@ $desktopGrid: (
 
 // Enhanced minimal layout
 .page {
-  max-width: 750px;
+  max-width: 900px;
   margin: 0 auto;
   line-height: 1.75;
   padding: 2rem 1rem;
