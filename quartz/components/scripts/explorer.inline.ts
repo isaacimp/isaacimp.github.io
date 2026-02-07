@@ -284,6 +284,15 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
 
       // Allow <html> to be scrollable when mobile explorer is collapsed
       document.documentElement.classList.remove("mobile-no-scroll")
+    } else {
+      // On desktop, check data-collapsed attribute and set class accordingly
+      const explorerEl = explorer as HTMLElement
+      const dataCollapsed = explorerEl.dataset.collapsed
+      if (dataCollapsed === "collapsed") {
+        explorer.classList.add("collapsed")
+      } else {
+        explorer.classList.remove("collapsed")
+      }
     }
 
     mobileExplorer.classList.remove("hide-until-loaded")
