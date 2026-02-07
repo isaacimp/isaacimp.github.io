@@ -18,7 +18,6 @@ export default ((opts?: Options) => {
 
     return (
       <footer class={`${displayClass ?? ""}`}>
-        <hr />
         <ul class="social-links">
           {socialLinks.map((link) => (
             <li>
