@@ -22,6 +22,19 @@ body {
   }
 }
 
+// Override grid to use 2 columns (left sidebar + content) instead of 3
+@media (min-width: 1200px) {
+  .page {
+    & > #quartz-body {
+      grid-template-columns: 400px 1fr !important;
+      grid-template-areas:
+        "grid-sidebar-left grid-header"
+        "grid-sidebar-left grid-center"
+        "grid-sidebar-left grid-footer" !important;
+    }
+  }
+}
+
 // Subtle mathematical background pattern
 body {
   position: relative;
