@@ -35,6 +35,20 @@ body {
   }
 }
 
+// Remove excessive bottom spacing
+.page {
+  min-height: auto !important;
+}
+
+.center {
+  min-height: auto !important;
+  padding-bottom: 2rem !important;
+}
+
+article {
+  margin-bottom: 2rem !important;
+}
+
 // Subtle mathematical background pattern
 body {
   position: relative;
