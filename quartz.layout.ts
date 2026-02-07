@@ -1,11 +1,6 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 
-// Create shared component instances to avoid duplicates
-const sharedExplorer = Component.Explorer()
-const sharedRecentNotes = Component.DesktopOnly(Component.RecentNotes({ limit: 5 }))
-const sharedTOC = Component.DesktopOnly(Component.TableOfContents())
-
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
@@ -43,11 +38,11 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    sharedExplorer,
-    sharedRecentNotes,
+    Component.Explorer({ folderDefaultState: "open" }),
+    Component.DesktopOnly(Component.RecentNotes({ limit: 5 })),
   ],
   right: [
-    sharedTOC,
+    Component.DesktopOnly(Component.TableOfContents()),
   ],
 }
 
@@ -64,13 +59,8 @@ export const defaultListPageLayout: PageLayout = {
           grow: true,
         },
         { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
       ],
     }),
-    sharedExplorer,
-    sharedRecentNotes,
   ],
-  right: [
-    sharedTOC,
-  ],
+  right: [],
 }
