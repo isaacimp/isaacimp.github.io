@@ -198,7 +198,7 @@ article {
 
 // Better reading experience
 p {
-  max-width: 80ch;
+  max-width: none;
 }
 
 // Subtle hover on page elements
@@ -240,10 +240,5 @@ p {
         display: inline-block;
       }
     }
-  }
-
-  // Make right sidebar (TOC) narrower to give more room to content
-  .right.sidebar {
-    max-width: 250px;
   }
 }

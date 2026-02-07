@@ -60,10 +60,10 @@ $desktopGrid: (
 
 // Enhanced minimal layout
 .page {
-  max-width: 1200px;
+  max-width: none;
   margin: 0 auto;
   line-height: 1.75;
-  padding: 2rem 1rem;
+  padding: 2rem 2rem 2rem 1rem;
 }
 
 // Typography refinements
