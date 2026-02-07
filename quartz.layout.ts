@@ -40,6 +40,10 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.Explorer({
       folderDefaultState: "open",
+      filterFn: (node) => {
+        // Show everything except tags folder and hidden files
+        return node.name !== "tags" && !node.name.startsWith(".")
+      },
     }),
     Component.DesktopOnly(Component.RecentNotes({ limit: 5 })),
   ],
@@ -68,6 +72,10 @@ export const defaultListPageLayout: PageLayout = {
     }),
     Component.Explorer({
       folderDefaultState: "open",
+      filterFn: (node) => {
+        // Show everything except tags folder and hidden files
+        return node.name !== "tags" && !node.name.startsWith(".")
+      },
     }),
   ],
   right: [],

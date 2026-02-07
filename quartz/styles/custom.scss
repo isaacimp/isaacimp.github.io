@@ -203,3 +203,11 @@ p {
     text-underline-offset: 2px;
   }
 }
+
+// Tighter spacing for recent notes
+.recent-notes {
+  li {
+    margin: 0.3rem 0;
+    line-height: 1.4;
+  }
+}
