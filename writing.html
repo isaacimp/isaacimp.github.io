@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>writing — isaacmp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --fg: #1a1a1a;
+    --fg2: #3d3d3d;
+    --fg3: #888;
+    --bg: #fdfdfc;
+    --rule: #d4d4d4;
+    --rule-light: #eee;
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'Source Serif 4', Georgia, serif;
+  }
+
+  html { font-size: 13px; }
+
+  body {
+    font-family: var(--mono);
+    color: var(--fg);
+    background: var(--bg);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 48px 24px 120px;
+  }
+
+  a { color: var(--fg); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { color: #000; }
+
+  /* ── TOP ── */
+  .top { margin-bottom: 32px; }
+  .top h1 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+  .top-nav {
+    font-size: 11.5px;
+    color: var(--fg3);
+    display: flex;
+    gap: 20px;
+  }
+
+  /* ── SEARCH ── */
+  .search-bar {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 12px 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--rule-light);
+    margin-bottom: 4px;
+  }
+  .search-bar input {
+    font-family: var(--mono);
+    font-size: 12px;
+    width: 100%;
+    padding: 9px 0;
+    border: none;
+    background: transparent;
+    color: var(--fg);
+    outline: none;
+  }
+  .search-bar input::placeholder { color: var(--fg3); }
+
+  /* ── STATUS ── */
+  .status {
+    font-size: 10.5px;
+    color: var(--fg3);
+    padding: 6px 0 14px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 4px;
+  }
+  .sort-btn {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--fg3);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .sort-btn:hover { color: var(--fg); }
+
+  /* ── YEAR ── */
+  .year-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--fg3);
+    padding: 18px 0 6px;
+    position: sticky;
+    top: 46px;
+    background: var(--bg);
+    z-index: 5;
+  }
+
+  /* ── ENTRIES ── */
+  .entry {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 16px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--rule-light);
+    align-items: baseline;
+  }
+  .entry.hidden { display: none; }
+  .entry-date {
+    font-size: 11px;
+    color: var(--fg3);
+    white-space: nowrap;
+  }
+  .entry-title {
+    font-family: var(--serif);
+    font-size: 16.5px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 3px;
+  }
+  .entry-title a { text-decoration: none; }
+  .entry-title a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
+  .entry-excerpt {
+    font-size: 12px;
+    color: var(--fg2);
+    line-height: 1.6;
+    max-width: 560px;
+  }
+
+  .no-results {
+    font-size: 12px;
+    color: var(--fg3);
+    padding: 32px 0;
+    display: none;
+  }
+
+  @media (max-width: 500px) {
+    body { padding: 32px 16px 80px; }
+    .entry { grid-template-columns: 1fr; gap: 2px; }
+    .entry-title { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Writing</h1>
+  <div class="top-nav">
+    <a href="index.html">&larr; home</a>
+    <a href="mailto:isaac@isaacmp.xyz">email</a>
+    <a href="https://github.com/isaacmp" target="_blank">github</a>
+  </div>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="search" placeholder="search..." autocomplete="off" spellcheck="false">
+</div>
+
+<div class="status">
+  <span id="count"></span>
+  <button class="sort-btn" id="sort-btn">newest first</button>
+</div>
+
+<div id="entries">
+
+  <!--
+    To add a post:
+    1. Add a year-label div if it's a new year
+    2. Copy an entry div
+    3. Fill in data-date (YYYY-MM-DD), data-search (keywords for search), date, title, excerpt
+    4. data-search: put any words someone might search for that aren't in the title/excerpt
+  -->
+
+  <div class="year-label" data-year="2026">2026</div>
+
+  <div class="entry" data-date="2026-05-20" data-search="">
+    <span class="entry-date">May 20</span>
+    <div>
+      <div class="entry-title"><a href="#">Post Title</a></div>
+      <div class="entry-excerpt">One line description.</div>
+    </div>
+  </div>
+
+  <div class="entry" data-date="2026-05-08" data-search="">
+    <span class="entry-date">May 8</span>
+    <div>
+      <div class="entry-title"><a href="#">Post Title</a></div>
+      <div class="entry-excerpt">One line description.</div>
+    </div>
+  </div>
+
+  <div class="entry" data-date="2026-04-22" data-search="">
+    <span class="entry-date">Apr 22</span>
+    <div>
+      <div class="entry-title"><a href="#">Post Title</a></div>
+      <div class="entry-excerpt">One line description.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="no-results" id="no-results">Nothing matched.</div>
+
+<script>
+const searchInput = document.getElementById('search');
+const entries = [...document.querySelectorAll('.entry')];
+const yearLabels = [...document.querySelectorAll('.year-label')];
+const countEl = document.getElementById('count');
+const noResults = document.getElementById('no-results');
+const sortBtn = document.getElementById('sort-btn');
+const container = document.getElementById('entries');
+let sortAsc = false;
+
+function render() {
+  const q = searchInput.value.toLowerCase().trim();
+  let visible = 0;
+  const visibleYears = new Set();
+
+  entries.forEach(e => {
+    const haystack = (e.dataset.search + ' ' + e.textContent).toLowerCase();
+    const show = !q || q.split(/\s+/).every(w => haystack.includes(w));
+    e.classList.toggle('hidden', !show);
+    if (show) { visible++; visibleYears.add(e.dataset.date.slice(0, 4)); }
+  });
+
+  yearLabels.forEach(y => y.style.display = visibleYears.has(y.dataset.year) ? '' : 'none');
+  countEl.textContent = visible + ' post' + (visible !== 1 ? 's' : '');
+  noResults.style.display = visible === 0 ? 'block' : 'none';
+}
+
+function sort() {
+  sortAsc = !sortAsc;
+  sortBtn.textContent = sortAsc ? 'oldest first' : 'newest first';
+  entries.sort((a, b) => {
+    const c = a.dataset.date.localeCompare(b.dataset.date);
+    return sortAsc ? c : -c;
+  });
+  const frag = document.createDocumentFragment();
+  let cur = null;
+  const years = sortAsc ? [...yearLabels].reverse() : yearLabels;
+  entries.forEach(e => {
+    const y = e.dataset.date.slice(0, 4);
+    if (y !== cur) { cur = y; const l = yearLabels.find(x => x.dataset.year === y); if (l) frag.appendChild(l); }
+    frag.appendChild(e);
+  });
+  container.innerHTML = '';
+  container.appendChild(frag);
+  render();
+}
+
+searchInput.addEventListener('input', render);
+sortBtn.addEventListener('click', sort);
+render();
+</script>
+
+</body>
+</html>
