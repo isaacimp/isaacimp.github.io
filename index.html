@@ -20,6 +20,19 @@
     --serif: 'Source Serif 4', Georgia, serif;
   }
 
+  @media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #e8e8e6;
+    --fg2: #b0b0aa;
+    --fg3: #606060;
+    --bg: #0e0e0d;
+    --rule: #2a2a28;
+    --rule-light: #1e1e1c;
+  }
+
+  article code, article pre { background: #1a1a18; }
+}
+
   html { font-size: 13px; }
 
   body {
@@ -263,10 +276,10 @@
 <!-- ARTICLES — copy this block for each new post -->
 
 <article>
-  <div class="date">20 May 2026</div>
+  <div class="date">th Jun 2026</div>
   <h2>The Sensaphone 2000</h2>
 
-  <p>I recenlty got my hands on a 1980's device called The Sensaphone 2000.</p>
+  <p>I recently got my hands on a 1980's Sensaphone 2000.</p>
 
   <p>Second paragraph. Inline <code>code</code> looks like this.</p>
 
@@ -299,6 +312,52 @@ const x = 1;</code></pre>
 <div class="archive-link">
   <a href="writing.html">all writing &rarr;</a>
 </div>
+
+<script>
+(function () {
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  let canvas, ctx;
+
+  function draw() {
+    canvas.width = window.innerWidth;
+    canvas.height = document.documentElement.scrollHeight;
+    const n = Math.floor((canvas.width * canvas.height) / 4000);
+    for (let i = 0; i < n; i++) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const r = Math.random() * 0.8 + 0.2;
+      const a = Math.random() * 0.5 + 0.1;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${a})`;
+      ctx.fill();
+    }
+  }
+
+  function mount() {
+    if (canvas) return;
+    canvas = document.createElement('canvas');
+    Object.assign(canvas.style, {
+      position: 'fixed', inset: '0',
+      width: '100%', height: '100%',
+      pointerEvents: 'none', zIndex: '-1'
+    });
+    ctx = canvas.getContext('2d');
+    document.body.prepend(canvas);
+    draw();
+    window.addEventListener('resize', draw);
+  }
+
+  function unmount() {
+    if (!canvas) return;
+    canvas.remove(); canvas = null; ctx = null;
+    window.removeEventListener('resize', draw);
+  }
+
+  if (mq.matches) mount();
+  mq.addEventListener('change', e => e.matches ? mount() : unmount());
+})();
+</script>
 
 </body>
 </html>
