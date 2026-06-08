@@ -20,8 +20,7 @@
     --serif: 'Source Serif 4', Georgia, serif;
   }
 
-  @media (prefers-color-scheme: dark) {
-  :root {
+  .dark {
     --fg: #e8e8e6;
     --fg2: #b0b0aa;
     --fg3: #606060;
@@ -30,8 +29,22 @@
     --rule-light: #1e1e1c;
   }
 
-  article code, article pre { background: #1a1a18; }
-}
+  .dark article code, .dark article pre { background: #1a1a18; }
+
+  #theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg3);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    letter-spacing: 0.5px;
+  }
+  #theme-toggle:hover { color: var(--fg); }
 
   html { font-size: 13px; }
 
@@ -230,6 +243,7 @@
 </style>
 </head>
 <body>
+<button id="theme-toggle">light</button>
 
 <div class="top">
   <h1>Isaac Morris-Perrott</h1>
@@ -315,12 +329,13 @@ const x = 1;</code></pre>
 
 <script>
 (function () {
-  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
   let canvas, ctx;
 
   function draw() {
     canvas.width = window.innerWidth;
-    canvas.height = document.documentElement.scrollHeight;
+    canvas.height = window.innerHeight;
     const n = Math.floor((canvas.width * canvas.height) / 4000);
     for (let i = 0; i < n; i++) {
       const x = Math.random() * canvas.width;
@@ -334,7 +349,7 @@ const x = 1;</code></pre>
     }
   }
 
-  function mount() {
+  function mountStars() {
     if (canvas) return;
     canvas = document.createElement('canvas');
     Object.assign(canvas.style, {
@@ -348,14 +363,25 @@ const x = 1;</code></pre>
     window.addEventListener('resize', draw);
   }
 
-  function unmount() {
+  function unmountStars() {
     if (!canvas) return;
     canvas.remove(); canvas = null; ctx = null;
     window.removeEventListener('resize', draw);
   }
 
-  if (mq.matches) mount();
-  mq.addEventListener('change', e => e.matches ? mount() : unmount());
+  function setDark(on) {
+    html.classList.toggle('dark', on);
+    btn.textContent = on ? 'light' : 'dark';
+    on ? mountStars() : unmountStars();
+    localStorage.setItem('theme', on ? 'dark' : 'light');
+  }
+
+  // init: saved preference, else OS
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setDark(saved ? saved === 'dark' : prefersDark);
+
+  btn.addEventListener('click', () => setDark(!html.classList.contains('dark')));
 })();
 </script>
 
