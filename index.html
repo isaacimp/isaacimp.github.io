@@ -223,6 +223,38 @@
     line-height: 1.6;
   }
 
+  /* ── POTATO FIGURE ── */
+  .potato-fig{
+    max-width:380px;
+    margin:32px auto;
+    color:#1B1B18;
+  }
+  .potato-fig svg{ width:100%; display:block; cursor:pointer; }
+  .potato-fig .wiggle{
+    transform-origin:35px -45px;
+    transition:transform 0.4s ease;
+  }
+  .potato-fig svg:hover .wiggle{ transform:rotate(-8deg); }
+  .potato-fig figcaption{ padding:14px 4px 0; }
+  .potato-fig figcaption p{
+    display:flex;
+    gap:10px;
+    font-size:15px;
+    line-height:1.5;
+    margin:0 0 10px;
+  }
+  .potato-fig figcaption strong{
+    flex:none;
+    width:19px; height:19px;
+    border-radius:50%;
+    background:#1B1B18;
+    color:#F2EDE1;
+    font-size:12px;
+    font-weight:600;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:2px;
+  }
+
   .archive-link {
     font-family: var(--mono);
     font-size: 11.5px;
@@ -295,8 +327,52 @@
 
   <p></p>
 
+  <figure class="potato-fig">
+    <svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A friendly line illustration of a potato with a small sprout growing from one eye.">
+      <defs>
+        <path id="blob" d="M -140,10 C -145,-35 -120,-70 -75,-78 C -40,-84 -5,-70 20,-75 C 60,-82 100,-65 118,-30 C 132,-5 128,25 105,45 C 122,60 130,80 110,95 C 85,112 45,108 15,98 C -20,110 -65,108 -95,88 C -130,65 -148,40 -140,10 Z"/>
+        <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+        <clipPath id="clip"><use xlink:href="#blob"/></clipPath>
+      </defs>
+
+      <g transform="translate(180,135)">
+        <!-- cast shadow -->
+        <use xlink:href="#blob" transform="translate(10,14) scale(1.02)" fill="#1B1B18" opacity="0.18"/>
+        <!-- base fill -->
+        <use xlink:href="#blob" fill="#EAE4D6" stroke="#1B1B18" stroke-width="2.5"/>
+        <!-- soft light/shadow for a touch of dimension, clipped to the silhouette -->
+        <g clip-path="url(#clip)">
+          <ellipse cx="-55" cy="-40" rx="62" ry="44" fill="#FFFFFF" opacity="0.7" filter="url(#soft)"/>
+          <ellipse cx="80" cy="55" rx="55" ry="40" fill="#1B1B18" opacity="0.08" filter="url(#soft)"/>
+        </g>
+        <!-- redraw outline on top so the clip doesn't soften it -->
+        <use xlink:href="#blob" fill="none" stroke="#1B1B18" stroke-width="2.5"/>
+
+        <!-- two plain eyes -->
+        <g fill="#1B1B18">
+          <ellipse cx="-30" cy="20" rx="3.5" ry="2.5" transform="rotate(-15 -30 20)"/>
+          <ellipse cx="60" cy="40" rx="3.5" ry="2.5" transform="rotate(40 60 40)"/>
+        </g>
+
+        <!-- the sprouting eye: hover/tap the figure to give it a little wiggle -->
+        <g class="wiggle">
+          <ellipse cx="35" cy="-45" rx="3.5" ry="2.5" fill="#1B1B18" transform="rotate(10 35 -45)"/>
+          <path d="M35,-47 C42,-65 50,-72 70,-78" fill="none" stroke="#1B1B18" stroke-width="2.2" stroke-linecap="round"/>
+          <ellipse cx="74" cy="-82" rx="10" ry="5.5" fill="#EAE4D6" stroke="#1B1B18" stroke-width="1.5" transform="rotate(-20 74 -82)"/>
+          <ellipse cx="60" cy="-86" rx="8" ry="4.5" fill="#EAE4D6" stroke="#1B1B18" stroke-width="1.5" transform="rotate(-50 60 -86)"/>
+        </g>
+      </g>
+    </svg>
+
+    <figcaption>
+      <p><strong>1</strong>This eye just woke up — and it's already making its own pesticide. Glycoalkaloids spike right around sprouts and any green skin.</p>
+      <p><strong>2</strong>No drying, no long storage, no mould — growing underground keeps potatoes mostly free of the aflatoxins found in grain, nuts, and coffee.</p>
+      <p><strong>3</strong>Most of the good stuff — vitamin C, potassium, fibre — sits just under the skin. The part most people peel off and bin.</p>
+    </figcaption>
+  </figure>
+
   <p>
-    
+
   </p>
 <!--
   <p>Second paragraph. Inline <code>code</code> looks like this.</p>
