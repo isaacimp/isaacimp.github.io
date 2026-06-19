@@ -271,6 +271,14 @@
     .row { grid-template-columns: 1fr; gap: 2px; }
     article h2 { font-size: 19px; }
     article p { font-size: 15px; }
+    .nutrient-row {
+      grid-template-columns: 100px 1fr 50px 60px;
+      gap: 8px;
+      font-size: 11px;
+    }
+    .nutrient-label {
+      font-size: 11px;
+    }
   }
 </style>
 </head>
@@ -325,7 +333,7 @@
   <div class="date">Jun 2026</div>
   <h2>Potato</h2>
 
-  <p>I wish to write about the wonderful Potato. No matter what I do I cannot escape the Potato. Everything I learn about them makes me more and more fascinated with how this one vegetable can provide so much nutrition with so little downsides. I have yet to find a perfect food that meets my criteria and I don’t think there is such thing as a perfect naturally occurring food but the Potato is very high up on the list. </p>
+  <p>No matter what I do I cannot escape the Potato. Everything I learn about them makes me more and more fascinated with how this one vegetable can provide so much nutrition with so little downsides. I have yet to find a perfect food and I don’t think there is such thing as a perfect naturally occurring food but the Potato is very high up on the list. </p>
 
   <figure class="potato-fig">
     <svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A friendly line illustration of a potato with a small sprout growing from one eye.">
@@ -373,7 +381,7 @@
   </figure>
 
   <p>
-First of all, the nutritional content of a good potato is outstanding. The potato provides meaningful amounts of a remarkably wide range of nutrients. It contains all essential amino acids, excellent vitamin C and B6, substantial potassium and other minerals. While potatoes don't contain every vitamin (they're missing B12, A, D, and E like all plant foods), they come closer to nutritional completeness than nearly any other single staple food.
+First of all, the nutritional content of a good potato is very impressive. They are an almost complete food nutritionally, containing all essential amino acids, excellent vitamin C and B6, and potassium as well as other minerals. While potatoes don't contain every vitamin (they're missing B12, A, D, and E), they come closer to nutritional completeness than nearly any other <em>single</em> food.
 </p>
 <style>
   /* ====== Enhanced nutrient chart system ====== */
@@ -440,6 +448,230 @@ First of all, the nutritional content of a good potato is outstanding. The potat
     margin-bottom:20px;
     line-height:1.6;
     text-align:center;
+  }
+
+  /* Completeness Chart Styles */
+  .completeness-chart {
+    max-width: 680px;
+    margin: 32px auto;
+  }
+  .nutrient-category {
+    margin-bottom: 36px;
+  }
+  .category-header {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--fg3);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .nutrient-row {
+    display: grid;
+    grid-template-columns: 180px 120px 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 7px 0;
+    font-size: 12px;
+    border-bottom: 1px solid var(--rule-light);
+  }
+  .nutrient-row:last-child {
+    border-bottom: none;
+  }
+  .nutrient-header {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--fg3);
+    font-weight: 600;
+    padding: 4px 0 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .nutrient-label {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .nutrient-header .nutrient-label {
+    font-weight: 600;
+  }
+  .nutrient-total {
+    text-align: right;
+    color: var(--fg2);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .nutrient-structure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .molecular-formula {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--fg2);
+    font-weight: 500;
+    letter-spacing: -0.3px;
+  }
+  .molecular-formula sub {
+    font-size: 0.75em;
+    vertical-align: sub;
+  }
+  .element-symbol {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--fg);
+    color: var(--bg);
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--mono);
+  }
+  .no-structure {
+    color: var(--fg3);
+    font-size: 11px;
+  }
+
+  /* Nutrient Heatmap Styles - GitHub style */
+  .heatmap-container {
+    max-width: 680px;
+    margin: 24px auto;
+  }
+  .heatmap-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--fg2);
+    margin-bottom: 12px;
+  }
+  .nutrient-heatmap {
+    display: grid;
+    grid-template-columns: repeat(13, 12px);
+    gap: 3px;
+    margin-bottom: 12px;
+  }
+  .heatmap-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    position: relative;
+  }
+  .heatmap-cell:hover {
+    transform: scale(1.3);
+    outline: 1px solid var(--fg);
+    z-index: 10;
+  }
+  .heatmap-tooltip {
+    position: fixed;
+    background: var(--fg);
+    color: var(--bg);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: none;
+  }
+  .heatmap-tooltip.visible {
+    display: block;
+  }
+  /* Intensity levels - 5 levels like GitHub */
+  .heatmap-cell[data-level="0"] {
+    background: #E8E6E0;
+  }
+  .heatmap-cell[data-level="1"] {
+    background: #C4C0B4;
+  }
+  .heatmap-cell[data-level="2"] {
+    background: #9B9689;
+  }
+  .heatmap-cell[data-level="3"] {
+    background: #6B6760;
+  }
+  .heatmap-cell[data-level="4"] {
+    background: #1B1B18;
+  }
+  .dark .heatmap-cell[data-level="0"] {
+    background: #1e1e1c;
+  }
+  .dark .heatmap-cell[data-level="1"] {
+    background: #3d3d3a;
+  }
+  .dark .heatmap-cell[data-level="2"] {
+    background: #6b6b66;
+  }
+  .dark .heatmap-cell[data-level="3"] {
+    background: #a8a8a0;
+  }
+  .dark .heatmap-cell[data-level="4"] {
+    background: #E8E6E0;
+  }
+  .heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    color: var(--fg3);
+    margin-top: 12px;
+  }
+  .legend-scale {
+    display: flex;
+    gap: 3px;
+  }
+  .legend-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  .legend-cell[data-level="0"] {
+    background: #E8E6E0;
+  }
+  .legend-cell[data-level="1"] {
+    background: #C4C0B4;
+  }
+  .legend-cell[data-level="2"] {
+    background: #9B9689;
+  }
+  .legend-cell[data-level="3"] {
+    background: #6B6760;
+  }
+  .legend-cell[data-level="4"] {
+    background: #1B1B18;
+  }
+  .dark .legend-cell[data-level="0"] {
+    background: #1e1e1c;
+  }
+  .dark .legend-cell[data-level="1"] {
+    background: #3d3d3a;
+  }
+  .dark .legend-cell[data-level="2"] {
+    background: #6b6b66;
+  }
+  .dark .legend-cell[data-level="3"] {
+    background: #a8a8a0;
+  }
+  .dark .legend-cell[data-level="4"] {
+    background: #E8E6E0;
+  }
+  .heatmap-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 680px;
+    margin: 24px auto;
+  }
+  @media (max-width: 600px) {
+    .heatmap-comparison {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* Tabs for different nutrient categories */
@@ -528,449 +760,106 @@ First of all, the nutritional content of a good potato is outstanding. The potat
 </style>
 
 <div class="nutrient-chart">
-  <p class="eyebrow">Nutritional Profile — One medium potato (200g with skin)</p>
+  <p class="eyebrow">Nutritional Profile — 500g Potato</p>
 
-  <p class="section-intro">A single medium potato provides <strong>over 30 different nutrients</strong> which includes all 9 essential amino acids, excellent vitamin C and B6, and 10+ essential minerals.</p>
+  <!--<p class="section-intro">500g of potato provides <strong>over 40 different nutrients</strong>.</p>-->
 
-  <div class="completeness-grid">
-    <div class="completeness-item">
-      <span class="label">Vitamin C</span>
-      <span class="value">39<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:44%"></div></div>
+  <!-- Completeness chart - shows all nutrients -->
+  <div id="potato-completeness"></div>
+
+  <p class="note">Source: USDA FoodData Central (FDC ID 170026). Values for 500g potato, raw with skin (approximately 385 calories).</p>
+</div>
+
+<!-- Load chart library and data -->
+<script src="charts.js"></script>
+<script src="nutrition-data.js"></script>
+<script>
+  // Generate the comprehensive completeness chart
+  ChartLib.createCompletenessChart('potato-completeness', nutritionData.allNutrients);
+</script>
+
+<!-- Nutrient Completeness Heatmap Comparison -->
+<div class="nutrient-chart">
+  <p class="eyebrow">Nutritional Completeness Comparison — 2500 Calories</p>
+
+  <p class="section-intro">Each square represents one essential nutrient. Darker = more complete. See how potato compares to rice as a single-food staple.</p>
+
+  <div class="heatmap-comparison">
+    <div class="heatmap-container">
+      <div class="heatmap-label">Pure Potato Diet (2500 cal)</div>
+      <div id="potato-heatmap"></div>
     </div>
-    <div class="completeness-item">
-      <span class="label">Vitamin B6</span>
-      <span class="value">0.6<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:35%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Potassium</span>
-      <span class="value">850<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:25%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Copper</span>
-      <span class="value">0.22<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:24%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Fiber</span>
-      <span class="value">4.6<span class="unit">g</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:18%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Niacin (B3)</span>
-      <span class="value">2.2<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:14%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Magnesium</span>
-      <span class="value">46<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:12%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Iron</span>
-      <span class="value">1.6<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:9%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Protein</span>
-      <span class="value">4.0<span class="unit">g</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:8%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Folate (B9)</span>
-      <span class="value">30<span class="unit">µg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:8%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Thiamin (B1)</span>
-      <span class="value">0.16<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:13%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Manganese</span>
-      <span class="value">0.3<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:13%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Phosphorus</span>
-      <span class="value">114<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:16%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Pantothenic (B5)</span>
-      <span class="value">0.6<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:12%"></div></div>
-    </div>
-    <div class="completeness-item">
-      <span class="label">Choline</span>
-      <span class="value">24<span class="unit">mg</span></span>
-      <div class="rda-bar"><div class="rda-fill" style="width:4%"></div></div>
+
+    <div class="heatmap-container">
+      <div class="heatmap-label">Pure Rice Diet (2500 cal)</div>
+      <div id="rice-heatmap"></div>
     </div>
   </div>
 
-  <p class="section-intro"></p>
+  <p class="note">Each cell represents one of 40+ essential nutrients. Brightness shows % of RDA met (0-25% = lightest, 75%+ = darkest). Notice: rice has MANY light/empty squares (missing Vitamin C, A, D, E, K, B12 and deficient in most minerals). Potato has only 3 missing nutrients (B12, A, D) but provides substantial amounts of nearly everything else—demonstrating true nutritional completeness from a single food.</p>
+</div>
 
-  <div class="nutrient-tabs">
-    <button class="tab-btn active" data-tab="macros">Macros</button>
-    <button class="tab-btn" data-tab="minerals">Minerals</button>
-    <button class="tab-btn" data-tab="vitamins">Vitamins</button>
-    <button class="tab-btn" data-tab="amino">Amino Acids</button>
-  </div>
+<!-- Realistic Diet Comparison -->
+<div class="nutrient-chart">
+  <p class="eyebrow">Realistic Minimal Diets — 2500 Calories</p>
 
-  <!-- MACROS TAB -->
-  <div class="tab-content active" id="macros">
-    <div class="group">
-      <h4>Calories <span class="rda">(kcal)</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">143</span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:70%"></div></div><span class="val">149</span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:60%"></div></div><span class="val">127</span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:42%"></div></div><span class="val">89</span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:36%"></div></div><span class="val">77</span></div>
+  <p class="section-intro">Adding just 1.2L low-fat milk + sunlight makes both more realistic. See how salted potato becomes nearly complete while rice still has major gaps.</p>
+
+  <div class="heatmap-comparison">
+    <div class="heatmap-container">
+      <div class="heatmap-label">Salted Potato + 1.2L Milk + Sun</div>
+      <div id="potato-milk-heatmap"></div>
     </div>
 
-    <div class="group">
-      <h4>Carbohydrates <span class="rda">(g)</span></h4>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">27.7</span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:94%"></div></div><span class="val">26.1</span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:82%"></div></div><span class="val">22.8</span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:63%"></div></div><span class="val">17.5</span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:4%"></div></div><span class="val">1.1</span></div>
-    </div>
-
-    <div class="group">
-      <h4>Fiber <span class="rda">(g) — RDA: 25-30g</span></h4>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">2.6 <span class="percent">10%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:88%"></div></div><span class="val">2.3 <span class="percent">9%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:69%"></div></div><span class="val">1.8 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:15%"></div></div><span class="val">0.4 <span class="percent">2%</span></span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Protein <span class="rda">(g)</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">12.6</span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:46%"></div></div><span class="val">5.8</span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:21%"></div></div><span class="val">2.7</span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:16%"></div></div><span class="val">2.0</span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:9%"></div></div><span class="val">1.1</span></div>
-    </div>
-
-    <div class="group">
-      <h4>Fat <span class="rda">(g)</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">9.5</span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:9%"></div></div><span class="val">0.9</span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:3%"></div></div><span class="val">0.3</span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:3%"></div></div><span class="val">0.3</span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.1</span></div>
+    <div class="heatmap-container">
+      <div class="heatmap-label">Rice + 1.2L Milk + Sun</div>
+      <div id="rice-milk-heatmap"></div>
     </div>
   </div>
 
-  <!-- MINERALS TAB -->
-  <div class="tab-content" id="minerals">
-    <div class="group">
-      <h4>Potassium <span class="rda">(mg) — RDA: 3,400mg</span></h4>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">425 <span class="percent">12%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:84%"></div></div><span class="val">358 <span class="percent">11%</span></span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:33%"></div></div><span class="val">138 <span class="percent">4%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:8%"></div></div><span class="val">35 <span class="percent">1%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:6%"></div></div><span class="val">24 <span class="percent">1%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Magnesium <span class="rda">(mg) — RDA: 400mg</span></h4>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">27 <span class="percent">7%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:85%"></div></div><span class="val">23 <span class="percent">6%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:67%"></div></div><span class="val">18 <span class="percent">5%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:44%"></div></div><span class="val">12 <span class="percent">3%</span></span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:44%"></div></div><span class="val">12 <span class="percent">3%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Phosphorus <span class="rda">(mg) — RDA: 700mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">198 <span class="percent">28%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:34%"></div></div><span class="val">68 <span class="percent">10%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:29%"></div></div><span class="val">57 <span class="percent">8%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:22%"></div></div><span class="val">43 <span class="percent">6%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:11%"></div></div><span class="val">22 <span class="percent">3%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Iron <span class="rda">(mg) — RDA: 18mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1.8 <span class="percent">10%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:72%"></div></div><span class="val">1.3 <span class="percent">7%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:44%"></div></div><span class="val">0.8 <span class="percent">4%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:17%"></div></div><span class="val">0.3 <span class="percent">2%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:11%"></div></div><span class="val">0.2 <span class="percent">1%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Zinc <span class="rda">(mg) — RDA: 11mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1.3 <span class="percent">12%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:38%"></div></div><span class="val">0.5 <span class="percent">5%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:38%"></div></div><span class="val">0.5 <span class="percent">5%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:23%"></div></div><span class="val">0.3 <span class="percent">3%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:15%"></div></div><span class="val">0.2 <span class="percent">2%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Copper <span class="rda">(mg) — RDA: 0.9mg</span></h4>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">0.11 <span class="percent">12%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:73%"></div></div><span class="val">0.08 <span class="percent">9%</span></span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:64%"></div></div><span class="val">0.07 <span class="percent">8%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:55%"></div></div><span class="val">0.06 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:45%"></div></div><span class="val">0.05 <span class="percent">6%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Selenium <span class="rda">(µg) — RDA: 55µg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">30.8 <span class="percent">56%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:43%"></div></div><span class="val">13.2 <span class="percent">24%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:25%"></div></div><span class="val">7.5 <span class="percent">14%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:2%"></div></div><span class="val">1.0 <span class="percent">2%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.4 <span class="percent">1%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Manganese <span class="rda">(mg) — RDA: 2.3mg</span></h4>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">0.5 <span class="percent">22%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:60%"></div></div><span class="val">0.3 <span class="percent">13%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:60%"></div></div><span class="val">0.3 <span class="percent">13%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:30%"></div></div><span class="val">0.15 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:12%"></div></div><span class="val">0.03 <span class="percent">1%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Calcium <span class="rda">(mg) — RDA: 1,000mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">56 <span class="percent">6%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:13%"></div></div><span class="val">7 <span class="percent">1%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:21%"></div></div><span class="val">12 <span class="percent">1%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:18%"></div></div><span class="val">10 <span class="percent">1%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:9%"></div></div><span class="val">5 <span class="percent">1%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Sodium <span class="rda">(mg) — RDA: 2,300mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">142 <span class="percent">6%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">1 <span class="percent">0%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:4%"></div></div><span class="val">6 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">1 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">1 <span class="percent">0%</span></span></div>
-    </div>
-  </div>
-
-  <!-- VITAMINS TAB -->
-  <div class="tab-content" id="vitamins">
-    <div class="group">
-      <h4>Vitamin C <span class="rda">(mg) — RDA: 90mg</span></h4>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">19.7 <span class="percent">22%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:44%"></div></div><span class="val">8.7 <span class="percent">10%</span></span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Vitamin B6 <span class="rda">(mg) — RDA: 1.7mg</span></h4>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">0.37 <span class="percent">22%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:81%"></div></div><span class="val">0.30 <span class="percent">18%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:38%"></div></div><span class="val">0.14 <span class="percent">8%</span></span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:30%"></div></div><span class="val">0.12 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:14%"></div></div><span class="val">0.05 <span class="percent">3%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Folate <span class="rda">(µg) — RDA: 400µg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">44 <span class="percent">11%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:45%"></div></div><span class="val">20 <span class="percent">5%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:41%"></div></div><span class="val">18 <span class="percent">5%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:34%"></div></div><span class="val">15 <span class="percent">4%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:7%"></div></div><span class="val">3 <span class="percent">1%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Thiamin (B1) <span class="rda">(mg) — RDA: 1.2mg</span></h4>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">0.08 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:75%"></div></div><span class="val">0.06 <span class="percent">5%</span></span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:50%"></div></div><span class="val">0.04 <span class="percent">3%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:38%"></div></div><span class="val">0.03 <span class="percent">3%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:25%"></div></div><span class="val">0.02 <span class="percent">2%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Niacin (B3) <span class="rda">(mg) — RDA: 16mg</span></h4>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1.3 <span class="percent">8%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:85%"></div></div><span class="val">1.1 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:54%"></div></div><span class="val">0.7 <span class="percent">4%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:31%"></div></div><span class="val">0.4 <span class="percent">3%</span></span></div>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:6%"></div></div><span class="val">0.08 <span class="percent">1%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Riboflavin (B2) <span class="rda">(mg) — RDA: 1.3mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">0.46 <span class="percent">35%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:15%"></div></div><span class="val">0.07 <span class="percent">5%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:9%"></div></div><span class="val">0.04 <span class="percent">3%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:7%"></div></div><span class="val">0.03 <span class="percent">2%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:2%"></div></div><span class="val">0.01 <span class="percent">1%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Vitamin B12 <span class="rda">(µg) — RDA: 2.4µg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1.1 <span class="percent">46%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Vitamin A <span class="rda">(µg RAE) — RDA: 900µg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">160 <span class="percent">18%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:2%"></div></div><span class="val">3 <span class="percent">0%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0 <span class="percent">0%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Vitamin D <span class="rda">(µg) — RDA: 20µg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">2.0 <span class="percent">10%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Vitamin E <span class="rda">(mg) — RDA: 15mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1.0 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:10%"></div></div><span class="val">0.1 <span class="percent">1%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:5%"></div></div><span class="val">0.05 <span class="percent">0%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.01 <span class="percent">0%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">0.0 <span class="percent">0%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Pantothenic Acid (B5) <span class="rda">(mg) — RDA: 5mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1.4 <span class="percent">28%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:21%"></div></div><span class="val">0.3 <span class="percent">6%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:23%"></div></div><span class="val">0.3 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:9%"></div></div><span class="val">0.1 <span class="percent">2%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:7%"></div></div><span class="val">0.04 <span class="percent">1%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Choline <span class="rda">(mg) — RDA: 550mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">294 <span class="percent">53%</span></span></div>
-      <div class="row"><span class="name">Pasta</span><div class="track"><div class="fill" style="width:2%"></div></div><span class="val">6.0 <span class="percent">1%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:4%"></div></div><span class="val">12.1 <span class="percent">2%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:2%"></div></div><span class="val">9.8 <span class="percent">2%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:1%"></div></div><span class="val">2.1 <span class="percent">0%</span></span></div>
-    </div>
-  </div>
-
-  <!-- AMINO ACIDS TAB -->
-  <div class="tab-content" id="amino">
-    <p class="section-intro" style="margin-bottom:18px;">Potato protein contains all 9 essential amino acids. While lower in total protein than eggs, potatoes exceed recommended levels for most essential amino acids except leucine (its limiting amino acid at 65% of ideal).</p>
-
-    <div class="group">
-      <h4>Leucine <span class="rda">(mg) — RDA: 2730mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1075 <span class="percent">39%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:20%"></div></div><span class="val">214 <span class="percent">8%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:12%"></div></div><span class="val">130 <span class="percent">5%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:7%"></div></div><span class="val">80 <span class="percent">3%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Lysine <span class="rda">(mg) — RDA: 2100mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">820 <span class="percent">39%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:11%"></div></div><span class="val">92 <span class="percent">4%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:15%"></div></div><span class="val">125 <span class="percent">6%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:6%"></div></div><span class="val">52 <span class="percent">2%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Methionine + Cysteine <span class="rda">(mg) — RDA: 1050mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">690 <span class="percent">66%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:18%"></div></div><span class="val">122 <span class="percent">12%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:4%"></div></div><span class="val">30 <span class="percent">3%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:5%"></div></div><span class="val">32 <span class="percent">3%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Phenylalanine + Tyrosine <span class="rda">(mg) — RDA: 1750mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">1135 <span class="percent">65%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:18%"></div></div><span class="val">207 <span class="percent">12%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:14%"></div></div><span class="val">160 <span class="percent">9%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:7%"></div></div><span class="val">83 <span class="percent">5%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Threonine <span class="rda">(mg) — RDA: 1050mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">570 <span class="percent">54%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:17%"></div></div><span class="val">95 <span class="percent">9%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:15%"></div></div><span class="val">82 <span class="percent">8%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:5%"></div></div><span class="val">31 <span class="percent">3%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Tryptophan <span class="rda">(mg) — RDA: 280mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">155 <span class="percent">55%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:22%"></div></div><span class="val">34 <span class="percent">12%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:12%"></div></div><span class="val">18 <span class="percent">6%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:8%"></div></div><span class="val">12 <span class="percent">4%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Valine <span class="rda">(mg) — RDA: 1820mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">830 <span class="percent">46%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:18%"></div></div><span class="val">148 <span class="percent">8%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:14%"></div></div><span class="val">120 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:6%"></div></div><span class="val">52 <span class="percent">3%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Histidine <span class="rda">(mg) — RDA: 700mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">300 <span class="percent">43%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:19%"></div></div><span class="val">56 <span class="percent">8%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:14%"></div></div><span class="val">42 <span class="percent">6%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:11%"></div></div><span class="val">33 <span class="percent">5%</span></span></div>
-    </div>
-
-    <div class="group">
-      <h4>Isoleucine <span class="rda">(mg) — RDA: 1400mg</span></h4>
-      <div class="row"><span class="name">Eggs</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">670 <span class="percent">48%</span></span></div>
-      <div class="row"><span class="name">Rice</span><div class="track"><div class="fill" style="width:17%"></div></div><span class="val">116 <span class="percent">8%</span></span></div>
-      <div class="row potato"><span class="name">Potato</span><div class="track"><div class="fill" style="width:14%"></div></div><span class="val">92 <span class="percent">7%</span></span></div>
-      <div class="row"><span class="name">Banana</span><div class="track"><div class="fill" style="width:4%"></div></div><span class="val">30 <span class="percent">2%</span></span></div>
-    </div>
-
-    <p class="note" style="margin-top:24px;">Potato's amino acid score: Essential amino acids make up 48% of total protein (similar to egg at 50%). Potatoes meet or exceed WHO recommended levels for most essential amino acids. Only leucine falls slightly short at 65% of ideal ratio.</p>
-  </div>
-
-  <p class="note">Source: USDA FoodData Central. Values per 100g. Potato: raw with skin (FDC ID 170026); Banana: raw (FDC ID 173944); Eggs: whole, raw (FDC ID 171287); Rice: white, cooked (FDC ID 168878); Pasta: enriched, cooked (FDC ID 169740). RDA values based on adult recommendations. Vitamin C degrades with cooking; potatoes retain 50-80% when boiled with skin.</p>
+  <p class="note">Both diets: 2000 cal base food + 500 cal low-fat milk (1.2L) + 30 min daily sun exposure. Salted potato + milk + sun = only 1 minor deficiency (Vitamin A at ~67% RDA). Rice + milk + sun = still missing Vitamin C, E, K entirely and deficient in potassium, magnesium, and other minerals. <strong>To make potato diet 100% complete:</strong> Add ~50g cheese (fills Vitamin A, boosts K) + small amount of greens broth boiled long to remove antinutrients (fills Vitamin K). This creates a nutritionally complete diet from just 4-5 whole foods.</p>
 </div>
 
 <script>
-// Tab switching for nutrient charts
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const targetTab = btn.dataset.tab;
+  // Generate heatmaps for single-food comparison
+  ChartLib.createNutrientHeatmap('potato-heatmap', nutritionData.allNutrients, 2500, 385);
+  ChartLib.createNutrientHeatmap('rice-heatmap', riceData, 2500, 2500); // Rice data already at 2500 cal
 
-    // Update button states
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  // Generate realistic diet heatmaps with milk + sunlight
+  // Potato: 2000 cal potato (from 385 cal base) + 500 cal milk + sunlight
+  const potatoMilkNutrients = ChartLib._combineNutrients(nutritionData.allNutrients, milkData, 2000, 385, true);
+  // Rice: 2000 cal rice (from 2500 cal base) + 500 cal milk + sunlight
+  const riceMilkNutrients = ChartLib._combineNutrients(riceData, milkData, 2000, 2500, true);
 
-    // Update content visibility
-    document.querySelectorAll('.tab-content').forEach(content => {
-      content.classList.remove('active');
+  ChartLib.createNutrientHeatmap('potato-milk-heatmap', potatoMilkNutrients, 2500, 2500);
+  ChartLib.createNutrientHeatmap('rice-milk-heatmap', riceMilkNutrients, 2500, 2500);
+
+  // Add tooltip functionality
+  const tooltip = document.createElement('div');
+  tooltip.className = 'heatmap-tooltip';
+  document.body.appendChild(tooltip);
+
+  document.querySelectorAll('.heatmap-cell').forEach(cell => {
+    cell.addEventListener('mouseenter', (e) => {
+      const nutrient = cell.dataset.nutrient;
+      const percent = cell.dataset.percent;
+      const value = cell.dataset.value;
+      const unit = cell.dataset.unit;
+      tooltip.textContent = `${nutrient}: ${value}${unit} (${percent}%)`;
+      tooltip.classList.add('visible');
     });
-    document.getElementById(targetTab).classList.add('active');
+
+    cell.addEventListener('mousemove', (e) => {
+      tooltip.style.left = (e.clientX + 10) + 'px';
+      tooltip.style.top = (e.clientY + 10) + 'px';
+    });
+
+    cell.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('visible');
+    });
   });
-});
 </script>
+
 
 </body>
 </html>
