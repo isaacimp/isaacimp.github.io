@@ -307,6 +307,94 @@
     transform:scale(1.1);
   }
 
+  /* ---------- mobile extras ---------- */
+
+  .mobile-only{display:none;}
+  @media (max-width:1400px){ .mobile-only{display:inline;} }
+
+  .mobile-extras{
+    display:none;
+    padding:24px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:24px;
+    background:color-mix(in srgb, var(--ink) 2%, transparent);
+  }
+
+  .mobile-extras.active{display:block;}
+
+  .mobile-now-info{
+    padding:0 0 24px;
+  }
+
+  .mobile-now-info h3{
+    font-size:19px;
+    font-weight:600;
+    margin-bottom:12px;
+  }
+
+  .mobile-now-info p{
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:10px;
+  }
+
+  .mobile-time{
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    font-size:15px;
+    font-family:monospace;
+  }
+
+  .time-label{
+    display:inline-block;
+    margin-right:8px;
+    color:var(--ink-soft);
+  }
+
+  .mobile-gallery{
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+
+  .mobile-gallery h3{
+    font-size:19px;
+    font-weight:600;
+    margin-bottom:16px;
+  }
+
+  .mobile-gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+  }
+
+  .mobile-gallery-img{
+    width:100%;
+    height:auto;
+    display:block;
+    border:1px solid var(--line);
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .mobile-gallery-img:hover{
+    transform:scale(1.02);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  @media (prefers-color-scheme: dark){
+    .mobile-gallery-img{box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+    .mobile-gallery-img:hover{box-shadow:0 4px 12px rgba(0,0,0,0.5);}
+  }
+
+  @media (min-width:1401px){
+    .mobile-extras{display:none !important;}
+    #mobile-extras-toggle{display:none !important;}
+  }
+
 </style>
 </head>
 <body>
@@ -331,9 +419,36 @@
       <a href="#about">about</a> ·
       <a href="#projects">projects</a> ·
       <a href="#articles">articles</a> ·
-      <a href="#log">log</a>
+      <a href="#log">log</a> ·
+      <a href="#" id="mobile-extras-toggle" class="mobile-only">more</a>
     </p>
   </header>
+
+  <!-- Mobile extras section (now info + images) -->
+  <div id="mobile-extras" class="mobile-extras mobile-only">
+    <div class="mobile-now-info">
+      <h3>Now</h3>
+      <p>Reading: <em>The Baroque Cycle</em> by Neal Stephenson, <em>The Moon Is a Harsh Mistress</em> by Robert A. Heinlein</p>
+      <p>Working: Karl Popper's epistemology</p>
+      <p>Building: at1a v0.3 health tracker</p>
+      <div class="mobile-time">
+        <span class="time-label">Local Time:</span>
+        <span id="mobile-local-time">—</span>
+      </div>
+    </div>
+
+    <div class="mobile-gallery">
+      <h3>Images</h3>
+      <div class="mobile-gallery-grid">
+        <img src="wallhaven-39l9w9.jpg" alt="" class="mobile-gallery-img">
+        <img src="20250219_122419.jpg" alt="" class="mobile-gallery-img">
+        <img src="Newton-WilliamBlake.jpg" alt="" class="mobile-gallery-img">
+        <img src="20260217_173157.jpg" alt="" class="mobile-gallery-img">
+        <img src="HKrWNULXoAAKi7c.jpeg" alt="" class="mobile-gallery-img">
+        <img src="C15_Objectif p56-bc color.png" alt="" class="mobile-gallery-img">
+      </div>
+    </div>
+  </div>
 
   <section id="about">
     <h2>About</h2>
@@ -483,6 +598,12 @@
   const currentSectionSpan = document.getElementById('current-section');
   const localTimeSpan = document.getElementById('local-time');
 
+  // Mobile extras functionality
+  const mobileExtrasToggle = document.getElementById('mobile-extras-toggle');
+  const mobileExtras = document.getElementById('mobile-extras');
+  const mobileLocalTimeSpan = document.getElementById('mobile-local-time');
+  const mobileGalleryImages = document.querySelectorAll('.mobile-gallery-img');
+
   // Hide galleries / show info widgets when scrolling
   let lastScroll = 0;
 
@@ -525,6 +646,29 @@
     lastScroll = currentScroll;
   });
 
+  // Mobile extras toggle
+  if (mobileExtrasToggle) {
+    mobileExtrasToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      mobileExtras.classList.toggle('active');
+      // Change toggle text based on state
+      if (mobileExtras.classList.contains('active')) {
+        mobileExtrasToggle.textContent = 'less';
+      } else {
+        mobileExtrasToggle.textContent = 'more';
+      }
+    });
+  }
+
+  // Mobile gallery images lightbox
+  mobileGalleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('active');
+    });
+  });
+
   // Update local time (Melbourne timezone)
   function updateTime() {
     const now = new Date();
@@ -536,6 +680,9 @@
       hour12: false
     }).format(now);
     localTimeSpan.textContent = melbourneTime;
+    if (mobileLocalTimeSpan) {
+      mobileLocalTimeSpan.textContent = melbourneTime;
+    }
   }
   updateTime();
   setInterval(updateTime, 1000);
