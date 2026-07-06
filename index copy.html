@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isaac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --paper:#FAFAF7;
+    --ink:#1A1A18;
+    --ink-soft:#5C5A52;
+    --line:#E9E7E0;
+    --link:#2C5AA0;
+    --serif:'Source Serif 4', Georgia, serif;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#17171A;
+      --ink:#EDECE6;
+      --ink-soft:#ADAA9F;
+      --line:#302F29;
+      --link:#8CB4E8;
+    }
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:18px;
+    line-height:1.72;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{background:color-mix(in srgb, var(--link) 22%, transparent);color:var(--ink);}
+
+  a{color:var(--link);text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);text-underline-offset:2px;}
+  a:hover{text-decoration-color:var(--link);}
+
+  em{color:var(--ink-soft);font-style:italic;}
+
+  main{max-width:620px;margin:0 auto;padding:64px 24px 100px;}
+  @media (max-width:600px){ main{padding:44px 18px 80px;} }
+
+  /* ---------- header ---------- */
+
+  header{padding-bottom:4px;}
+
+  .brand{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+
+  .lemniscate{display:block;width:220px;height:169px;flex-shrink:0;color:var(--ink);}
+  @media (max-width:700px){ .lemniscate{width:170px;height:131px;} }
+  @media (max-width:420px){ .lemniscate{width:150px;height:115px;} }
+
+  .id h1{font-size:19px;font-weight:600;}
+  .id .role{margin-top:3px;font-size:13px;font-style:italic;color:var(--ink-soft);}
+
+  .jumplinks{margin-top:0px;font-size:15px;}
+  .jumplinks a{color:var(--ink-soft);text-decoration:none;}
+  .jumplinks a:hover{color:var(--link);text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);}
+
+  /* ---------- intro ---------- */
+
+  .intro{padding:0px 0 6px;}
+  .intro p{max-width:58ch;}
+
+  /* ---------- sections ---------- */
+
+  section{padding:34px 0 6px;scroll-margin-top:16px;transition:background-color .4s ease;}
+  section:target{background:color-mix(in srgb, var(--ink) 4%, transparent);}
+
+  section h2{font-size:19px;font-weight:600;margin-bottom:14px;}
+
+  section > p{margin-bottom:10px;max-width:58ch;}
+
+  /* plain flowing lists — the core content pattern for everything */
+
+  ul.plain{list-style:none;}
+  ul.plain li{padding:10px 0;max-width:60ch;transition:background-color .4s ease;scroll-margin-top:16px;}
+  ul.plain li + li{border-top:1px solid var(--line);}
+  ul.plain li:target{background:color-mix(in srgb, var(--ink) 4%, transparent);}
+
+  details.more{margin-top:6px;font-size:17px;}
+  details.more summary{cursor:pointer;color:var(--link);list-style:none;text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);}
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
+
+  /* ---------- side galleries ---------- */
+
+  .side-gallery{
+    position:fixed;
+    top:64px;
+    width:280px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    opacity:1;
+    transition:opacity 0.4s ease;
+    pointer-events:auto;
+  }
+
+  .side-gallery.left{left:40px;}
+  .side-gallery.right{right:40px;}
+
+  .side-gallery.hidden{
+    opacity:0;
+    pointer-events:none;
+  }
+
+  .side-gallery img{
+    width:100%;
+    height:auto;
+    display:block;
+    border:1px solid var(--line);
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .side-gallery img:hover{
+    transform:scale(1.02);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  @media (prefers-color-scheme: dark){
+    .side-gallery img{box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+    .side-gallery img:hover{box-shadow:0 4px 12px rgba(0,0,0,0.5);}
+  }
+
+  /* hide on smaller screens */
+  @media (max-width:1400px){ .side-gallery{display:none;} }
+
+  /* ---------- side info widgets ---------- */
+
+  .side-info{
+    position:fixed;
+    top:64px;
+    width:280px;
+    display:flex;
+    flex-direction:column;
+    gap:32px;
+    opacity:0;
+    transition:opacity 0.4s ease;
+    font-size:15px;
+    pointer-events:none;
+  }
+
+  .side-info.left{left:40px;}
+  .side-info.right{right:40px;}
+
+  .side-info.visible{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .info-widget{
+    padding:12px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:transparent;
+  }
+
+  .info-widget h3{
+    font-size:10px;
+    font-weight:400;
+    margin-bottom:14px;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    opacity:0.4;
+    font-family:monospace;
+  }
+
+  .info-widget p{
+    font-size:13px;
+    line-height:1.7;
+    margin-bottom:10px;
+  }
+
+  .info-widget p:last-child{margin-bottom:0;}
+
+  .info-widget em{
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+
+  .info-widget a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid var(--ink);
+    opacity:0.6;
+    font-size:12px;
+    transition:opacity 0.2s ease;
+  }
+
+  .info-widget a:hover{
+    opacity:1;
+  }
+
+  .progress-bar{
+    width:1px;
+    height:180px;
+    background:transparent;
+    border-left:1px solid var(--line);
+    position:relative;
+    margin:0 auto;
+  }
+
+  .progress-bar-fill{
+    position:absolute;
+    top:0;
+    left:-1px;
+    width:1px;
+    height:0%;
+    background:var(--ink);
+    transition:height 0.1s ease;
+  }
+
+  .meta-item{
+    font-size:12px;
+    color:var(--ink);
+    margin-bottom:12px;
+    font-family:monospace;
+    opacity:0.7;
+  }
+
+  .meta-item:last-child{margin-bottom:0;}
+
+  .meta-label{
+    display:block;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin-bottom:4px;
+    opacity:0.4;
+  }
+
+  @media (max-width:1400px){ .side-info{display:none;} }
+
+  /* ---------- lightbox ---------- */
+
+  .lightbox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    cursor:pointer;
+  }
+
+  .lightbox.active{display:flex;}
+
+  .lightbox-content{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    max-width:90vw;
+    max-height:90vh;
+    cursor:default;
+  }
+
+  .lightbox img{
+    max-width:100%;
+    max-height:90vh;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border:1px solid var(--line);
+    box-shadow:0 8px 32px rgba(0,0,0,0.6);
+  }
+
+  .lightbox-close{
+    position:absolute;
+    top:-40px;
+    right:0;
+    width:32px;
+    height:32px;
+    background:var(--paper);
+    color:var(--ink);
+    border:1px solid var(--line);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:20px;
+    font-weight:600;
+    transition:background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .lightbox-close:hover{
+    background:var(--ink);
+    color:var(--paper);
+    transform:scale(1.1);
+  }
+
+</style>
+</head>
+<body>
+
+<main>
+
+  <header>
+    <div class="brand">
+      <div class="id">
+        <h1>Isaac</h1>
+        <p class="role">now, Melbourne</p>
+      </div>
+
+      <!-- infinity symbol -->
+      <svg class="lemniscate" viewBox="0 0 130 100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 101.00,50.00 L 100.92,51.41 L 100.67,52.80 L 100.26,54.14 L 99.71,55.43 L 99.01,56.64 L 98.20,57.75 L 97.27,58.76 L 96.25,59.66 L 95.16,60.44 L 94.01,61.10 L 92.82,61.65 L 91.59,62.07 L 90.36,62.39 L 89.11,62.60 L 87.87,62.71 L 86.65,62.72 L 85.44,62.65 L 84.25,62.50 L 83.10,62.28 L 81.97,62.00 L 80.88,61.66 L 79.81,61.26 L 78.79,60.83 L 77.79,60.35 L 76.83,59.83 L 75.89,59.29 L 74.99,58.71 L 74.11,58.12 L 73.26,57.50 L 72.43,56.87 L 71.63,56.22 L 70.84,55.56 L 70.07,54.88 L 69.32,54.20 L 68.58,53.51 L 67.85,52.82 L 67.13,52.12 L 66.42,51.41 L 65.71,50.71 L 65.00,50.00 L 64.29,49.29 L 63.58,48.59 L 62.87,47.88 L 62.15,47.18 L 61.42,46.49 L 60.68,45.80 L 59.93,45.12 L 59.16,44.44 L 58.37,43.78 L 57.57,43.13 L 56.74,42.50 L 55.89,41.88 L 55.01,41.29 L 54.11,40.71 L 53.17,40.17 L 52.21,39.65 L 51.21,39.17 L 50.19,38.74 L 49.12,38.34 L 48.03,38.00 L 46.90,37.72 L 45.75,37.50 L 44.56,37.35 L 43.35,37.28 L 42.13,37.29 L 40.89,37.40 L 39.64,37.61 L 38.41,37.93 L 37.18,38.35 L 35.99,38.90 L 34.84,39.56 L 33.75,40.34 L 32.73,41.24 L 31.80,42.25 L 30.99,43.36 L 30.29,44.57 L 29.74,45.86 L 29.33,47.20 L 29.08,48.59 L 29.00,50.00 L 29.08,51.41 L 29.33,52.80 L 29.74,54.14 L 30.29,55.43 L 30.99,56.64 L 31.80,57.75 L 32.73,58.76 L 33.75,59.66 L 34.84,60.44 L 35.99,61.10 L 37.18,61.65 L 38.41,62.07 L 39.64,62.39 L 40.89,62.60 L 42.13,62.71 L 43.35,62.72 L 44.56,62.65 L 45.75,62.50 L 46.90,62.28 L 48.03,62.00 L 49.12,61.66 L 50.19,61.26 L 51.21,60.83 L 52.21,60.35 L 53.17,59.83 L 54.11,59.29 L 55.01,58.71 L 55.89,58.12 L 56.74,57.50 L 57.57,56.87 L 58.37,56.22 L 59.16,55.56 L 59.93,54.88 L 60.68,54.20 L 61.42,53.51 L 62.15,52.82 L 62.87,52.12 L 63.58,51.41 L 64.29,50.71 L 65.00,50.00 L 65.71,49.29 L 66.42,48.59 L 67.13,47.88 L 67.85,47.18 L 68.58,46.49 L 69.32,45.80 L 70.07,45.12 L 70.84,44.44 L 71.63,43.78 L 72.43,43.13 L 73.26,42.50 L 74.11,41.88 L 74.99,41.29 L 75.89,40.71 L 76.83,40.17 L 77.79,39.65 L 78.79,39.17 L 79.81,38.74 L 80.88,38.34 L 81.97,38.00 L 83.10,37.72 L 84.25,37.50 L 85.44,37.35 L 86.65,37.28 L 87.87,37.29 L 89.11,37.40 L 90.36,37.61 L 91.59,37.93 L 92.82,38.35 L 94.01,38.90 L 95.16,39.56 L 96.25,40.34 L 97.27,41.24 L 98.20,42.25 L 99.01,43.36 L 99.71,44.57 L 100.26,45.86 L 100.67,47.20 L 100.92,48.59 L 101.00,50.00 Z"
+              fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <p class="jumplinks">
+      <a href="#about">about</a> ·
+      <a href="#projects">projects</a> ·
+      <a href="#articles">articles</a> ·
+      <a href="#log">log</a>
+    </p>
+  </header>
+
+  <section id="about">
+    <h2>About</h2>
+    <p>Hello, I'm Isaac. Right now I am working on:<br>
+      - Making health tracking easier and more integrated into daily life to help people understand the patterns of their symptoms and get to the root causes with my company: <em>at1a</em>.<br>
+      - Working through the epistimology of Karl Popper.<br>
+      - Reading: The Baroque Cycle by Neal Stephenson and The Moon Is a Harsh Mistress by Robert A. Heinlein.</p>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <p><a href="https://bioenergetic.live/" target="_blank">bioenergetic.live</a>: 24/7 Live loop of all interviews and conversation with Dr <a href="https://raypeat.com" target="_blank">Raymond Peat.</a></p>
+    <p><a href="https://at1a.com/" target="_blank">at1a.com</a>: Health tracking tech.</p>
+  </section>
+
+  <section id="articles">
+    <h2>Articles</h2>
+    <p>Coming soon.</p>
+  </section>
+
+  <section id="log">
+    <h2>Log</h2>
+    <p>A collection of thoughts, experiments, ideas, and random things.</p>
+  </section>
+
+  <!-- <section id="old-log">
+    <h2>Log</h2>
+    <ul class="plain">
+      <li id="log-06"><a href="#log-06">Persorption, revisited</a> — notes on starch granule uptake and what the older literature actually shows versus what gets cited. <em>Jul 2, diet.</em></li>
+      <li id="log-05"><a href="#log-05">Six weeks with a moka pot</a> — switching off AeroPress, mycotoxin testing, and why the Bialetti won on cost without losing the cup. <em>Jun 24, coffee.</em></li>
+      <li id="log-04"><a href="#log-04">TrueNAS, tower to daily driver</a> — ZFS layout, the services I actually kept running, and the SSH dashboard I built to watch it all. <em>Jun 11, NAS.</em></li>
+      <li id="log-03"><a href="#log-03">The potato essay</a> — historical diets, nutrition science, and a much longer detour through persorption than intended. <em>May 29, research.</em></li>
+      <li id="log-02"><a href="#log-02">Why Odin, why now</a> — minimal dependencies, manual memory, and what it's taught me about the languages I used before it. <em>May 14, code.</em></li>
+      <li id="log-01"><a href="#log-01">First at1a prototype, breadboard to bones</a> — MLX90614, an SSD1306, and the long walk from a proof of concept to something wearable. <em>May 2, at1a.</em></li>
+    </ul>
+  </section>
+
+  <section id="pics">
+    <h2>Pics</h2>
+    <ul class="plain">
+      <li>at1a enclosure, rev C</li>
+      <li>Wombat Forest, dry creek</li>
+      <li>NAS rack, mid build</li>
+      <li>Guppy tank, week 12</li>
+      <li>Philosophical Transactions, 1686</li>
+      <li>Desk, mid firmware push</li>
+    </ul>
+  </section>
+
+  <section id="ideas">
+    <h2>Ideas</h2>
+    <ul class="plain">
+      <li>Could the at1a case use the same tolerance stack as the Fusion prototype, just one fewer part. <em>Jun 30, hardware.</em></li>
+      <li>An article on why courier shift work is a better creative constraint than a co-working desk. <em>Jun 21, writing.</em></li>
+      <li>Deutsch's "problems are solvable" as a debugging heuristic, not just a worldview. <em>Jun 15, epistemology.</em></li>
+      <li>A margin-note pattern for every post — date, tag, catalog number, nothing else. <em>Jun 3, site.</em></li>
+    </ul>
+  </section>
+
+  <section id="experiments">
+    <h2>Experiments</h2>
+    <ul class="plain">
+      <li id="exp-at1a"><strong>at1a</strong> (active) — a handheld health-tracking device: IR temp sensing, custom firmware, milled enclosure. <em>esp32, arduino, fusion 360.</em></li>
+      <li id="exp-vault"><strong>VAULT</strong> (paused) — a terminal finance dashboard, local-first, DuckDB-backed, built for fast daily review. <em>python, textual, duckdb.</em></li>
+      <li id="exp-sysfo"><strong>sysfo</strong> (stable) — a macOS system monitor HUD rendered from scratch, no Electron, no shortcuts. <em>c, sdl3, nanovg.</em></li>
+      <li id="exp-nas"><strong>Home NAS</strong> (active) — TrueNAS SCALE on repurposed hardware: media, backups, a private git remote. <em>truenas, zfs, gitea.</em></li>
+    </ul>
+  </section>
+
+  <section id="work">
+    <h2>Work</h2>
+    <ul class="plain">
+      <li id="work-site"><a href="#">isaacmp.xyz</a> — personal site and writing archive, hand-built, no framework, deployed on push.</li>
+      <li id="work-lem"><a href="#">Lemniscate</a> — a YouTube channel on progress, optimism, and building things worth building.</li>
+    </ul>
+  </section> -->
+<!--
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Let's talk shop. I read everything sent here and reply the same day — <a href="mailto:hello@isaacmp.xyz">hello@isaacmp.xyz</a>, <a href="#">github.com/isaacimp</a>, <a href="#">youtube.com/@lemniscater</a>.</p>
+    <p style="margin-top:24px;font-size:14px;color:var(--ink-soft);">© 2026 Isaac Morris-Perrott, Melbourne.</p>
+  </section>
+-->
+</main>
+
+<aside class="side-gallery left">
+  <!-- Left side images -->
+  <img src="wallhaven-39l9w9.jpg" alt="">
+  <img src="20250219_122419.jpg" alt="">
+  <img src="Newton-WilliamBlake.jpg" alt="">
+</aside>
+
+<aside class="side-gallery right">
+  <!-- Right side images -->
+  <img src="20260217_173157.jpg" alt="">
+  <img src="HKrWNULXoAAKi7c.jpeg" alt="">
+  <img src="C15_Objectif p56-bc color.png" alt="">
+</aside>
+
+<aside class="side-info left">
+  <div class="info-widget">
+    <h3>Now</h3>
+    <p>Reading: <em>The Baroque Cycle</em> by Neal Stephenson, <em>The Moon Is a Harsh Mistress</em> by Robert A. Heinlein</p>
+    <p>Working: Karl Popper's epistemology</p>
+    <p>Building: at1a v0.3 health tracker</p>
+    <p><a href="/now">View past now entries →</a></p>
+  </div>
+</aside>
+
+<aside class="side-info right">
+  <div class="progress-bar">
+    <div class="progress-bar-fill"></div>
+  </div>
+
+  <div class="info-widget">
+    <div class="meta-item">
+      <span class="meta-label">Section</span>
+      <span id="current-section">—</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Local Time</span>
+      <span id="local-time">—</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Last Updated</span>
+      <span>2026-07-06</span>
+    </div>
+  </div>
+</aside>
+
+<div class="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <img src="" alt="">
+  </div>
+</div>
+
+<script>
+  // Lightbox functionality
+  const lightbox = document.querySelector('.lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  const lightboxClose = lightbox.querySelector('.lightbox-close');
+  const galleries = document.querySelectorAll('.side-gallery');
+  const galleryImages = document.querySelectorAll('.side-gallery img');
+  const infoWidgets = document.querySelectorAll('.side-info');
+  const progressBarFill = document.querySelector('.progress-bar-fill');
+  const currentSectionSpan = document.getElementById('current-section');
+  const localTimeSpan = document.getElementById('local-time');
+
+  // Hide galleries / show info widgets when scrolling
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+
+    // Toggle galleries and info widgets
+    galleries.forEach(gallery => {
+      if (currentScroll > 100) {
+        gallery.classList.add('hidden');
+      } else {
+        gallery.classList.remove('hidden');
+      }
+    });
+
+    infoWidgets.forEach(widget => {
+      if (currentScroll > 100) {
+        widget.classList.add('visible');
+      } else {
+        widget.classList.remove('visible');
+      }
+    });
+
+    // Update progress bar
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (currentScroll / docHeight) * 100;
+    progressBarFill.style.height = scrollPercent + '%';
+
+    // Update current section
+    const sections = document.querySelectorAll('section');
+    let currentSection = '';
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 150 && rect.bottom >= 150) {
+        currentSection = section.querySelector('h2')?.textContent || '';
+      }
+    });
+    currentSectionSpan.textContent = currentSection || '—';
+
+    lastScroll = currentScroll;
+  });
+
+  // Update local time (Melbourne timezone)
+  function updateTime() {
+    const now = new Date();
+    const melbourneTime = new Intl.DateTimeFormat('en-AU', {
+      timeZone: 'Australia/Melbourne',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    }).format(now);
+    localTimeSpan.textContent = melbourneTime;
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('active');
+    });
+  });
+
+  // Close on background click
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
+    }
+  });
+
+  // Close on X button click
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+    }
+  });
+</script>
+
+</body>
+</html>
