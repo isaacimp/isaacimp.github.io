@@ -3,963 +3,569 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>isaac</title>
+<title>Isaac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap');
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --fg: #1a1a1a;
-    --fg2: #3d3d3d;
-    --fg3: #888;
-    --bg: #fdfdfc;
-    --rule: #d4d4d4;
-    --rule-light: #eee;
-    --mono: 'JetBrains Mono', monospace;
-    --serif: 'Source Serif 4', Georgia, serif;
+  :root{
+    --paper:#FAFAF7;
+    --ink:#1A1A18;
+    --ink-soft:#5C5A52;
+    --line:#E9E7E0;
+    --link:#2C5AA0;
+    --serif:'Source Serif 4', Georgia, serif;
   }
 
-  .dark {
-    --fg: #e8e8e6;
-    --fg2: #b0b0aa;
-    --fg3: #606060;
-    --bg: #0e0e0d;
-    --rule: #2a2a28;
-    --rule-light: #1e1e1c;
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#17171A;
+      --ink:#EDECE6;
+      --ink-soft:#ADAA9F;
+      --line:#302F29;
+      --link:#8CB4E8;
+    }
   }
 
-  .dark article code, .dark article pre { background: #1a1a18; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
 
-  #theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--fg3);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    letter-spacing: 0.5px;
-  }
-  #theme-toggle:hover { color: var(--fg); }
-
-  html { font-size: 13px; }
-
-  body {
-    font-family: var(--mono);
-    color: var(--fg);
-    background: var(--bg);
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 48px 24px 120px;
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:18px;
+    line-height:1.72;
+    -webkit-font-smoothing:antialiased;
   }
 
-  a { color: var(--fg); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-  a:hover { color: #000; }
+  ::selection{background:color-mix(in srgb, var(--link) 22%, transparent);color:var(--ink);}
 
-  /* ── TOP ── */
-  .top { margin-bottom: 36px; }
-  .top h1 {
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: -0.3px;
-    margin-bottom: 6px;
-  }
-  .top p {
-    color: var(--fg2);
-    font-size: 12px;
-    max-width: 520px;
-  }
-  .top-links {
-    margin-top: 12px;
-    font-size: 11.5px;
-    display: flex;
-    gap: 20px;
-    color: var(--fg3);
-  }
+  a{color:var(--link);text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);text-underline-offset:2px;}
+  a:hover{text-decoration-color:var(--link);}
 
-  /* ── ROWS ── */
-  .section { margin-bottom: 32px; }
-  .section-label {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--fg3);
-    margin-bottom: 10px;
-  }
-  .row {
-    display: grid;
-    grid-template-columns: 130px 1fr;
-    gap: 12px;
-    padding: 6px 0;
-    font-size: 12px;
-    border-bottom: 1px solid var(--rule-light);
-    align-items: baseline;
-  }
-  .row:last-child { border-bottom: none; }
-  .row-name { font-weight: 500; }
-  .row-desc { color: var(--fg2); }
+  em{color:var(--ink-soft);font-style:italic;}
 
-  /* ── ARTICLES ── */
-  article {
-    font-family: var(--serif);
-    margin-top: 52px;
-  }
-  article + article { margin-top: 58px; }
-  article .date {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--fg3);
-    margin-bottom: 6px;
-  }
-  article h2 {
-    font-family: var(--serif);
-    font-size: 21px;
-    font-weight: 600;
-    line-height: 1.3;
-    letter-spacing: -0.2px;
-    margin-bottom: 18px;
-    color: var(--fg);
-  }
-  article p {
-    font-size: 15.5px;
-    line-height: 1.78;
-    color: var(--fg2);
-    margin-bottom: 16px;
-    max-width: 640px;
-  }
-  article p:last-child { margin-bottom: 0; }
-  article h3 {
-    font-family: var(--serif);
-    font-size: 15.5px;
-    font-weight: 600;
-    color: var(--fg);
-    margin-top: 32px;
-    margin-bottom: 12px;
-  }
-  article figure {
-    margin: 28px 0;
-    max-width: 100%;
-  }
-  article figure img {
-    width: 100%;
-    display: block;
-    border: 1px solid var(--rule-light);
-  }
-  article figcaption {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--fg3);
-    margin-top: 6px;
-    line-height: 1.5;
-  }
-  article code {
-    font-family: var(--mono);
-    font-size: 12.5px;
-    background: #f4f4f1;
-    padding: 1.5px 4px;
-    border-radius: 2px;
-  }
-  article pre {
-    font-family: var(--mono);
-    font-size: 12px;
-    line-height: 1.65;
-    background: #f4f4f1;
-    padding: 16px 18px;
-    overflow-x: auto;
-    margin: 20px 0;
-  }
-  article pre code { background: none; padding: 0; }
-  article table {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    border-collapse: collapse;
-    margin: 24px 0;
-    width: 100%;
-    max-width: 540px;
-  }
-  article th {
-    text-align: left;
-    font-weight: 500;
-    padding: 5px 12px 5px 0;
-    border-bottom: 1px solid var(--rule);
-    color: var(--fg3);
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  article td {
-    padding: 5px 12px 5px 0;
-    border-bottom: 1px solid var(--rule-light);
-    color: var(--fg2);
-  }
-  article blockquote {
-    font-style: italic;
-    color: var(--fg3);
-    padding-left: 18px;
-    border-left: 2px solid var(--rule);
-    margin: 20px 0;
-  }
-  article ul, article ol {
-    margin: 14px 0 14px 20px;
-    font-size: 15px;
-    line-height: 1.75;
-    color: var(--fg2);
-  }
-  article li { margin-bottom: 4px; }
-  article aside {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--fg3);
-    border-top: 1px solid var(--rule-light);
-    margin-top: 24px;
-    padding-top: 10px;
-    line-height: 1.6;
-  }
+  main{max-width:620px;margin:0 auto;padding:64px 24px 100px;}
+  @media (max-width:600px){ main{padding:44px 18px 80px;} }
 
-  /* ── POTATO FIGURE ── */
-  .potato-fig{
-    max-width:380px;
-    margin:32px auto;
-    color:#1B1B18;
-  }
-  .potato-fig svg{ width:100%; display:block; cursor:pointer; }
-  .potato-fig .wiggle{
-    transform-origin:35px -45px;
-    transition:transform 0.4s ease;
-  }
-  .potato-fig svg:hover .wiggle{ transform:rotate(-8deg); }
-  .potato-fig figcaption{ padding:14px 4px 0; }
-  .potato-fig figcaption p{
+  /* ---------- header ---------- */
+
+  header{padding-bottom:4px;}
+
+  .brand{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+
+  .lemniscate{display:block;width:220px;height:169px;flex-shrink:0;color:var(--ink);}
+  @media (max-width:700px){ .lemniscate{width:170px;height:131px;} }
+  @media (max-width:420px){ .lemniscate{width:150px;height:115px;} }
+
+  .id h1{font-size:19px;font-weight:600;}
+  .id .role{margin-top:3px;font-size:13px;font-style:italic;color:var(--ink-soft);}
+
+  .jumplinks{margin-top:0px;font-size:15px;}
+  .jumplinks a{color:var(--ink-soft);text-decoration:none;}
+  .jumplinks a:hover{color:var(--link);text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);}
+
+  /* ---------- intro ---------- */
+
+  .intro{padding:0px 0 6px;}
+  .intro p{max-width:58ch;}
+
+  /* ---------- sections ---------- */
+
+  section{padding:34px 0 6px;scroll-margin-top:16px;transition:background-color .4s ease;}
+  section:target{background:color-mix(in srgb, var(--ink) 4%, transparent);}
+
+  section h2{font-size:19px;font-weight:600;margin-bottom:14px;}
+
+  section > p{margin-bottom:10px;max-width:58ch;}
+
+  /* plain flowing lists — the core content pattern for everything */
+
+  ul.plain{list-style:none;}
+  ul.plain li{padding:10px 0;max-width:60ch;transition:background-color .4s ease;scroll-margin-top:16px;}
+  ul.plain li + li{border-top:1px solid var(--line);}
+  ul.plain li:target{background:color-mix(in srgb, var(--ink) 4%, transparent);}
+
+  details.more{margin-top:6px;font-size:17px;}
+  details.more summary{cursor:pointer;color:var(--link);list-style:none;text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);}
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
+
+  /* ---------- side galleries ---------- */
+
+  .side-gallery{
+    position:fixed;
+    top:64px;
+    width:280px;
     display:flex;
-    gap:10px;
+    flex-direction:column;
+    gap:22px;
+    opacity:1;
+    transition:opacity 0.4s ease;
+    pointer-events:auto;
+  }
+
+  .side-gallery.left{left:40px;}
+  .side-gallery.right{right:40px;}
+
+  .side-gallery.hidden{
+    opacity:0;
+    pointer-events:none;
+  }
+
+  .side-gallery img{
+    width:100%;
+    height:auto;
+    display:block;
+    border:1px solid var(--line);
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .side-gallery img:hover{
+    transform:scale(1.02);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  @media (prefers-color-scheme: dark){
+    .side-gallery img{box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+    .side-gallery img:hover{box-shadow:0 4px 12px rgba(0,0,0,0.5);}
+  }
+
+  /* hide on smaller screens */
+  @media (max-width:1400px){ .side-gallery{display:none;} }
+
+  /* ---------- side info widgets ---------- */
+
+  .side-info{
+    position:fixed;
+    top:64px;
+    width:280px;
+    display:flex;
+    flex-direction:column;
+    gap:32px;
+    opacity:0;
+    transition:opacity 0.4s ease;
     font-size:15px;
-    line-height:1.5;
-    margin:0 0 10px;
+    pointer-events:none;
   }
-  .potato-fig figcaption strong{
-    flex:none;
-    width:19px; height:19px;
-    border-radius:50%;
-    background:#1B1B18;
-    color:#F2EDE1;
+
+  .side-info.left{left:40px;}
+  .side-info.right{right:40px;}
+
+  .side-info.visible{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .info-widget{
+    padding:12px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:transparent;
+  }
+
+  .info-widget h3{
+    font-size:10px;
+    font-weight:400;
+    margin-bottom:14px;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    opacity:0.4;
+    font-family:monospace;
+  }
+
+  .info-widget p{
+    font-size:13px;
+    line-height:1.7;
+    margin-bottom:10px;
+  }
+
+  .info-widget p:last-child{margin-bottom:0;}
+
+  .info-widget em{
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+
+  .info-widget a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid var(--ink);
+    opacity:0.6;
     font-size:12px;
+    transition:opacity 0.2s ease;
+  }
+
+  .info-widget a:hover{
+    opacity:1;
+  }
+
+  .progress-bar{
+    width:1px;
+    height:180px;
+    background:transparent;
+    border-left:1px solid var(--line);
+    position:relative;
+    margin:0 auto;
+  }
+
+  .progress-bar-fill{
+    position:absolute;
+    top:0;
+    left:-1px;
+    width:1px;
+    height:0%;
+    background:var(--ink);
+    transition:height 0.1s ease;
+  }
+
+  .meta-item{
+    font-size:12px;
+    color:var(--ink);
+    margin-bottom:12px;
+    font-family:monospace;
+    opacity:0.7;
+  }
+
+  .meta-item:last-child{margin-bottom:0;}
+
+  .meta-label{
+    display:block;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin-bottom:4px;
+    opacity:0.4;
+  }
+
+  @media (max-width:1400px){ .side-info{display:none;} }
+
+  /* ---------- lightbox ---------- */
+
+  .lightbox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    cursor:pointer;
+  }
+
+  .lightbox.active{display:flex;}
+
+  .lightbox-content{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    max-width:90vw;
+    max-height:90vh;
+    cursor:default;
+  }
+
+  .lightbox img{
+    max-width:100%;
+    max-height:90vh;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border:1px solid var(--line);
+    box-shadow:0 8px 32px rgba(0,0,0,0.6);
+  }
+
+  .lightbox-close{
+    position:absolute;
+    top:-40px;
+    right:0;
+    width:32px;
+    height:32px;
+    background:var(--paper);
+    color:var(--ink);
+    border:1px solid var(--line);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:20px;
     font-weight:600;
-    display:flex; align-items:center; justify-content:center;
-    margin-top:2px;
+    transition:background-color 0.2s ease, transform 0.2s ease;
   }
 
-  .archive-link {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--fg3);
-    margin-top: 64px;
-    padding-top: 16px;
-    border-top: 1px solid var(--rule-light);
+  .lightbox-close:hover{
+    background:var(--ink);
+    color:var(--paper);
+    transform:scale(1.1);
   }
-  .archive-link a { color: var(--fg3); }
-  .archive-link a:hover { color: var(--fg); }
 
-  @media (max-width: 500px) {
-    body { padding: 32px 16px 80px; }
-    .row { grid-template-columns: 1fr; gap: 2px; }
-    article h2 { font-size: 19px; }
-    article p { font-size: 15px; }
-    .nutrient-row {
-      grid-template-columns: 100px 1fr 50px 60px;
-      gap: 8px;
-      font-size: 11px;
-    }
-    .nutrient-label {
-      font-size: 11px;
-    }
-  }
 </style>
 </head>
 <body>
-<button id="theme-toggle">light</button>
 
-<div class="top">
-  <h1>Isaac Morris-Perrott</h1>
-  <p>Currently trying to understand Popperian Epistimology. Working on health and life data tracking software/ hardware. Longevity. Optimisim. Living in Melbourne.</p>
+<main>
 
-  <div class="top-links">
-    <a href="mailto:mail@isaacmp.xyz">email</a>
-    <a href="https://github.com/isaacimp" target="_blank">github</a>
-    <a href="writing.html">articles</a>
-  </div>
-</div>
+  <header>
+    <div class="brand">
+      <div class="id">
+        <h1>Isaac</h1>
+        <p class="role">now, Melbourne</p>
+      </div>
 
-<div class="section">
-  <div class="subheading">Currently reading:</div>
-  <p>- Quicksilver by Neal Stephenson
-</div>
+      <!-- infinity symbol -->
+      <svg class="lemniscate" viewBox="0 0 130 100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 101.00,50.00 L 100.92,51.41 L 100.67,52.80 L 100.26,54.14 L 99.71,55.43 L 99.01,56.64 L 98.20,57.75 L 97.27,58.76 L 96.25,59.66 L 95.16,60.44 L 94.01,61.10 L 92.82,61.65 L 91.59,62.07 L 90.36,62.39 L 89.11,62.60 L 87.87,62.71 L 86.65,62.72 L 85.44,62.65 L 84.25,62.50 L 83.10,62.28 L 81.97,62.00 L 80.88,61.66 L 79.81,61.26 L 78.79,60.83 L 77.79,60.35 L 76.83,59.83 L 75.89,59.29 L 74.99,58.71 L 74.11,58.12 L 73.26,57.50 L 72.43,56.87 L 71.63,56.22 L 70.84,55.56 L 70.07,54.88 L 69.32,54.20 L 68.58,53.51 L 67.85,52.82 L 67.13,52.12 L 66.42,51.41 L 65.71,50.71 L 65.00,50.00 L 64.29,49.29 L 63.58,48.59 L 62.87,47.88 L 62.15,47.18 L 61.42,46.49 L 60.68,45.80 L 59.93,45.12 L 59.16,44.44 L 58.37,43.78 L 57.57,43.13 L 56.74,42.50 L 55.89,41.88 L 55.01,41.29 L 54.11,40.71 L 53.17,40.17 L 52.21,39.65 L 51.21,39.17 L 50.19,38.74 L 49.12,38.34 L 48.03,38.00 L 46.90,37.72 L 45.75,37.50 L 44.56,37.35 L 43.35,37.28 L 42.13,37.29 L 40.89,37.40 L 39.64,37.61 L 38.41,37.93 L 37.18,38.35 L 35.99,38.90 L 34.84,39.56 L 33.75,40.34 L 32.73,41.24 L 31.80,42.25 L 30.99,43.36 L 30.29,44.57 L 29.74,45.86 L 29.33,47.20 L 29.08,48.59 L 29.00,50.00 L 29.08,51.41 L 29.33,52.80 L 29.74,54.14 L 30.29,55.43 L 30.99,56.64 L 31.80,57.75 L 32.73,58.76 L 33.75,59.66 L 34.84,60.44 L 35.99,61.10 L 37.18,61.65 L 38.41,62.07 L 39.64,62.39 L 40.89,62.60 L 42.13,62.71 L 43.35,62.72 L 44.56,62.65 L 45.75,62.50 L 46.90,62.28 L 48.03,62.00 L 49.12,61.66 L 50.19,61.26 L 51.21,60.83 L 52.21,60.35 L 53.17,59.83 L 54.11,59.29 L 55.01,58.71 L 55.89,58.12 L 56.74,57.50 L 57.57,56.87 L 58.37,56.22 L 59.16,55.56 L 59.93,54.88 L 60.68,54.20 L 61.42,53.51 L 62.15,52.82 L 62.87,52.12 L 63.58,51.41 L 64.29,50.71 L 65.00,50.00 L 65.71,49.29 L 66.42,48.59 L 67.13,47.88 L 67.85,47.18 L 68.58,46.49 L 69.32,45.80 L 70.07,45.12 L 70.84,44.44 L 71.63,43.78 L 72.43,43.13 L 73.26,42.50 L 74.11,41.88 L 74.99,41.29 L 75.89,40.71 L 76.83,40.17 L 77.79,39.65 L 78.79,39.17 L 79.81,38.74 L 80.88,38.34 L 81.97,38.00 L 83.10,37.72 L 84.25,37.50 L 85.44,37.35 L 86.65,37.28 L 87.87,37.29 L 89.11,37.40 L 90.36,37.61 L 91.59,37.93 L 92.82,38.35 L 94.01,38.90 L 95.16,39.56 L 96.25,40.34 L 97.27,41.24 L 98.20,42.25 L 99.01,43.36 L 99.71,44.57 L 100.26,45.86 L 100.67,47.20 L 100.92,48.59 L 101.00,50.00 Z"
+              fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+    </div>
 
-<div class="section">
-  <div class="section-label">Projects</div>
-  <div class="row">
-    <span class="row-name"><a href="https://bioenergetic.live/public/bioenergetic_live" target="_blank">Bioenergetic Radio</a></span>
-    <span class="row-desc">24/7 loop of hundreds of hours of intereviews with Dr Raymond Peat. Ray Peat has a lot of interesting ideas regarding health and I think he has good explainations for many of them which is important to me.</span>
-  </div>
-  <div class="row">
-    <span class="row-name">Health tracking and data viz</span>
-    <span class="row-desc">Very much a work in progress. Odin/ Sokol charts, manual tracking device...</span>
-  </div>
-  <!-- add rows -->
-</div>
+    <p class="jumplinks">
+      <a href="#about">about</a> ·
+      <a href="#projects">projects</a> ·
+      <a href="#articles">articles</a> ·
+      <a href="#log">log</a>
+    </p>
+  </header>
 
-<div class="section">
-  <div class="section-label">Problems</div>
-  <div class="row">
-    <span class="row-name">Health</span>
-    <span class="row-desc">If healing a damaged gut and metabolism requies sufficient fuel in the form of food calories but food is the very thing causing the damage, how can I heal.</span>
-  </div>
-  <div class="row">
-    <span class="row-name">Productivity</span>
-    <span class="row-desc">How does one decide which behaviours are serving them vs which are harmful. I think that coercing oneself is a bad idea but there are obviously things that we do that we regret afterwards, or do not enjoy. How might one rid this behaviour without coercion if simply understanding that it is bad has not worked.</span>
-  </div>
-</div>
+  <section id="about">
+    <h2>About</h2>
+    <p>Hello, I'm Isaac. Right now I am working on:<br>
+      - Making health tracking easier and more integrated into daily life to help people understand the patterns of their symptoms and get to the root causes with my company: <em>at1a</em>.<br>
+      - Working through the epistimology of Karl Popper.<br>
+      - Reading: The Baroque Cycle by Neal Stephenson and The Moon Is a Harsh Mistress by Robert A. Heinlein.</p>
+  </section>
 
+  <section id="projects">
+    <h2>Projects</h2>
+    <p><a href="https://bioenergetic.live/" target="_blank">bioenergetic.live</a>: 24/7 Live loop of all interviews and conversation with Dr <a href="https://raypeat.com" target="_blank">Raymond Peat.</a></p>
+    <p><a href="https://at1a.com/" target="_blank">at1a.com</a>: Health tracking tech.</p>
+  </section>
 
-<!-- ARTICLES — copy this block for each new post -->
+  <section id="articles">
+    <h2>Articles</h2>
+    <p>Coming soon.</p>
+  </section>
 
-<article>
-  <div class="date">Jun 2026</div>
-  <h2>Potato</h2>
+  <section id="log">
+    <h2>Log</h2>
+    <p>A collection of thoughts, experiments, ideas, and random things.</p>
+  </section>
 
-  <p>No matter what I do I cannot escape the Potato. Everything I learn about them makes me more and more fascinated with how this one vegetable can provide so much nutrition with so little downsides. I have yet to find a perfect food and I don’t think there is such thing as a perfect naturally occurring food but the Potato is very high up on the list. </p>
+  <!-- <section id="old-log">
+    <h2>Log</h2>
+    <ul class="plain">
+      <li id="log-06"><a href="#log-06">Persorption, revisited</a> — notes on starch granule uptake and what the older literature actually shows versus what gets cited. <em>Jul 2, diet.</em></li>
+      <li id="log-05"><a href="#log-05">Six weeks with a moka pot</a> — switching off AeroPress, mycotoxin testing, and why the Bialetti won on cost without losing the cup. <em>Jun 24, coffee.</em></li>
+      <li id="log-04"><a href="#log-04">TrueNAS, tower to daily driver</a> — ZFS layout, the services I actually kept running, and the SSH dashboard I built to watch it all. <em>Jun 11, NAS.</em></li>
+      <li id="log-03"><a href="#log-03">The potato essay</a> — historical diets, nutrition science, and a much longer detour through persorption than intended. <em>May 29, research.</em></li>
+      <li id="log-02"><a href="#log-02">Why Odin, why now</a> — minimal dependencies, manual memory, and what it's taught me about the languages I used before it. <em>May 14, code.</em></li>
+      <li id="log-01"><a href="#log-01">First at1a prototype, breadboard to bones</a> — MLX90614, an SSD1306, and the long walk from a proof of concept to something wearable. <em>May 2, at1a.</em></li>
+    </ul>
+  </section>
 
-  <figure class="potato-fig">
-    <svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A friendly line illustration of a potato with a small sprout growing from one eye.">
-      <defs>
-        <path id="blob" d="M -140,10 C -145,-35 -120,-70 -75,-78 C -40,-84 -5,-70 20,-75 C 60,-82 100,-65 118,-30 C 132,-5 128,25 105,45 C 122,60 130,80 110,95 C 85,112 45,108 15,98 C -20,110 -65,108 -95,88 C -130,65 -148,40 -140,10 Z"/>
-        <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
-        <clipPath id="clip"><use xlink:href="#blob"/></clipPath>
-      </defs>
+  <section id="pics">
+    <h2>Pics</h2>
+    <ul class="plain">
+      <li>at1a enclosure, rev C</li>
+      <li>Wombat Forest, dry creek</li>
+      <li>NAS rack, mid build</li>
+      <li>Guppy tank, week 12</li>
+      <li>Philosophical Transactions, 1686</li>
+      <li>Desk, mid firmware push</li>
+    </ul>
+  </section>
 
-      <g transform="translate(180,135)">
-        <!-- cast shadow -->
-        <use xlink:href="#blob" transform="translate(10,14) scale(1.02)" fill="#1B1B18" opacity="0.18"/>
-        <!-- base fill -->
-        <use xlink:href="#blob" fill="#EAE4D6" stroke="#1B1B18" stroke-width="2.5"/>
-        <!-- soft light/shadow for a touch of dimension, clipped to the silhouette -->
-        <g clip-path="url(#clip)">
-          <ellipse cx="-55" cy="-40" rx="62" ry="44" fill="#FFFFFF" opacity="0.7" filter="url(#soft)"/>
-          <ellipse cx="80" cy="55" rx="55" ry="40" fill="#1B1B18" opacity="0.08" filter="url(#soft)"/>
-        </g>
-        <!-- redraw outline on top so the clip doesn't soften it -->
-        <use xlink:href="#blob" fill="none" stroke="#1B1B18" stroke-width="2.5"/>
+  <section id="ideas">
+    <h2>Ideas</h2>
+    <ul class="plain">
+      <li>Could the at1a case use the same tolerance stack as the Fusion prototype, just one fewer part. <em>Jun 30, hardware.</em></li>
+      <li>An article on why courier shift work is a better creative constraint than a co-working desk. <em>Jun 21, writing.</em></li>
+      <li>Deutsch's "problems are solvable" as a debugging heuristic, not just a worldview. <em>Jun 15, epistemology.</em></li>
+      <li>A margin-note pattern for every post — date, tag, catalog number, nothing else. <em>Jun 3, site.</em></li>
+    </ul>
+  </section>
 
-        <!-- two plain eyes -->
-        <g fill="#1B1B18">
-          <ellipse cx="-30" cy="20" rx="3.5" ry="2.5" transform="rotate(-15 -30 20)"/>
-          <ellipse cx="60" cy="40" rx="3.5" ry="2.5" transform="rotate(40 60 40)"/>
-        </g>
+  <section id="experiments">
+    <h2>Experiments</h2>
+    <ul class="plain">
+      <li id="exp-at1a"><strong>at1a</strong> (active) — a handheld health-tracking device: IR temp sensing, custom firmware, milled enclosure. <em>esp32, arduino, fusion 360.</em></li>
+      <li id="exp-vault"><strong>VAULT</strong> (paused) — a terminal finance dashboard, local-first, DuckDB-backed, built for fast daily review. <em>python, textual, duckdb.</em></li>
+      <li id="exp-sysfo"><strong>sysfo</strong> (stable) — a macOS system monitor HUD rendered from scratch, no Electron, no shortcuts. <em>c, sdl3, nanovg.</em></li>
+      <li id="exp-nas"><strong>Home NAS</strong> (active) — TrueNAS SCALE on repurposed hardware: media, backups, a private git remote. <em>truenas, zfs, gitea.</em></li>
+    </ul>
+  </section>
 
-        <!-- the sprouting eye: hover/tap the figure to give it a little wiggle -->
-        <g class="wiggle">
-          <ellipse cx="35" cy="-45" rx="3.5" ry="2.5" fill="#1B1B18" transform="rotate(10 35 -45)"/>
-          <path d="M35,-47 C42,-65 50,-72 70,-78" fill="none" stroke="#1B1B18" stroke-width="2.2" stroke-linecap="round"/>
-          <ellipse cx="74" cy="-82" rx="10" ry="5.5" fill="#EAE4D6" stroke="#1B1B18" stroke-width="1.5" transform="rotate(-20 74 -82)"/>
-          <ellipse cx="60" cy="-86" rx="8" ry="4.5" fill="#EAE4D6" stroke="#1B1B18" stroke-width="1.5" transform="rotate(-50 60 -86)"/>
-        </g>
-      </g>
-    </svg>
+  <section id="work">
+    <h2>Work</h2>
+    <ul class="plain">
+      <li id="work-site"><a href="#">isaacmp.xyz</a> — personal site and writing archive, hand-built, no framework, deployed on push.</li>
+      <li id="work-lem"><a href="#">Lemniscate</a> — a YouTube channel on progress, optimism, and building things worth building.</li>
+    </ul>
+  </section> -->
 <!--
-    <figcaption>
-      <p><strong>1</strong> Glycoalkaloids spike right around sprouts and any green skin.</p>
-      <p><strong>2</strong>No drying, no long storage, no mould — growing underground keeps potatoes mostly free of the aflatoxins found in grain, nuts, and coffee.</p>
-      <p><strong>3</strong>Most of the good stuff — vitamin C, potassium, fibre — sits just under the skin. The part most people peel off and bin.</p>
-    </figcaption>
-    -->
-  </figure>
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Let's talk shop. I read everything sent here and reply the same day — <a href="mailto:hello@isaacmp.xyz">hello@isaacmp.xyz</a>, <a href="#">github.com/isaacimp</a>, <a href="#">youtube.com/@lemniscater</a>.</p>
+    <p style="margin-top:24px;font-size:14px;color:var(--ink-soft);">© 2026 Isaac Morris-Perrott, Melbourne.</p>
+  </section>
+-->
+</main>
 
-  <p>
-First of all, the nutritional content of a good potato is very impressive. They are an almost complete food nutritionally, containing all essential amino acids, excellent vitamin C and B6, and potassium as well as other minerals. While potatoes don't contain every vitamin (they're missing B12, A, D, and E), they come closer to nutritional completeness than nearly any other <em>single</em> food.
-</p>
-<style>
-  /* ====== Enhanced nutrient chart system ====== */
-  .nutrient-chart{
-    max-width:520px;
-    margin:32px auto;
-    color:#1B1B18;
-  }
-  .nutrient-chart .eyebrow{
-    font-variant-caps:small-caps;
-    letter-spacing:0.12em;
-    font-size:13px;
-    color:#7A7066;
-    margin:0 0 20px;
-  }
+<aside class="side-gallery left">
+  <!-- Left side images -->
+  <img src="wallhaven-39l9w9.jpg" alt="">
+  <img src="20250219_122419.jpg" alt="">
+  <img src="Newton-WilliamBlake.jpg" alt="">
+</aside>
 
-  /* Completeness grid */
-  .completeness-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
-    gap:12px;
-    margin-bottom:32px;
-    padding:20px;
-    background:#F5F3ED;
-    border-radius:4px;
-  }
-  .completeness-item{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-  }
-  .completeness-item .label{
-    font-size:11px;
-    color:#7A7066;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-  }
-  .completeness-item .value{
-    font-size:18px;
-    font-weight:600;
-    color:#1B1B18;
-  }
-  .completeness-item .value .unit{
-    font-size:11px;
-    font-weight:400;
-    color:#7A7066;
-    margin-left:2px;
-  }
-  .completeness-item .rda-bar{
-    height:4px;
-    background:#E2DCC9;
-    border-radius:2px;
-    overflow:hidden;
-    margin-top:2px;
-  }
-  .completeness-item .rda-fill{
-    height:100%;
-    background:#1B1B18;
-    border-radius:2px;
-  }
-  .section-intro{
-    font-size:13px;
-    color:#5b5650;
-    margin-bottom:20px;
-    line-height:1.6;
-    text-align:center;
-  }
+<aside class="side-gallery right">
+  <!-- Right side images -->
+  <img src="20260217_173157.jpg" alt="">
+  <img src="HKrWNULXoAAKi7c.jpeg" alt="">
+  <img src="C15_Objectif p56-bc color.png" alt="">
+</aside>
 
-  /* Completeness Chart Styles */
-  .completeness-chart {
-    max-width: 680px;
-    margin: 32px auto;
-  }
-  .nutrient-category {
-    margin-bottom: 36px;
-  }
-  .category-header {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--fg3);
-    margin-bottom: 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--rule);
-  }
-  .nutrient-row {
-    display: grid;
-    grid-template-columns: 180px 120px 1fr;
-    gap: 20px;
-    align-items: center;
-    padding: 7px 0;
-    font-size: 12px;
-    border-bottom: 1px solid var(--rule-light);
-  }
-  .nutrient-row:last-child {
-    border-bottom: none;
-  }
-  .nutrient-header {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--fg3);
-    font-weight: 600;
-    padding: 4px 0 10px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  .nutrient-label {
-    color: var(--fg);
-    font-weight: 500;
-  }
-  .nutrient-header .nutrient-label {
-    font-weight: 600;
-  }
-  .nutrient-total {
-    text-align: right;
-    color: var(--fg2);
-    font-size: 12px;
-    font-variant-numeric: tabular-nums;
-  }
-  .nutrient-structure {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .molecular-formula {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--fg2);
-    font-weight: 500;
-    letter-spacing: -0.3px;
-  }
-  .molecular-formula sub {
-    font-size: 0.75em;
-    vertical-align: sub;
-  }
-  .element-symbol {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: var(--fg);
-    color: var(--bg);
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: var(--mono);
-  }
-  .no-structure {
-    color: var(--fg3);
-    font-size: 11px;
-  }
+<aside class="side-info left">
+  <div class="info-widget">
+    <h3>Now</h3>
+    <p>Reading: <em>The Baroque Cycle</em> by Neal Stephenson, <em>The Moon Is a Harsh Mistress</em> by Robert A. Heinlein</p>
+    <p>Working: Karl Popper's epistemology</p>
+    <p>Building: at1a v0.3 health tracker</p>
+    <p><a href="/now">View past now entries →</a></p>
+  </div>
+</aside>
 
-  /* Nutrient Heatmap Styles - GitHub style */
-  .heatmap-container {
-    max-width: 680px;
-    margin: 24px auto;
-  }
-  .heatmap-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--fg2);
-    margin-bottom: 12px;
-  }
-  .nutrient-heatmap {
-    display: grid;
-    grid-template-columns: repeat(13, 12px);
-    gap: 3px;
-    margin-bottom: 12px;
-  }
-  .heatmap-cell {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: transform 0.1s ease;
-    position: relative;
-  }
-  .heatmap-cell:hover {
-    transform: scale(1.3);
-    outline: 1px solid var(--fg);
-    z-index: 10;
-  }
-  .heatmap-tooltip {
-    position: fixed;
-    background: var(--fg);
-    color: var(--bg);
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 500;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    display: none;
-  }
-  .heatmap-tooltip.visible {
-    display: block;
-  }
-  /* Intensity levels - 5 levels like GitHub */
-  .heatmap-cell[data-level="0"] {
-    background: #E8E6E0;
-  }
-  .heatmap-cell[data-level="1"] {
-    background: #C4C0B4;
-  }
-  .heatmap-cell[data-level="2"] {
-    background: #9B9689;
-  }
-  .heatmap-cell[data-level="3"] {
-    background: #6B6760;
-  }
-  .heatmap-cell[data-level="4"] {
-    background: #1B1B18;
-  }
-  .dark .heatmap-cell[data-level="0"] {
-    background: #1e1e1c;
-  }
-  .dark .heatmap-cell[data-level="1"] {
-    background: #3d3d3a;
-  }
-  .dark .heatmap-cell[data-level="2"] {
-    background: #6b6b66;
-  }
-  .dark .heatmap-cell[data-level="3"] {
-    background: #a8a8a0;
-  }
-  .dark .heatmap-cell[data-level="4"] {
-    background: #E8E6E0;
-  }
-  .heatmap-legend {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 10px;
-    color: var(--fg3);
-    margin-top: 12px;
-  }
-  .legend-scale {
-    display: flex;
-    gap: 3px;
-  }
-  .legend-cell {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
-  }
-  .legend-cell[data-level="0"] {
-    background: #E8E6E0;
-  }
-  .legend-cell[data-level="1"] {
-    background: #C4C0B4;
-  }
-  .legend-cell[data-level="2"] {
-    background: #9B9689;
-  }
-  .legend-cell[data-level="3"] {
-    background: #6B6760;
-  }
-  .legend-cell[data-level="4"] {
-    background: #1B1B18;
-  }
-  .dark .legend-cell[data-level="0"] {
-    background: #1e1e1c;
-  }
-  .dark .legend-cell[data-level="1"] {
-    background: #3d3d3a;
-  }
-  .dark .legend-cell[data-level="2"] {
-    background: #6b6b66;
-  }
-  .dark .legend-cell[data-level="3"] {
-    background: #a8a8a0;
-  }
-  .dark .legend-cell[data-level="4"] {
-    background: #E8E6E0;
-  }
-  .heatmap-comparison {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    max-width: 680px;
-    margin: 24px auto;
-  }
-  @media (max-width: 600px) {
-    .heatmap-comparison {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* Tabs for different nutrient categories */
-  .nutrient-tabs{
-    display:flex;
-    gap:6px;
-    margin-bottom:20px;
-    border-bottom:1px solid #E2DCC9;
-    padding-bottom:8px;
-  }
-  .nutrient-tabs button{
-    font-family:var(--mono);
-    font-size:12px;
-    padding:6px 12px;
-    background:transparent;
-    border:1px solid #E2DCC9;
-    color:#7A7066;
-    cursor:pointer;
-    border-radius:3px;
-    transition:all 0.2s;
-  }
-  .nutrient-tabs button:hover{ background:#F5F3ED; }
-  .nutrient-tabs button.active{
-    background:#1B1B18;
-    color:#F2EDE1;
-    border-color:#1B1B18;
-  }
-
-  .tab-content{ display:none; }
-  .tab-content.active{ display:block; }
-
-  .nutrient-chart .group{ margin-bottom:22px; }
-  .nutrient-chart .group h4{
-    font-size:14px;
-    font-weight:600;
-    margin:0 0 8px;
-    font-variant-caps:small-caps;
-    letter-spacing:0.04em;
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
-  .nutrient-chart .group h4 .rda{
-    font-size:11px;
-    font-weight:400;
-    color:#7A7066;
-    font-variant-caps:normal;
-    letter-spacing:0;
-  }
-  .nutrient-chart .row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:5px;
-    font-size:13.5px;
-  }
-  .nutrient-chart .row .name{ width:64px; flex:none; }
-  .nutrient-chart .row.potato .name{ font-weight:600; }
-  .nutrient-chart .track{ flex:1; height:14px; background:#E2DCC9; border-radius:2px; }
-  .nutrient-chart .fill{ height:100%; background:#A9A092; border-radius:2px; transition:width 0.3s ease; }
-  .nutrient-chart .row.potato .fill{ background:#1B1B18; }
-  .nutrient-chart .val{
-    min-width:56px;
-    flex:none;
-    text-align:right;
-    color:#5b5650;
-    font-size:12.5px;
-    display:flex;
-    align-items:baseline;
-    justify-content:flex-end;
-    gap:4px;
-  }
-  .nutrient-chart .val .percent{
-    font-size:10.5px;
-    color:#7A7066;
-  }
-  .nutrient-chart .note{
-    font-size:12px;
-    color:#7A7066;
-    margin-top:20px;
-    line-height:1.6;
-    padding-top:16px;
-    border-top:1px solid #E2DCC9;
-  }
-  /* ====== end copy block ====== */
-</style>
-
-<div class="nutrient-chart">
-  <p class="eyebrow">Nutritional Profile — 500g Potato</p>
-
-  <!--<p class="section-intro">500g of potato provides <strong>over 40 different nutrients</strong>.</p>-->
-
-  <!-- Completeness chart - shows all nutrients -->
-  <div id="potato-completeness"></div>
-
-  <p class="note">Source: USDA FoodData Central (FDC ID 170026). Values for 500g potato, raw with skin (approximately 385 calories).</p>
-</div>
-
-<!-- Load chart library and data -->
-<script src="charts.js"></script>
-<script src="nutrition-data.js"></script>
-<script>
-  // Generate the comprehensive completeness chart
-  ChartLib.createCompletenessChart('potato-completeness', nutritionData.allNutrients);
-</script>
-
-<!-- Nutrient Completeness Heatmap Comparison -->
-<div class="nutrient-chart">
-  <p class="eyebrow">Nutritional Completeness Comparison — 2500 Calories</p>
-
-  <p class="section-intro">Each square represents one essential nutrient. Darker = more complete. See how potato compares to rice as a single-food staple.</p>
-
-  <div class="heatmap-comparison">
-    <div class="heatmap-container">
-      <div class="heatmap-label">Pure Potato Diet (2500 cal)</div>
-      <div id="potato-heatmap"></div>
-    </div>
-
-    <div class="heatmap-container">
-      <div class="heatmap-label">Pure Rice Diet (2500 cal)</div>
-      <div id="rice-heatmap"></div>
-    </div>
+<aside class="side-info right">
+  <div class="progress-bar">
+    <div class="progress-bar-fill"></div>
   </div>
 
-  <p class="note">Each cell represents one of 40+ essential nutrients. Brightness shows % of RDA met (0-25% = lightest, 75%+ = darkest). Notice: rice has MANY light/empty squares (missing Vitamin C, A, D, E, K, B12 and deficient in most minerals). Potato has only 3 missing nutrients (B12, A, D) but provides substantial amounts of nearly everything else—demonstrating true nutritional completeness from a single food.</p>
-</div>
-
-<!-- Realistic Diet Comparison -->
-<div class="nutrient-chart">
-  <p class="eyebrow">Realistic Minimal Diets — 2500 Calories</p>
-
-  <p class="section-intro">Adding just 1.2L low-fat milk + sunlight makes both more realistic. See how salted potato becomes nearly complete while rice still has major gaps.</p>
-
-  <div class="heatmap-comparison">
-    <div class="heatmap-container">
-      <div class="heatmap-label">Salted Potato + 1.2L Milk + Sun</div>
-      <div id="potato-milk-heatmap"></div>
+  <div class="info-widget">
+    <div class="meta-item">
+      <span class="meta-label">Section</span>
+      <span id="current-section">—</span>
     </div>
-
-    <div class="heatmap-container">
-      <div class="heatmap-label">Rice + 1.2L Milk + Sun</div>
-      <div id="rice-milk-heatmap"></div>
+    <div class="meta-item">
+      <span class="meta-label">Local Time</span>
+      <span id="local-time">—</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Last Updated</span>
+      <span>2026-07-06</span>
     </div>
   </div>
+</aside>
 
-  <p class="note">Both diets: 2000 cal base food + 500 cal low-fat milk (1.2L) + 30 min daily sun exposure. Salted potato + milk + sun = only 1 minor deficiency (Vitamin A at ~67% RDA). Rice + milk + sun = still missing Vitamin C, E, K entirely and deficient in potassium, magnesium, and other minerals. <strong>To make potato diet 100% complete:</strong> Add ~50g cheese (fills Vitamin A, boosts K) + small amount of greens broth boiled long to remove antinutrients (fills Vitamin K). This creates a nutritionally complete diet from just 4-5 whole foods.</p>
+<div class="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <img src="" alt="">
+  </div>
 </div>
 
 <script>
-  // Generate heatmaps for single-food comparison
-  ChartLib.createNutrientHeatmap('potato-heatmap', nutritionData.allNutrients, 2500, 385);
-  ChartLib.createNutrientHeatmap('rice-heatmap', riceData, 2500, 2500); // Rice data already at 2500 cal
+  // Lightbox functionality
+  const lightbox = document.querySelector('.lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  const lightboxClose = lightbox.querySelector('.lightbox-close');
+  const galleries = document.querySelectorAll('.side-gallery');
+  const galleryImages = document.querySelectorAll('.side-gallery img');
+  const infoWidgets = document.querySelectorAll('.side-info');
+  const progressBarFill = document.querySelector('.progress-bar-fill');
+  const currentSectionSpan = document.getElementById('current-section');
+  const localTimeSpan = document.getElementById('local-time');
 
-  // Generate realistic diet heatmaps with milk + sunlight
-  // Potato: 2000 cal potato (from 385 cal base) + 500 cal milk + sunlight
-  const potatoMilkNutrients = ChartLib._combineNutrients(nutritionData.allNutrients, milkData, 2000, 385, true);
-  // Rice: 2000 cal rice (from 2500 cal base) + 500 cal milk + sunlight
-  const riceMilkNutrients = ChartLib._combineNutrients(riceData, milkData, 2000, 2500, true);
+  // Hide galleries / show info widgets when scrolling
+  let lastScroll = 0;
 
-  ChartLib.createNutrientHeatmap('potato-milk-heatmap', potatoMilkNutrients, 2500, 2500);
-  ChartLib.createNutrientHeatmap('rice-milk-heatmap', riceMilkNutrients, 2500, 2500);
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
 
-  // Add tooltip functionality
-  const tooltip = document.createElement('div');
-  tooltip.className = 'heatmap-tooltip';
-  document.body.appendChild(tooltip);
-
-  document.querySelectorAll('.heatmap-cell').forEach(cell => {
-    cell.addEventListener('mouseenter', (e) => {
-      const nutrient = cell.dataset.nutrient;
-      const percent = cell.dataset.percent;
-      const value = cell.dataset.value;
-      const unit = cell.dataset.unit;
-      tooltip.textContent = `${nutrient}: ${value}${unit} (${percent}%)`;
-      tooltip.classList.add('visible');
+    // Toggle galleries and info widgets
+    galleries.forEach(gallery => {
+      if (currentScroll > 100) {
+        gallery.classList.add('hidden');
+      } else {
+        gallery.classList.remove('hidden');
+      }
     });
 
-    cell.addEventListener('mousemove', (e) => {
-      tooltip.style.left = (e.clientX + 10) + 'px';
-      tooltip.style.top = (e.clientY + 10) + 'px';
+    infoWidgets.forEach(widget => {
+      if (currentScroll > 100) {
+        widget.classList.add('visible');
+      } else {
+        widget.classList.remove('visible');
+      }
     });
 
-    cell.addEventListener('mouseleave', () => {
-      tooltip.classList.remove('visible');
+    // Update progress bar
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (currentScroll / docHeight) * 100;
+    progressBarFill.style.height = scrollPercent + '%';
+
+    // Update current section
+    const sections = document.querySelectorAll('section');
+    let currentSection = '';
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 150 && rect.bottom >= 150) {
+        currentSection = section.querySelector('h2')?.textContent || '';
+      }
+    });
+    currentSectionSpan.textContent = currentSection || '—';
+
+    lastScroll = currentScroll;
+  });
+
+  // Update local time (Melbourne timezone)
+  function updateTime() {
+    const now = new Date();
+    const melbourneTime = new Intl.DateTimeFormat('en-AU', {
+      timeZone: 'Australia/Melbourne',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    }).format(now);
+    localTimeSpan.textContent = melbourneTime;
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('active');
     });
   });
-</script>
 
-
-</body>
-</html>
-
-</article>
-<!--
-  <p>Second paragraph. Inline <code>code</code> looks like this.</p>
-
-  <h3>Subheading</h3>
-
-  <p>More text under a subheading.</p>
-
-  -->
-<!--
-  <figure>
-    <img src="images/example.png" alt="Description">
-    <figcaption>Fig 1 — Caption for the image or chart.</figcaption>
-  </figure>
-
-  <pre><code>// code block
-const x = 1;</code></pre>
-
-  <table>
-    <thead><tr><th>Column</th><th>Column</th><th>Column</th></tr></thead>
-    <tbody>
-      <tr><td>Data</td><td>Data</td><td>Data</td></tr>
-      <tr><td>Data</td><td>Data</td><td>Data</td></tr>
-    </tbody>
-  </table>
-
-  <aside>Footnote or aside text.</aside>
-</article>
-
--->
-
-<!-- 
-<article></article>
--->
-
-
-<div class="archive-link">
-  <a href="writing.html">all writing &rarr;</a>
-</div>
-
-<script>
-(function () {
-  const html = document.documentElement;
-  const btn = document.getElementById('theme-toggle');
-  let canvas, ctx;
-
-  function draw() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const n = Math.floor((canvas.width * canvas.height) / 4000);
-    for (let i = 0; i < n; i++) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      const r = Math.random() * 0.8 + 0.2;
-      const a = Math.random() * 0.5 + 0.1;
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${a})`;
-      ctx.fill();
+  // Close on background click
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
     }
-  }
+  });
 
-  function mountStars() {
-    if (canvas) return;
-    canvas = document.createElement('canvas');
-    Object.assign(canvas.style, {
-      position: 'fixed', inset: '0',
-      width: '100%', height: '100%',
-      pointerEvents: 'none', zIndex: '-1'
-    });
-    ctx = canvas.getContext('2d');
-    document.body.prepend(canvas);
-    draw();
-    window.addEventListener('resize', draw);
-  }
+  // Close on X button click
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
 
-  function unmountStars() {
-    if (!canvas) return;
-    canvas.remove(); canvas = null; ctx = null;
-    window.removeEventListener('resize', draw);
-  }
-
-  function setDark(on) {
-    html.classList.toggle('dark', on);
-    btn.textContent = on ? 'light' : 'dark';
-    on ? mountStars() : unmountStars();
-    localStorage.setItem('theme', on ? 'dark' : 'light');
-  }
-
-  // init: saved preference, else OS
-  const saved = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  setDark(saved ? saved === 'dark' : prefersDark);
-
-  btn.addEventListener('click', () => setDark(!html.classList.contains('dark')));
-})();
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+    }
+  });
 </script>
 
 </body>
