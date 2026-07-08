@@ -125,21 +125,17 @@ details.more summary{cursor:pointer;color:var(--link);list-style:none;text-decor
 details.more summary::-webkit-details-marker{display:none;}
 details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 
-/* ---------- side galleries ---------- */
+/* ---------- side gallery ---------- */
 
 .side-gallery{
   position:fixed;
   top:64px;
-  width:280px;
-  display:flex;
-  flex-direction:column;
-  gap:22px;
+  width:320px;
   opacity:1;
   transition:opacity 0.4s ease;
   pointer-events:auto;
 }
 
-.side-gallery.left{left:40px;}
 .side-gallery.right{right:40px;}
 
 .side-gallery.hidden{
@@ -147,24 +143,40 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   pointer-events:none;
 }
 
+/* framed like a picture on a wall — full original image (no cropping),
+   a paper-coloured mat, then a brass/gold moulding built from stacked
+   box-shadows (mitred corners for free, no border-image quirks), and a
+   soft cast shadow so it reads as "hung" rather than pasted on top */
+
 .side-gallery img{
+  display:block;
   width:100%;
   height:auto;
-  display:block;
-  border:1px solid var(--line);
-  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  box-sizing:border-box;
   cursor:pointer;
-  transition:transform 0.2s ease, box-shadow 0.2s ease;
+  padding:16px;
+  background:var(--paper);
+  box-shadow:
+    0 0 0 1px rgba(26,22,10,0.5),
+    0 0 0 3px #8a6a2f,
+    0 0 0 10px #cfa54d,
+    0 0 0 11px #7d5f29,
+    0 0 0 12px rgba(26,22,10,0.6),
+    0 22px 40px -12px rgba(0,0,0,0.38),
+    0 8px 18px -6px rgba(0,0,0,0.22);
+  transition:transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .side-gallery img:hover{
-  transform:scale(1.02);
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-
-@media (prefers-color-scheme: dark){
-  .side-gallery img{box-shadow:0 2px 8px rgba(0,0,0,0.3);}
-  .side-gallery img:hover{box-shadow:0 4px 12px rgba(0,0,0,0.5);}
+  transform:translateY(-3px);
+  box-shadow:
+    0 0 0 1px rgba(26,22,10,0.5),
+    0 0 0 3px #96762f,
+    0 0 0 10px #ddb45c,
+    0 0 0 11px #7d5f29,
+    0 0 0 12px rgba(26,22,10,0.6),
+    0 28px 48px -12px rgba(0,0,0,0.42),
+    0 10px 22px -6px rgba(0,0,0,0.26);
 }
 
 /* hide on smaller screens */

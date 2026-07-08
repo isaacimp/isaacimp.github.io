@@ -193,18 +193,10 @@
 -->
 </main>
 
-<aside class="side-gallery left">
-  <!-- Left side images -->
-  <img src="wallhaven-39l9w9.jpg" alt="">
-  <img src="20260404_075508.jpg" alt="">
-  <img src="Newton-WilliamBlake.jpg" alt="">
-</aside>
-
+<!-- One image, right side only, picked at random on each load — see the
+     gallery pool + shuffle in the script below -->
 <aside class="side-gallery right">
-  <!-- Right side images -->
-  <img src="20260217_173157.jpg" alt="">
-  <img src="HKrWNULXoAAKi7c.jpeg" alt="">
-  <img src="C15_Objectif p56-bc color.png" alt="">
+  <img alt="">
 </aside>
 
 <aside class="side-info left">
@@ -246,6 +238,18 @@
 </div>
 
 <script>
+  // Side gallery — one random image per side, reshuffled on every page load
+  const galleryPool = [
+    'wallhaven-39l9w9.jpg',
+    '20260404_075508.jpg',
+    'Newton-WilliamBlake.jpg',
+    '20260217_173157.jpg',
+    'HKrWNULXoAAKi7c.jpeg',
+    'C15_Objectif p56-bc color.png'
+  ];
+  const rightGalleryImg = document.querySelector('.side-gallery.right img');
+  if (rightGalleryImg) rightGalleryImg.src = galleryPool[Math.floor(Math.random() * galleryPool.length)];
+
   // Lightbox functionality
   const lightbox = document.querySelector('.lightbox');
   const lightboxImg = lightbox.querySelector('img');
@@ -289,7 +293,7 @@
   window.addEventListener('scroll', () => {
     const currentScroll = window.scrollY;
 
-    // Toggle galleries and info widgets
+    // Toggle gallery and info widgets
     galleries.forEach(gallery => {
       if (currentScroll > 100) {
         gallery.classList.add('hidden');
