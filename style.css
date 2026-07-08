@@ -143,41 +143,70 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   pointer-events:none;
 }
 
-/* framed like a picture on a wall — full original image (no cropping),
-   a paper-coloured mat, then a brass/gold moulding built from stacked
-   box-shadows (mitred corners for free, no border-image quirks), and a
-   soft cast shadow so it reads as "hung" rather than pasted on top */
+/* framed like an old gallery piece — full original image (no cropping),
+   a paper-coloured mat, a fluted gold moulding with a carved bevel, and
+   small corner medallions, then a soft cast shadow so it reads as
+   "hung on the wall" rather than pasted on top of the page */
 
-.side-gallery img{
+.side-gallery .frame{
+  position:relative;
+  padding:20px;
+  background:repeating-linear-gradient(
+    90deg,
+    #a9793a 0px, #a9793a 2px,
+    #e0bb6f 2px, #e0bb6f 4px,
+    #c99a4e 4px, #c99a4e 6px
+  );
+  box-shadow:
+    inset 0 0 0 2px rgba(255,247,222,0.45),
+    inset 0 0 0 3px rgba(0,0,0,0.2),
+    inset 0 2px 4px rgba(255,247,222,0.5),
+    inset 0 -2px 4px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(26,22,10,0.6),
+    0 22px 42px -12px rgba(0,0,0,0.4),
+    0 8px 18px -6px rgba(0,0,0,0.24);
+  transition:transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.side-gallery .frame:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,247,222,0.55),
+    inset 0 0 0 3px rgba(0,0,0,0.2),
+    inset 0 2px 4px rgba(255,247,222,0.6),
+    inset 0 -2px 4px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(26,22,10,0.6),
+    0 28px 50px -12px rgba(0,0,0,0.44),
+    0 10px 22px -6px rgba(0,0,0,0.28);
+}
+
+.side-gallery .frame img{
   display:block;
   width:100%;
   height:auto;
   box-sizing:border-box;
   cursor:pointer;
-  padding:16px;
+  padding:14px;
   background:var(--paper);
-  box-shadow:
-    0 0 0 1px rgba(26,22,10,0.5),
-    0 0 0 3px #8a6a2f,
-    0 0 0 10px #cfa54d,
-    0 0 0 11px #7d5f29,
-    0 0 0 12px rgba(26,22,10,0.6),
-    0 22px 40px -12px rgba(0,0,0,0.38),
-    0 8px 18px -6px rgba(0,0,0,0.22);
-  transition:transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.2);
 }
 
-.side-gallery img:hover{
-  transform:translateY(-3px);
-  box-shadow:
-    0 0 0 1px rgba(26,22,10,0.5),
-    0 0 0 3px #96762f,
-    0 0 0 10px #ddb45c,
-    0 0 0 11px #7d5f29,
-    0 0 0 12px rgba(26,22,10,0.6),
-    0 28px 48px -12px rgba(0,0,0,0.42),
-    0 10px 22px -6px rgba(0,0,0,0.26);
+/* small carved corner medallions sitting on top of the moulding */
+
+.frame-corner{
+  position:absolute;
+  width:26px;
+  height:26px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='5' fill='%23e8c874' stroke='%235f4720' stroke-width='1.2'/%3E%3Cpath d='M12 1 L12 6 M12 18 L12 23 M1 12 L6 12 M18 12 L23 12 M4.5 4.5 L8 8 M16 16 L19.5 19.5 M19.5 4.5 L16 8 M8 16 L4.5 19.5' stroke='%235f4720' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size:contain;
+  background-repeat:no-repeat;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,0.35));
+  pointer-events:none;
 }
+.frame-corner.tl{top:-5px;left:-5px;}
+.frame-corner.tr{top:-5px;right:-5px;}
+.frame-corner.bl{bottom:-5px;left:-5px;}
+.frame-corner.br{bottom:-5px;right:-5px;}
 
 /* hide on smaller screens */
 @media (max-width:1400px){ .side-gallery{display:none;} }
