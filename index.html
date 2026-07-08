@@ -56,16 +56,16 @@
 
   .brand{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
 
-  .lemniscate{display:block;width:220px;height:169px;flex-shrink:0;color:var(--ink);}
+  .lemniscate{display:block;width:220px;height:169px;flex-shrink:0;color:var(--link);opacity:0.85;}
   @media (max-width:700px){ .lemniscate{width:170px;height:131px;} }
   @media (max-width:420px){ .lemniscate{width:150px;height:115px;} }
 
-  .id h1{font-size:19px;font-weight:600;}
+  .id h1{font-size:19px;font-weight:600;letter-spacing:0.2px;}
   .id .role{margin-top:3px;font-size:13px;font-style:italic;color:var(--ink-soft);}
 
-  .jumplinks{margin-top:0px;font-size:15px;}
-  .jumplinks a{color:var(--ink-soft);text-decoration:none;}
-  .jumplinks a:hover{color:var(--link);text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);}
+  .jumplinks{display:flex;gap:22px;margin-top:0px;font-size:14px;}
+  .jumplinks a{color:var(--ink-soft);text-decoration:none;display:inline-block;transition:color .2s ease, transform .2s ease;}
+  .jumplinks a:hover{color:var(--link);transform:translateY(-1px);}
 
   /* ---------- intro ---------- */
 
@@ -75,18 +75,41 @@
   /* ---------- sections ---------- */
 
   section{padding:34px 0 6px;scroll-margin-top:16px;transition:background-color .4s ease;}
-  section:target{background:color-mix(in srgb, var(--ink) 4%, transparent);}
+  section:target{background:color-mix(in srgb, var(--link) 5%, transparent);}
 
-  section h2{font-size:19px;font-weight:600;margin-bottom:14px;}
+  section h2{
+    font-size:12.5px;
+    font-weight:500;
+    letter-spacing:2.4px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+  }
 
   section > p{margin-bottom:10px;max-width:58ch;}
 
-  /* plain flowing lists — the core content pattern for everything */
+  /* real content lists — a small colour mark replaces bullets/hyphens */
+
+  ul.lead{list-style:none;max-width:58ch;}
+  ul.lead li{position:relative;padding-left:20px;margin-bottom:10px;line-height:1.72;}
+  ul.lead li:last-child{margin-bottom:0;}
+  ul.lead li::before{
+    content:'';
+    position:absolute;
+    left:0;
+    top:0.68em;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--link);
+    opacity:0.7;
+  }
+
+  /* plain flowing lists — spacing and colour carry the separation, not a rule */
 
   ul.plain{list-style:none;}
-  ul.plain li{padding:10px 0;max-width:60ch;transition:background-color .4s ease;scroll-margin-top:16px;}
-  ul.plain li + li{border-top:1px solid var(--line);}
-  ul.plain li:target{background:color-mix(in srgb, var(--ink) 4%, transparent);}
+  ul.plain li{padding:16px 0;max-width:60ch;transition:background-color .4s ease, color .3s ease;scroll-margin-top:16px;}
+  ul.plain li:target{background:color-mix(in srgb, var(--link) 6%, transparent);}
 
   details.more{margin-top:6px;font-size:17px;}
   details.more summary{cursor:pointer;color:var(--link);list-style:none;text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);}
@@ -162,10 +185,7 @@
   }
 
   .info-widget{
-    padding:12px 0;
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    background:transparent;
+    padding:0;
   }
 
   .info-widget h3{
@@ -192,34 +212,38 @@
   }
 
   .info-widget a{
-    color:var(--ink);
+    color:var(--link);
     text-decoration:none;
-    border-bottom:1px solid var(--ink);
-    opacity:0.6;
+    opacity:0.75;
     font-size:12px;
-    transition:opacity 0.2s ease;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    display:inline-block;
   }
 
   .info-widget a:hover{
     opacity:1;
+    transform:translateX(2px);
   }
 
   .progress-bar{
-    width:1px;
+    width:3px;
     height:180px;
-    background:transparent;
-    border-left:1px solid var(--line);
+    background:color-mix(in srgb, var(--ink) 8%, transparent);
+    border-radius:2px;
     position:relative;
     margin:0 auto;
+    overflow:hidden;
   }
 
   .progress-bar-fill{
     position:absolute;
     top:0;
-    left:-1px;
-    width:1px;
+    left:0;
+    width:100%;
     height:0%;
-    background:var(--ink);
+    background:var(--link);
+    opacity:0.8;
+    border-radius:2px;
     transition:height 0.1s ease;
   }
 
@@ -315,10 +339,7 @@
   .mobile-extras{
     display:none;
     padding:24px 0;
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
     margin-bottom:24px;
-    background:color-mix(in srgb, var(--ink) 2%, transparent);
   }
 
   .mobile-extras.active{display:block;}
@@ -340,9 +361,7 @@
   }
 
   .mobile-time{
-    margin-top:18px;
-    padding-top:18px;
-    border-top:1px solid var(--line);
+    margin-top:22px;
     font-size:15px;
     font-family:monospace;
   }
@@ -354,8 +373,7 @@
   }
 
   .mobile-gallery{
-    padding-top:24px;
-    border-top:1px solid var(--line);
+    margin-top:28px;
   }
 
   .mobile-gallery h3{
@@ -395,6 +413,132 @@
     #mobile-extras-toggle{display:none !important;}
   }
 
+  /* ---------- article content formatting ---------- */
+  /* Add class="article-content" to any <article> or <div> and just write
+     plain p/h2/h3/ul/blockquote/etc inside it — everything below is automatic. */
+
+  .article-content{max-width:68ch;}
+
+  .article-content > p:first-of-type{font-size:1.07em;}
+
+  .article-content h2{font-size:24px;font-weight:600;margin-top:48px;margin-bottom:20px;line-height:1.3;letter-spacing:-0.01em;}
+  .article-content h3{font-size:20px;font-weight:600;margin-top:36px;margin-bottom:16px;letter-spacing:-0.01em;}
+  .article-content h2:first-child, .article-content h3:first-child{margin-top:0;}
+
+  .article-content p{margin-bottom:24px;line-height:1.8;}
+  .article-content p:last-child{margin-bottom:0;}
+
+  .article-content strong{font-weight:600;}
+
+  .article-content ul, .article-content ol{margin-bottom:24px;padding-left:26px;}
+  .article-content li{margin-bottom:10px;line-height:1.8;padding-left:4px;}
+  .article-content li:last-child{margin-bottom:0;}
+  .article-content li::marker{color:var(--ink-soft);}
+
+  .article-content blockquote{
+    position:relative;
+    margin:36px 0;
+    padding:0 0 0 40px;
+    color:var(--ink-soft);
+    font-style:italic;
+    font-size:1.08em;
+    line-height:1.75;
+  }
+  .article-content blockquote::before{
+    content:'\201C';
+    position:absolute;
+    left:0;
+    top:-0.1em;
+    font-family:var(--serif);
+    font-style:normal;
+    font-size:2.6em;
+    line-height:1;
+    color:var(--link);
+    opacity:0.4;
+  }
+  .article-content blockquote p{margin-bottom:12px;}
+  .article-content blockquote p:last-child{margin-bottom:0;}
+
+  .article-content code{
+    font-family:'SF Mono', Monaco, monospace;
+    font-size:0.85em;
+  }
+
+  /* no box, no border, no accent colour — the monospace font and the
+     indent are the only signal that this is code */
+
+  .article-content pre{
+    margin:32px 0;
+    padding-left:24px;
+    font-size:14px;
+    line-height:1.75;
+    overflow-x:auto;
+  }
+
+  .article-content pre code{
+    font-family:'SF Mono', Monaco, monospace;
+  }
+
+  .article-content hr{
+    margin:48px 0;
+    border:none;
+    height:2px;
+    width:48px;
+    background:linear-gradient(to right, var(--link), transparent);
+    opacity:0.6;
+  }
+
+  .article-content img{max-width:100%;height:auto;display:block;border-radius:6px;}
+
+  .article-content figure{margin:32px 0;}
+  .article-content figure img{margin:0;}
+  .article-content figcaption{margin-top:10px;font-size:14px;color:var(--ink-soft);text-align:center;}
+
+  .article-content table{width:100%;border-collapse:collapse;margin:32px 0;font-size:16px;}
+  .article-content th, .article-content td{text-align:left;padding:10px 14px;}
+  .article-content th{font-weight:600;color:var(--ink);}
+  .article-content td{color:var(--ink-soft);}
+  .article-content tr:nth-child(even) td{background:color-mix(in srgb, var(--ink) 4%, transparent);}
+
+  /* article blocks stacked in a section, e.g. #articles — whitespace and a
+     small colour mark carry the separation, not a rule across the page */
+
+  article.article-content{padding:44px 0;}
+  article.article-content:first-of-type{padding-top:0;}
+
+  .article-header{
+    display:grid;
+    grid-template-columns:1fr auto;
+    column-gap:20px;
+    margin-bottom:26px;
+  }
+  .article-header::before{
+    content:'';
+    grid-column:1 / -1;
+    width:28px;
+    height:2px;
+    margin-bottom:16px;
+    background:var(--link);
+    opacity:0.55;
+  }
+  .article-header h3{grid-column:1;align-self:baseline;font-size:23px;}
+
+  @media (max-width:480px){
+    .article-header{grid-template-columns:1fr;}
+    .article-meta{grid-column:1;margin-top:6px;}
+  }
+
+  .article-meta{
+    grid-column:2;
+    align-self:baseline;
+    font-size:14px;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+
+  .tag{color:var(--link);font-style:normal;}
+  .tag::before{content:'— ';}
+
 </style>
 </head>
 <body>
@@ -415,13 +559,13 @@
       </svg>
     </div>
 
-    <p class="jumplinks">
-      <a href="#about">about</a> ·
-      <a href="#projects">projects</a> ·
-      <a href="#articles">articles</a> ·
-      <a href="#log">log</a> ·
+    <nav class="jumplinks">
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#articles">articles</a>
+      <a href="#log">log</a>
       <a href="#" id="mobile-extras-toggle" class="mobile-only">more</a>
-    </p>
+    </nav>
   </header>
 
   <!-- Mobile extras section (now info + images) -->
@@ -452,10 +596,12 @@
 
   <section id="about">
     <h2>About</h2>
-    <p>Hello, I'm Isaac. Right now I am working on:<br>
-      - Making health tracking easier and more integrated into daily life to help people understand the patterns of their symptoms and get to the root causes with my company: <em>at1a</em>.<br>
-      - Working through the epistimology of Karl Popper.<br>
-      - Reading: The Baroque Cycle by Neal Stephenson and The Moon Is a Harsh Mistress by Robert A. Heinlein.</p>
+    <p>Hello, I'm Isaac. Right now I am working on:</p>
+    <ul class="lead">
+      <li>Making health tracking easier and more integrated into daily life to help people understand the patterns of their symptoms and get to the root causes with my company: <em>at1a</em>.</li>
+      <li>Working through the epistemology of Karl Popper.</li>
+      <li>Reading: <em>The Baroque Cycle</em> by Neal Stephenson and <em>The Moon Is a Harsh Mistress</em> by Robert A. Heinlein.</li>
+    </ul>
   </section>
 
   <section id="projects">
@@ -466,7 +612,62 @@
 
   <section id="articles">
     <h2>Articles</h2>
-    <p>Coming soon.</p>
+    <p>Longer pieces on health tracking, epistemology, and whatever I'm building. Newest first.</p>
+
+    <!--
+      NEW ARTICLE: copy the <article> block below, paste it here (above older
+      articles, so newest stays on top), then edit the id/title/date/tag and
+      write your content as plain p / h3 / ul / blockquote / pre — it's all
+      styled automatically by .article-content. Delete the demo article
+      further down whenever you don't need it as a reference anymore.
+
+      <article id="article-your-slug" class="article-content">
+        <header class="article-header">
+          <h3>Your Article Title</h3>
+          <p class="article-meta"><time datetime="2026-07-08">Jul 8, 2026</time> <span class="tag">category</span></p>
+        </header>
+
+        <p>Opening paragraph — renders slightly larger, like a lede.</p>
+        <p>More paragraphs, <strong>bold</strong>, <em>italic</em>, and <a href="#">links</a> all work as normal.</p>
+
+        <h3>A subheading</h3>
+        <p>Keep going.</p>
+
+        <blockquote><p>A pulled quote or a point worth highlighting.</p></blockquote>
+
+        <ul>
+          <li>Bullet</li>
+          <li>Points</li>
+        </ul>
+
+        <pre><code>const example = "code renders like this";</code></pre>
+      </article>
+    -->
+<!--
+    <article id="article-demo-format" class="article-content">
+      <header class="article-header">
+        <h3>Formatting reference</h3>
+        <p class="article-meta"><time datetime="2026-07-08">Jul 8, 2026</time> <span class="tag">meta</span></p>
+      </header>
+
+      <p>This is a demo article showing everything the <code>.article-content</code> class styles automatically. Delete it once you've written a real first post — or keep it around as a cheat sheet.</p>
+
+      <p>Paragraphs get generous line height and <strong>bold</strong>, <em>italic</em>, and <a href="#">linked</a> text all fall out of normal HTML — no extra markup needed.</p>
+
+      <h3>Subheadings</h3>
+      <p>Use <code>&lt;h3&gt;</code> for section breaks within a post. They get their own spacing rhythm so long articles stay easy to scan.</p>
+
+      <blockquote><p>Blockquotes pick up a large hanging quotation mark instead of a box or a ruled line — for pulled quotes or asides worth setting apart from the main text.</p></blockquote>
+
+      <ul>
+        <li>Plain <code>&lt;ul&gt;</code> and <code>&lt;ol&gt;</code> lists work as expected.</li>
+        <li>Inline <code>code</code> and full code blocks are both styled.</li>
+        <li>A category like <span class="tag">this</span> just needs a <code>&lt;span class="tag"&gt;</code> in the meta line — colour marks it, no box around it.</li>
+      </ul>
+
+      <pre><code>const example = "code blocks get a soft background + rounded corners";</code></pre>
+    </article>
+    -->
   </section>
 
   <section id="log">
