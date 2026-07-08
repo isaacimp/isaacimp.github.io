@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formatting reference — Isaac</title>
+<meta name="description" content="A demo article showing every element the site's article template supports — headings, lists, blockquotes, code, and tags.">
+<link rel="canonical" href="https://isaacmp.xyz/articles/formatting-reference.html">
+<!-- This is a demo/cheat-sheet page, not a real post — kept out of search results. -->
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Formatting reference">
+<meta property="og:description" content="A demo article showing every element the site's article template supports.">
+<meta property="og:url" content="https://isaacmp.xyz/articles/formatting-reference.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Formatting reference">
+<meta name="twitter:description" content="A demo article showing every element the site's article template supports.">
+
+<meta name="theme-color" content="#FAFAF7">
+<meta name="theme-color" content="#17171A" media="(prefers-color-scheme: dark)">
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<main>
+  <a href="../index.html#articles" class="back">&larr; isaacmp.xyz</a>
+
+  <article class="article-content">
+    <header class="article-header">
+      <h3>Formatting reference</h3>
+      <p class="article-meta"><time datetime="2026-07-08">Jul 8, 2026</time> <span class="tag">meta</span></p>
+    </header>
+
+    <p>This is a demo article showing everything the <code>.article-content</code> class styles automatically. Copy <code>articles/template.html</code> to start a real post — this page is just a cheat sheet.</p>
+
+    <p>Paragraphs get generous line height and <strong>bold</strong>, <em>italic</em>, and <a href="https://isaacmp.xyz/">linked</a> text all fall out of normal HTML — no extra markup needed.</p>
+
+    <h3>Subheadings</h3>
+    <p>Use <code>&lt;h3&gt;</code> for section breaks within a post. They get their own spacing rhythm so long articles stay easy to scan.</p>
+
+    <blockquote><p>Blockquotes pick up a large hanging quotation mark instead of a box or a ruled line — for pulled quotes or asides worth setting apart from the main text.</p></blockquote>
+
+    <ul>
+      <li>Plain <code>&lt;ul&gt;</code> and <code>&lt;ol&gt;</code> lists work as expected.</li>
+      <li>Inline <code>code</code> and full code blocks are both styled.</li>
+      <li>A category like <span class="tag">this</span> just needs a <code>&lt;span class="tag"&gt;</code> in the meta line — colour marks it, no box around it.</li>
+    </ul>
+
+    <pre><code>const example = "code blocks are just monospace + an indent";</code></pre>
+
+    <p>Every article lives on its own page under <code>/articles/</code>, with its own title and meta description, so it can actually rank in search — unlike content buried in an anchor on the homepage.</p>
+  </article>
+</main>
+
+</body>
+</html>

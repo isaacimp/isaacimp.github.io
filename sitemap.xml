@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Add a <url> entry here each time you publish a real article (not the
+     noindex template/demo pages) so search engines can find it. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://isaacmp.xyz/</loc>
+  </url>
+</urlset>
