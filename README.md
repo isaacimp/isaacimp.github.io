@@ -22,6 +22,27 @@ If something feels like it deserves its own audience/search traffic, it's an Art
 
 Just add a `<li>` inside the `ul.plain` list in the `#log` section of `index.html` — see the commented-out example markup nearby for the pattern (title link, em-dash, short note, `<em>date, tag</em>`).
 
+## Updating "Now"
+
+The "Now" widget (homepage sidebar + mobile panel) and its full history at
+`/now/` both read from a single file: `now-data.js`. To change what you're
+doing, add a new entry to the **top** of the `NOW_ENTRIES` array — don't edit
+the old ones, that's what makes `/now/` an archive:
+
+```js
+{
+  date: '2026-07-09',
+  html: `
+    <p>Reading: ...</p>
+    <p>Working: ...</p>
+    <p>Building: ...</p>
+  `
+}
+```
+
+The homepage always shows `NOW_ENTRIES[0]`; `/now/` lists all of them,
+newest first, each timestamped. Nothing else needs editing.
+
 ## Adding a new top-level section
 
 ```html

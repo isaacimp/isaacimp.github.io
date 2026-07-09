@@ -9,12 +9,12 @@
 <meta name="robots" content="index, follow">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Isaac Morris-Perrott">
-<meta property="og:description" content="Health-tracking hardware, writing on diet science and epistemology, and whatever else is being built right now.">
+<meta property="og:title" content="Isaac">
+<meta property="og:description" content="Progress, energy, infinity.">
 <meta property="og:url" content="https://isaacmp.xyz/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Isaac Morris-Perrott">
-<meta name="twitter:description" content="Health-tracking hardware, writing on diet science and epistemology, and whatever else is being built right now.">
+<meta name="twitter:title" content="Isaac">
+<meta name="twitter:description" content="Progress, energy, infinity.">
 
 <meta name="theme-color" content="#FAFAF7">
 <meta name="theme-color" content="#17171A" media="(prefers-color-scheme: dark)">
@@ -30,10 +30,10 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Isaac Morris-Perrott",
+  "name": "Isaac",
   "url": "https://isaacmp.xyz/",
-  "jobTitle": "Developer & builder",
-  "description": "Health-tracking hardware, writing on diet science and epistemology."
+  "jobTitle": "Person",
+  "description": "Working on enhancing the human body and brain."
 }
 </script>
 </head>
@@ -70,9 +70,7 @@
   <div id="mobile-extras" class="mobile-extras mobile-only">
     <div class="mobile-now-info">
       <h3>Now</h3>
-      <p>Reading: <em>The Baroque Cycle</em> by Neal Stephenson, <em>The Moon Is a Harsh Mistress</em> by Robert A. Heinlein</p>
-      <p>Working: Karl Popper's epistemology</p>
-      <p>Building: at1a v0.3 health tracker</p>
+      <div id="now-content-mobile"></div>
       <div class="mobile-time">
         <span class="time-label">Local Time:</span>
         <span id="mobile-local-time">—</span>
@@ -196,22 +194,24 @@
 <!-- One image, right side only, picked at random on each load — see the
      gallery pool + shuffle in the script below -->
 <aside class="side-gallery right">
-  <div class="frame">
-    <span class="frame-corner tl" aria-hidden="true"></span>
-    <span class="frame-corner tr" aria-hidden="true"></span>
-    <span class="frame-corner bl" aria-hidden="true"></span>
-    <span class="frame-corner br" aria-hidden="true"></span>
-    <img alt="">
-  </div>
+  <figure class="frame">
+    <div class="outerBevel">
+      <div class="flatSurface">
+        <div class="innerBevel">
+          <div class="mat">
+            <img alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </figure>
 </aside>
 
 <aside class="side-info left">
   <div class="info-widget">
     <h3>Now</h3>
-    <p>Reading: <em>The Baroque Cycle</em> by Neal Stephenson, <em>The Moon Is a Harsh Mistress</em> by Robert A. Heinlein</p>
-    <p>Working: Karl Popper's epistemology</p>
-    <p>Building: at1a v0.3 health tracker</p>
-    <p><a href="/now">View past now entries →</a></p>
+    <div id="now-content"></div>
+    <p><a href="/now/">View past now entries →</a></p>
   </div>
 </aside>
 
@@ -243,6 +243,7 @@
   </div>
 </div>
 
+<script src="now-data.js"></script>
 <script>
   // Side gallery — one random image per side, reshuffled on every page load
   const galleryPool = [
@@ -272,6 +273,17 @@
   const mobileExtras = document.getElementById('mobile-extras');
   const mobileLocalTimeSpan = document.getElementById('mobile-local-time');
   const mobileGalleryImages = document.querySelectorAll('.mobile-gallery-img');
+
+  // "Now" widget is rendered from now-data.js (the same source /now/ reads
+  // from) and cloned into the mobile panel, so there's only one place to edit.
+  const nowContent = document.getElementById('now-content');
+  const nowContentMobile = document.getElementById('now-content-mobile');
+  if (nowContent && typeof NOW_ENTRIES !== 'undefined' && NOW_ENTRIES.length) {
+    nowContent.innerHTML = NOW_ENTRIES[0].html;
+  }
+  if (nowContent && nowContentMobile) {
+    nowContentMobile.innerHTML = nowContent.innerHTML;
+  }
 
   // Flash a section's heading when you jump to it from the nav, then let it fade
   function flashSectionHeading(id) {
