@@ -8,15 +8,16 @@ const NOW_ENTRIES = [
     date: '2026-07-09',
     html: `
       <p>Reading: <em>The Baroque Cycle</em> by Neal Stephenson, <em>The Moon Is a Harsh Mistress</em> by Robert A. Heinlein</p>
-      <p>Working: loggt Voice recorded health and life tracking</p>
+      <p>Solving: loggt Voice recorded health and life tracking</p>
+      <p>I've been working on this site quite a bit recently and trying to clean up the code to make it easier to work with and publish writing and stuff here.</p>
+      <p>I'm also playing a lot of deadlock. I'm Emissary V. I am getting better but I'm in a bit of elo hell at the moment.
       `
   },
   {
     date: '2026-07-08',
     html: `
       <p>Reading: <em>The Baroque Cycle</em> by Neal Stephenson, <em>The Moon Is a Harsh Mistress</em> by Robert A. Heinlein</p>
-      <p>Working: Karl Popper's epistemology</p>
-      <p>Building: at1a v0.3 health tracker</p>
+      <p>Solving: health tracker</p>
     `
   }
 ];
