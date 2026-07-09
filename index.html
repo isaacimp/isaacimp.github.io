@@ -69,7 +69,7 @@
   <!-- Mobile extras section (now info + images) -->
   <div id="mobile-extras" class="mobile-extras mobile-only">
     <div class="mobile-now-info">
-      <h3>Now</h3>
+      <h3>Now <time id="now-timestamp-mobile" class="now-timestamp"></time></h3>
       <div id="now-content-mobile"></div>
       <div class="mobile-time">
         <span class="time-label">Local Time:</span>
@@ -209,7 +209,7 @@
 
 <aside class="side-info left">
   <div class="info-widget">
-    <h3>Now</h3>
+    <h3>Now <time id="now-timestamp" class="now-timestamp"></time></h3>
     <div id="now-content"></div>
     <p><a href="/now/">View past now entries →</a></p>
   </div>
@@ -278,8 +278,15 @@
   // from) and cloned into the mobile panel, so there's only one place to edit.
   const nowContent = document.getElementById('now-content');
   const nowContentMobile = document.getElementById('now-content-mobile');
+  const nowTimestamp = document.getElementById('now-timestamp');
+  const nowTimestampMobile = document.getElementById('now-timestamp-mobile');
   if (nowContent && typeof NOW_ENTRIES !== 'undefined' && NOW_ENTRIES.length) {
     nowContent.innerHTML = NOW_ENTRIES[0].html;
+    [nowTimestamp, nowTimestampMobile].forEach(el => {
+      if (!el) return;
+      el.textContent = NOW_ENTRIES[0].date;
+      el.setAttribute('datetime', NOW_ENTRIES[0].date);
+    });
   }
   if (nowContent && nowContentMobile) {
     nowContentMobile.innerHTML = nowContent.innerHTML;

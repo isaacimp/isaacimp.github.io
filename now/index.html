@@ -45,8 +45,7 @@
     const block = document.createElement('div');
     block.className = 'now-entry';
     block.id = 'now-' + entry.date;
-    const formatted = new Date(entry.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    block.innerHTML = `<p class="now-entry-date"><time datetime="${entry.date}">${formatted}</time></p>${entry.html}`;
+    block.innerHTML = `<p class="now-entry-date"><time datetime="${entry.date}">${entry.date}</time></p>${entry.html}`;
     list.appendChild(block);
   });
 </script>

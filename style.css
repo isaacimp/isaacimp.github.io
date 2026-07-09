@@ -295,6 +295,12 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   font-family:monospace;
 }
 
+.now-timestamp{
+  text-transform:none;
+  letter-spacing:0.3px;
+  margin-left:6px;
+}
+
 .info-widget p{
   font-size:13px;
   line-height:1.7;
@@ -449,6 +455,13 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   font-size:19px;
   font-weight:600;
   margin-bottom:12px;
+}
+
+.mobile-now-info h3 .now-timestamp{
+  font-size:12px;
+  font-weight:400;
+  font-family:monospace;
+  color:var(--ink-soft);
 }
 
 .mobile-now-info p{
