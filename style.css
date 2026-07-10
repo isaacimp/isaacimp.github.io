@@ -439,16 +439,19 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 .mobile-only{display:none;}
 @media (max-width:1400px){ .mobile-only{display:inline;} }
 
+.mobile-only-block{display:none;}
+@media (max-width:1400px){ .mobile-only-block{display:block;} }
+
 .mobile-extras{
   display:none;
-  padding:24px 0;
+  padding:0 0 24px;
   margin-bottom:24px;
 }
 
 .mobile-extras.active{display:block;}
 
 .mobile-now-info{
-  padding:0 0 24px;
+  padding:24px 0;
 }
 
 .mobile-now-info h3{
@@ -520,6 +523,7 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 
 @media (min-width:1401px){
   .mobile-extras{display:none !important;}
+  .mobile-only-block{display:none !important;}
   #mobile-extras-toggle{display:none !important;}
 }
 

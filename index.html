@@ -66,17 +66,18 @@
     </nav>
   </header>
 
-  <!-- Mobile extras section (now info + images) -->
-  <div id="mobile-extras" class="mobile-extras mobile-only">
-    <div class="mobile-now-info">
-      <h3>Now <time id="now-timestamp-mobile" class="now-timestamp"></time></h3>
-      <div id="now-content-mobile"></div>
-      <div class="mobile-time">
-        <span class="time-label">Local Time:</span>
-        <span id="mobile-local-time">—</span>
-      </div>
+  <!-- Now widget — always visible on mobile, independent of the images toggle -->
+  <div class="mobile-now-info mobile-only-block">
+    <h3>Now <time id="now-timestamp-mobile" class="now-timestamp"></time></h3>
+    <div id="now-content-mobile"></div>
+    <div class="mobile-time">
+      <span class="time-label">Local Time:</span>
+      <span id="mobile-local-time">—</span>
     </div>
+  </div>
 
+  <!-- Mobile images — shown only when "more" is toggled -->
+  <div id="mobile-extras" class="mobile-extras mobile-only">
     <div class="mobile-gallery">
       <h3>Images</h3>
       <div class="mobile-gallery-grid">
