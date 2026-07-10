@@ -231,7 +231,7 @@
     </div>
     <div class="meta-item">
       <span class="meta-label">Last Updated</span>
-      <span>2026-07-06</span>
+      <span id="last-updated">2026-07-06</span>
     </div>
   </div>
 </aside>
@@ -376,6 +376,33 @@
       lightbox.classList.add('active');
     });
   });
+
+  // "Last Updated" — pulled from the repo's latest commit via the GitHub
+  // API, so it's automatic, never needs manual editing. Cached in
+  // localStorage for an hour so repeat visits don't all hit the API. If
+  // the fetch fails (offline, rate-limited), the static date already in
+  // the HTML stays put.
+  (function updateLastUpdated() {
+    const el = document.getElementById('last-updated');
+    if (!el) return;
+    const CACHE_KEY = 'lastUpdatedCache';
+    const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+    try {
+      const cached = JSON.parse(localStorage.getItem(CACHE_KEY));
+      if (cached && Date.now() - cached.fetchedAt < CACHE_TTL) {
+        el.textContent = cached.date;
+        return;
+      }
+    } catch (e) {}
+    fetch('https://api.github.com/repos/isaacimp/isaacimp.github.io/commits?sha=main&per_page=1')
+      .then(res => res.ok ? res.json() : Promise.reject(res))
+      .then(commits => {
+        const date = commits[0].commit.author.date.slice(0, 10);
+        el.textContent = date;
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ date, fetchedAt: Date.now() }));
+      })
+      .catch(() => {});
+  })();
 
   // Update local time (Melbourne timezone)
   function updateTime() {
