@@ -5,10 +5,17 @@
 // homepage always shows entries[0], and /now lists all of them.
 const NOW_ENTRIES = [
   {
+    date: '2026-07-29',
+    html: `
+      <p>Reading <em>Seveneves</em> (almost finished), <a href="/articles/poorcharlie.html" >Poor Charlies Almanack</a></em> by Peter D. Kaufman and flipping through various others like <em>Generative Energy</em> by Raymond Peat and <em>Hypothyroidism: The Unexpected Illness</em> by Broda O. Barnes and Lawrence Galton</p>
+      <p>Im now at the stage where I have basically all of the parts needed to make a prototype of my voice health tracking device so I am starting to piece it together and work through the documentation for the nRF52840-DK and the software so I can get an initial prototype in my hands and start testing it.</p>
+      `
+  },
+  {
     date: '2026-07-22',
     html: `
       <p>Reading: <em>Seveneves</em> by Neal Stephenson, <em><a href="/articles/poorcharlie.html" >Poor Charlies Almanack</a></em> by Peter D. Kaufman and <em>The Moon Is a Harsh Mistress</em> by Robert A. Heinlein</p>
-      <p>Building out a company: <a href="https://fourpots.com/" target="_blank">fourpots</a> where I am creating a voice recording device with transcription which coverts speech to real data for health tracking as well as potentially a air filter for cars but that might just end up as a personal project for myself.</p>
+      <p>Building out a company: <a href="https://fourpots.com/" target="_blank">fourpots</a> where I am creating a voice recording device with transcription which coverts speech to real data for health tracking as well as potentially an air filter for cars but that might just end up as a personal project for myself.</p>
       `
   },
   {
