@@ -14,6 +14,12 @@
 //
 const BOOKMARKS = [
   {
+    date: '2026-07-31',
+    url: 'https://takingchildrenseriously.com/taking-ourselves-seriously/',
+    title: 'Taking Ourselves Seriously - Cody Baldwin'
+    type: 'article',
+  },
+  {
      date: '2026-07-31',
      url: 'https://takingchildrenseriously.com/wp-content/uploads/2023/12/The-Evolution-of-Culture.pdf',
      title: 'The Evolution of Culture - David Deutsch',
