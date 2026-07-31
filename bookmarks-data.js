@@ -16,8 +16,9 @@ const BOOKMARKS = [
   {
     date: '2026-08-01',
     url: 'https://youtube.com/playlist?list=PLAAzS4t77NvUHvpv9elzrARVm9cI--z1z&si=Q71JJwhy4_RKzOlw',
-    title: 'Interviews and Talks by David Deutsch - Youtube playlist by Lulie Tanett',
+    title: 'Interviews and Talks by David Deutsch',
     type: 'video',
+    note: 'Youtube playlist by Lulie Tanett'
   },
   {
     date: '2026-07-31',
