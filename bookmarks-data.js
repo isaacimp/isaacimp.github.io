@@ -14,6 +14,12 @@
 //
 const BOOKMARKS = [
   {
+    date: '2026-08-01',
+    url: 'https://youtube.com/playlist?list=PLAAzS4t77NvUHvpv9elzrARVm9cI--z1z&si=Q71JJwhy4_RKzOlw',
+    title: 'Interviews and Talks by David Deutsch - Youtube playlist by Lulie Tanett',
+    type: 'video',
+  },
+  {
     date: '2026-07-31',
     url: 'https://takingchildrenseriously.com/taking-ourselves-seriously/',
     title: 'Taking Ourselves Seriously - Cody Baldwin',
@@ -37,8 +43,8 @@ const BOOKMARKS = [
   {
     date: '2026-07-15',
     url: 'https://youtu.be/YGeNzpZ5Va4?si=tnEtV_-iLaJqM6yu',
-    title: 'Cool in person interview with David Deutsch',
+    title: 'In-person Q&A with David Deutsch on Free Will, LLMs, Novelty, Hayek, Self-Driving Cars & Pokémon',
     type: 'video',
-    note: ''
+    note: 'A nice in-person group interview with David. I could put every interview ever with him here. I might actually link to a playlist with most of them. Should be above. :)'
   }
 ];
