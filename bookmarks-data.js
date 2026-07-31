@@ -16,7 +16,7 @@ const BOOKMARKS = [
   {
     date: '2026-07-31',
     url: 'https://takingchildrenseriously.com/taking-ourselves-seriously/',
-    title: 'Taking Ourselves Seriously - Cody Baldwin'
+    title: 'Taking Ourselves Seriously - Cody Baldwin',
     type: 'article',
   },
   {

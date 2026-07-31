@@ -20,6 +20,8 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 
+html, body{overflow-x:hidden;}
+
 body{
   background:var(--paper);
   color:var(--ink);
@@ -27,6 +29,7 @@ body{
   font-size:18px;
   line-height:1.72;
   -webkit-font-smoothing:antialiased;
+  width:100%;
 }
 
 ::selection{background:color-mix(in srgb, var(--ink) 15%, transparent);color:var(--ink);}
@@ -60,9 +63,11 @@ header{padding-bottom:4px;}
 .id h1{font-size:19px;font-weight:600;letter-spacing:0.2px;}
 .id .role{margin-top:3px;font-size:13px;font-style:italic;color:var(--ink-soft);}
 
-.jumplinks{display:flex;gap:22px;margin-top:0px;font-size:14px;}
+.jumplinks{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:0px;font-size:14px;}
 .jumplinks a{color:var(--ink-soft);text-decoration:none;display:inline-block;transition:color .2s ease, transform .2s ease;}
 .jumplinks a:hover{color:var(--link);transform:translateY(-1px);}
+
+@media (max-width:480px){ .jumplinks{gap:8px 16px;font-size:13px;} }
 
 /* ---------- intro ---------- */
 
