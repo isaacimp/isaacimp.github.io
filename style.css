@@ -441,35 +441,52 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 
 /* ---------- mobile extras ---------- */
 
-.mobile-only{display:none;}
-@media (max-width:1400px){ .mobile-only{display:inline;} }
-
 .mobile-only-block{display:none;}
 @media (max-width:1400px){ .mobile-only-block{display:block;} }
 
-.mobile-extras{
-  display:none;
-  padding:0 0 24px;
-  margin-bottom:24px;
+@media (min-width:1401px){
+  .mobile-only-block{display:none !important;}
 }
 
-.mobile-extras.active{display:block;}
-
+/* Now widget — collapsed by default so it doesn't push the page down;
+   tap the summary chip to expand it in place. */
 .mobile-now-info{
-  padding:24px 0;
+  padding:16px 0;
 }
 
-.mobile-now-info h3{
-  font-size:19px;
+.mobile-now-info summary{
+  cursor:pointer;
+  list-style:none;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:16px;
   font-weight:600;
-  margin-bottom:12px;
+  padding:10px 16px;
+  border:1px solid var(--line);
+  border-radius:999px;
 }
 
-.mobile-now-info h3 .now-timestamp{
+.mobile-now-info summary::-webkit-details-marker{display:none;}
+
+.mobile-now-info summary::after{
+  content:'+';
+  color:var(--ink-soft);
+  font-weight:400;
+}
+
+.mobile-now-info[open] summary::after{content:'\2212';}
+
+.mobile-now-info summary .now-timestamp{
   font-size:12px;
   font-weight:400;
   font-family:monospace;
   color:var(--ink-soft);
+}
+
+.mobile-now-info > div,
+.mobile-now-info .mobile-time{
+  margin-top:16px;
 }
 
 .mobile-now-info p{
@@ -479,7 +496,6 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 }
 
 .mobile-time{
-  margin-top:22px;
   font-size:15px;
   font-family:monospace;
 }
@@ -490,20 +506,29 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   color:var(--ink-soft);
 }
 
-.mobile-gallery{
-  margin-top:28px;
+/* Images — not important, tucked away at the bottom and kept low-key */
+.mobile-extras{
+  margin-top:8px;
+  padding:12px 0 32px;
+  border-top:1px solid var(--line);
 }
 
-.mobile-gallery h3{
-  font-size:19px;
-  font-weight:600;
-  margin-bottom:16px;
+.mobile-extras summary{
+  cursor:pointer;
+  list-style:none;
+  font-size:13px;
+  color:var(--ink-soft);
+  text-decoration:underline;
+  text-decoration-color:color-mix(in srgb, var(--ink-soft) 40%, transparent);
 }
+
+.mobile-extras summary::-webkit-details-marker{display:none;}
 
 .mobile-gallery-grid{
   display:grid;
   grid-template-columns:repeat(2, 1fr);
   gap:12px;
+  margin-top:14px;
 }
 
 .mobile-gallery-img{
@@ -524,12 +549,6 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 @media (prefers-color-scheme: dark){
   .mobile-gallery-img{box-shadow:0 2px 8px rgba(0,0,0,0.3);}
   .mobile-gallery-img:hover{box-shadow:0 4px 12px rgba(0,0,0,0.5);}
-}
-
-@media (min-width:1401px){
-  .mobile-extras{display:none !important;}
-  .mobile-only-block{display:none !important;}
-  #mobile-extras-toggle{display:none !important;}
 }
 
 /* ---------- article content formatting ---------- */

@@ -63,34 +63,19 @@
       <a href="#articles">articles</a>
       <a href="#log">log</a>
       <a href="bookmarks.html">bookmarks</a>
-      <a href="#" id="mobile-extras-toggle" class="mobile-only">more</a>
     </nav>
   </header>
 
-  <!-- Now widget — always visible on mobile, independent of the images toggle -->
-  <div class="mobile-now-info mobile-only-block">
-    <h3>Now <time id="now-timestamp-mobile" class="now-timestamp"></time></h3>
+  <!-- Now widget — collapsed by default on mobile so it doesn't push
+       everything else down; tap the summary to expand in place. -->
+  <details class="mobile-now-info mobile-only-block">
+    <summary>Now <time id="now-timestamp-mobile" class="now-timestamp"></time></summary>
     <div id="now-content-mobile"></div>
     <div class="mobile-time">
       <span class="time-label">Local Time:</span>
       <span id="mobile-local-time">—</span>
     </div>
-  </div>
-
-  <!-- Mobile images — shown only when "more" is toggled -->
-  <div id="mobile-extras" class="mobile-extras mobile-only">
-    <div class="mobile-gallery">
-      <h3>Images</h3>
-      <div class="mobile-gallery-grid">
-        <img src="wallhaven-39l9w9.jpg" alt="" class="mobile-gallery-img">
-        <img src="20260404_075508.jpg" alt="" class="mobile-gallery-img">
-        <img src="Newton-WilliamBlake.jpg" alt="" class="mobile-gallery-img">
-        <img src="20260217_173157.jpg" alt="" class="mobile-gallery-img">
-        <img src="HKrWNULXoAAKi7c.jpeg" alt="" class="mobile-gallery-img">
-        <img src="C15_Objectif p56-bc color.png" alt="" class="mobile-gallery-img">
-      </div>
-    </div>
-  </div>
+  </details>
 
   <section id="about">
     <h2>About</h2>
@@ -196,6 +181,20 @@
       <li id="work-lem"><a href="#">Lemniscate</a> — a YouTube channel on progress, optimism, and building things worth building.</li>
     </ul>
   </section> -->
+
+  <!-- Images — tucked away at the bottom, collapsed by default; not
+       important enough to compete with the rest of the mobile page. -->
+  <details class="mobile-extras mobile-only-block">
+    <summary>Images</summary>
+    <div class="mobile-gallery-grid">
+      <img src="wallhaven-39l9w9.jpg" alt="" class="mobile-gallery-img">
+      <img src="20260404_075508.jpg" alt="" class="mobile-gallery-img">
+      <img src="Newton-WilliamBlake.jpg" alt="" class="mobile-gallery-img">
+      <img src="20260217_173157.jpg" alt="" class="mobile-gallery-img">
+      <img src="HKrWNULXoAAKi7c.jpeg" alt="" class="mobile-gallery-img">
+      <img src="C15_Objectif p56-bc color.png" alt="" class="mobile-gallery-img">
+    </div>
+  </details>
 <!--
   <section id="contact">
     <h2>Contact</h2>
@@ -283,8 +282,6 @@
   const localTimeSpan = document.getElementById('local-time');
 
   // Mobile extras functionality
-  const mobileExtrasToggle = document.getElementById('mobile-extras-toggle');
-  const mobileExtras = document.getElementById('mobile-extras');
   const mobileLocalTimeSpan = document.getElementById('mobile-local-time');
   const mobileGalleryImages = document.querySelectorAll('.mobile-gallery-img');
 
@@ -367,20 +364,6 @@
 
     lastScroll = currentScroll;
   });
-
-  // Mobile extras toggle
-  if (mobileExtrasToggle) {
-    mobileExtrasToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      mobileExtras.classList.toggle('active');
-      // Change toggle text based on state
-      if (mobileExtras.classList.contains('active')) {
-        mobileExtrasToggle.textContent = 'less';
-      } else {
-        mobileExtrasToggle.textContent = 'more';
-      }
-    });
-  }
 
   // Mobile gallery images lightbox
   mobileGalleryImages.forEach(img => {
