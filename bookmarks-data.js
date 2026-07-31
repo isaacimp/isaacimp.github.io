@@ -7,7 +7,9 @@
 //   url: '',
 //   title: '',
 //   type: 'article', // article / video / post / paper / tool / link
-//   note: ''
+//   note: '',
+//   enhancedUrl: '' // optional: link to a locally-hosted improved version,
+//                   // e.g. 'pdfs/my-file.pdf' — drop the file in /pdfs first
 // },
 //
 const BOOKMARKS = [
@@ -23,7 +25,8 @@ const BOOKMARKS = [
     url: 'https://wiki.chadnet.org/files/using-sunlight-to-sustain-life.pdf',
     title: 'Using Sunlight to Sustain Life - Ray Peat',
     type: 'article',
-    note: 'A nice article on light and its importance.'
+    note: 'A nice article on light and its importance.',
+    enhancedUrl: 'pdfs/using-sunlight-restored.pdf'
   },
   {
     date: '2026-07-15',

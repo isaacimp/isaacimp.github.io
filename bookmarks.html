@@ -66,6 +66,7 @@
           <time datetime="${entry.date}">${entry.date}</time>
         </div>
         ${entry.note ? `<p class="bookmark-entry-note">${entry.note}</p>` : ''}
+        ${entry.enhancedUrl ? `<div class="bookmark-entry-enhanced"><a href="${entry.enhancedUrl}" target="_blank" rel="noopener">view enhanced version</a> · <a href="${entry.enhancedUrl}" download>download</a></div>` : ''}
       `;
       list.appendChild(item);
     });

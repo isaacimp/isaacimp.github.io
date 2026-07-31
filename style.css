@@ -743,4 +743,15 @@ article.article-content:first-of-type{padding-top:0;}
   line-height:1.6;
 }
 
+.bookmark-entry-enhanced{
+  margin-top:8px;
+  font-family:monospace;
+  font-size:11.5px;
+  letter-spacing:0.4px;
+  text-transform:uppercase;
+}
+
+.bookmark-entry-enhanced a{color:var(--ink-soft);}
+.bookmark-entry-enhanced a:hover{color:var(--ink);}
+
 .bookmark-empty{color:var(--ink-soft);font-style:italic;padding:18px 0;}
