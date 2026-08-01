@@ -220,11 +220,15 @@
   </figure>
 </aside>
 
-<aside class="side-info left">
+<aside class="side-info left" id="now-widget">
   <div class="info-widget">
-    <h3>Now <time id="now-timestamp" class="now-timestamp"></time></h3>
-    <div id="now-content"></div>
-    <p><a href="/now/">View past now entries →</a></p>
+    <button type="button" id="now-toggle" class="now-toggle" aria-expanded="false" aria-controls="now-body">
+      <h3>Now <time id="now-timestamp" class="now-timestamp"></time></h3>
+    </button>
+    <div id="now-body" class="now-body">
+      <div id="now-content"></div>
+      <p><a href="/now/">View past now entries →</a></p>
+    </div>
   </div>
 </aside>
 
@@ -276,7 +280,7 @@
   const lightboxClose = lightbox.querySelector('.lightbox-close');
   const galleries = document.querySelectorAll('.side-gallery');
   const galleryImages = document.querySelectorAll('.side-gallery img');
-  const infoWidgets = document.querySelectorAll('.side-info');
+  const infoWidgets = document.querySelectorAll('.side-info.right');
   const progressBarFill = document.querySelector('.progress-bar-fill');
   const currentSectionSpan = document.getElementById('current-section');
   const localTimeSpan = document.getElementById('local-time');
@@ -301,6 +305,26 @@
   }
   if (nowContent && nowContentMobile) {
     nowContentMobile.innerHTML = nowContent.innerHTML;
+  }
+
+  // Desktop "Now" widget: auto-shows/hides with scroll by default (below),
+  // but the toggle click always wins — lets it be opened without scrolling
+  // or closed while scrolled, until the page reloads.
+  const nowToggle = document.getElementById('now-toggle');
+  const nowBody = document.getElementById('now-body');
+  let nowOverride = null; // null = follow scroll, true/false = manual pin
+
+  function setNowOpen(open) {
+    if (!nowBody || !nowToggle) return;
+    nowBody.classList.toggle('open', open);
+    nowToggle.setAttribute('aria-expanded', String(open));
+  }
+
+  if (nowToggle) {
+    nowToggle.addEventListener('click', () => {
+      nowOverride = !nowBody.classList.contains('open');
+      setNowOpen(nowOverride);
+    });
   }
 
   // Flash a section's heading when you jump to it from the nav, then let it fade
@@ -345,6 +369,10 @@
         widget.classList.remove('visible');
       }
     });
+
+    if (nowOverride === null) {
+      setNowOpen(currentScroll > 100);
+    }
 
     // Update progress bar
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
