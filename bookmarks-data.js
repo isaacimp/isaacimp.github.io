@@ -1,15 +1,10 @@
-// Single source of truth for the Bookmarks page. Newest entry first — to
-// save something, copy the template block below, paste it at the TOP of
-// the array, and fill in url + title. Everything else is optional.
-//
 // {
 //   date: 'YYYY-MM-DD',
 //   url: '',
 //   title: '',
 //   type: 'article', // article / video / post / paper / tool / link
 //   note: '',
-//   enhancedUrl: '' // optional: link to a locally-hosted improved version,
-//                   // e.g. 'pdfs/my-file.pdf' — drop the file in /pdfs first
+//   enhancedUrl: ''
 // },
 //
 const BOOKMARKS = [
