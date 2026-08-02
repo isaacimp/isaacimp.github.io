@@ -13,6 +13,13 @@
 // },
 //
 const BOOKMARKS = [
+   {
+    date: '2026-08-02',
+    url: 'https://breathing-interval-timer.netlify.app',
+    title: 'Breathing Interval Timer',
+    type: 'website', // article / video / post / paper / tool / link
+    note: '',
+  },
   {
     date: '2026-08-01',
     url: 'https://youtube.com/playlist?list=PLAAzS4t77NvUHvpv9elzrARVm9cI--z1z&si=Q71JJwhy4_RKzOlw',
