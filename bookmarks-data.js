@@ -17,8 +17,8 @@ const BOOKMARKS = [
     date: '2026-08-02',
     url: 'http://www.the-rathouse.com',
     title: 'Rafe Champion -- Personal Website',
-    type: 'website', // article / video / post / paper / tool / link
-    note: 'http://www.the-rathouse.com/writingsonpopper.html',
+    type: 'website',
+    note: 'I really like his Writings on Karl Popper section here: http://www.the-rathouse.com/writingsonpopper.html',
   },
   {
     date: '2026-08-01',
