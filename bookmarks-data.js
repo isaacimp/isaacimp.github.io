@@ -13,12 +13,12 @@
 // },
 //
 const BOOKMARKS = [
-   {
+  {
     date: '2026-08-02',
-    url: 'https://breathing-interval-timer.netlify.app',
-    title: 'Breathing Interval Timer',
+    url: 'http://www.the-rathouse.com',
+    title: 'Rafe Champion -- Personal Website',
     type: 'website', // article / video / post / paper / tool / link
-    note: '',
+    note: 'http://www.the-rathouse.com/writingsonpopper.html',
   },
   {
     date: '2026-08-01',
