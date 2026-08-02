@@ -192,13 +192,13 @@
       <img src="img/coolearth.jpg" alt="" class="mobile-gallery-img">
       <img src="img/erath.jpg" alt="" class="mobile-gallery-img">
       <img src="img/jup.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/jupiter.jpg p56-bc color.png" alt="" class="mobile-gallery-img">
-      <img src="img/mve.jpeg p56-bc color.png" alt="" class="mobile-gallery-img">
-      <img src="img/punch.jpg p56-bc color.png" alt="" class="mobile-gallery-img">
-      <img src="img/spcshp.jpg p56-bc color.png" alt="" class="mobile-gallery-img">
-      <img src="img/tin.png p56-bc color.png" alt="" class="mobile-gallery-img">
-      <img src="img/tkeoff.jpg p56-bc color.png" alt="" class="mobile-gallery-img">
-      <img src="img/truke.jpg p56-bc color.png" alt="" class="mobile-gallery-img">
+      <img src="img/jupiter.jpg" alt="" class="mobile-gallery-img">
+      <img src="img/mve.jpeg" alt="" class="mobile-gallery-img">
+      <img src="img/punch.jpg" alt="" class="mobile-gallery-img">
+      <img src="img/spcshp.jpg" alt="" class="mobile-gallery-img">
+      <img src="img/tin.png" alt="" class="mobile-gallery-img">
+      <img src="img/tkeoff.jpg" alt="" class="mobile-gallery-img">
+      <img src="img/truke.jpg" alt="" class="mobile-gallery-img">
     </div>
   </details>
 <!--
@@ -268,14 +268,19 @@
 
 <script src="now-data.js"></script>
 <script>
-  // Side gallery — one random image per side, reshuffled on every page load
   const galleryPool = [
-    'wallhaven-39l9w9.jpg',
-    '20260404_075508.jpg',
-    'Newton-WilliamBlake.jpg',
-    '20260217_173157.jpg',
-    'HKrWNULXoAAKi7c.jpeg',
-    'C15_Objectif p56-bc color.png'
+    'img/baleknewton.jpg',
+    'img/centaphnewton.jpg',
+    'img/coolearth.jpg',
+    'img/erath.jpg',
+    'img/jup.jpg',
+    'img/jupiter.jpg',
+    'img/mve.jpeg',
+    'img/punch.jpg',
+    'img/spcshp.jpg',
+    'img/tin.png',
+    'img/tkeoff.jpg',
+    'img/truke.jpg'
   ];
   const rightGalleryImg = document.querySelector('.side-gallery.right img');
   if (rightGalleryImg) rightGalleryImg.src = galleryPool[Math.floor(Math.random() * galleryPool.length)];
