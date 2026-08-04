@@ -63,6 +63,23 @@ header{padding-bottom:4px;}
 .id h1{font-size:19px;font-weight:600;letter-spacing:0.2px;}
 .id .role{margin-top:3px;font-size:13px;font-style:italic;color:var(--ink-soft);}
 
+/* Hover the name to see it rendered in Chinese, the way "Isaac Newton"
+   gets transliterated — a small easter egg, not localization. */
+.name-zh-swap{position:relative;transition:color 0.25s ease;}
+.name-zh-swap::after{
+  content:attr(data-zh);
+  position:absolute;
+  left:0;
+  top:0;
+  color:var(--ink);
+  opacity:0;
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  transition:opacity 0.25s ease;
+  pointer-events:none;
+}
+.name-zh-swap:hover{color:transparent;}
+.name-zh-swap:hover::after{opacity:1;}
+
 .jumplinks{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:0px;font-size:14px;}
 .jumplinks a{color:var(--ink-soft);text-decoration:none;display:inline-block;transition:color .2s ease, transform .2s ease;}
 .jumplinks a:hover{color:var(--link);transform:translateY(-1px);}
