@@ -5,6 +5,14 @@
 // homepage always shows entries[0], and /now lists all of them.
 const NOW_ENTRIES = [
   {
+    date: '2026-08-04',
+    html: `
+      <p>Reading <em>Seveneves</em> (almost finished), <a href="/articles/poorcharlie.html" >Poor Charlies Almanack</a></em> by Peter D. Kaufman and flipping through various others like <em>Generative Energy</em> by Raymond Peat and <em>Hypothyroidism: The Unexpected Illness</em> by Broda O. Barnes and Lawrence Galton</p>
+      <p>Out of the blue I realised that I would like to learn a second language. I think it would be very cool. After some thought, I decided on Traditional Mandarin Chinese for a few reasons. 1: It is the most spoken first language in the world. 2: It seems hard and interesting. 3: It would be very cool to be able to speak Mandarin and would surprise a lot of people. 4: I would like to visit/ live in Taiwan for a while. (also Taiwan makes most of the worlds semiconductors and other cool computing hardware)</p>
+      <p>I've arrived at a very basic diet -- hopefully it can help me to heal my gut by giving it rest and providing nutrient dense whole meals. Basically just eating rice, chicken, beef mince, milk, and some fruits and well cooked veggies sometimes.</p>
+      `
+  },
+  {
     date: '2026-07-29',
     html: `
       <p>Reading <em>Seveneves</em> (almost finished), <a href="/articles/poorcharlie.html" >Poor Charlies Almanack</a></em> by Peter D. Kaufman and flipping through various others like <em>Generative Energy</em> by Raymond Peat and <em>Hypothyroidism: The Unexpected Illness</em> by Broda O. Barnes and Lawrence Galton</p>
