@@ -9,6 +9,13 @@
 //
 const BOOKMARKS = [
   {
+    date: '2026-08-05',
+    url: 'https://homepages.inf.ed.ac.uk/wadler/papers/firbush/hamming.pdf',
+    title: 'You and Your Research -- Richard Hamming',
+    type: 'article',
+    note: 'Talk by Richard Hamming',
+  },
+  {
     date: '2026-08-02',
     url: 'http://www.the-rathouse.com',
     title: 'Rafe Champion -- Personal Website',
