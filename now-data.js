@@ -9,6 +9,7 @@ const NOW_ENTRIES = [
     html: `
       <p>Keeping my eye on: <a href="https://keepsite.org">keepsite</a> by Derek <a href="https://sive.rs>sive.rs</a> which looks like a very interesting idea and one which I would likely use for my own site.</p>
       <p>I have a new design for my speech to data, ai, health tracking device to allow for entering of specific values which will help with the accuracy issue of using voice to text and ai.</p>
+      <p>test</p>
     `
   },
   {
