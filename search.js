@@ -204,22 +204,30 @@
     trigger.id = 'site-search-trigger';
     trigger.setAttribute('aria-label', 'Search this site (press / )');
     trigger.innerHTML =
-      '<span class="site-search-icon">&#9906;</span>' +
+      '<svg class="site-search-icon" viewBox="0 0 20 20" width="15" height="15" aria-hidden="true">' +
+        '<circle cx="8.3" cy="8.3" r="5.8" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
+        '<line x1="12.7" y1="12.7" x2="17.5" y2="17.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+      '</svg>' +
       '<span class="site-search-label">Search</span>' +
       '<span class="site-search-kbd">/</span>';
 
     // Prefer sitting in-flow near the page's own navigation: the homepage
     // has a dedicated slot under the header; other pages just have a
-    // "back to home" link at the top of <main>. Only fall back to a fixed
-    // floating button if neither exists.
+    // "back to home" link at the top of <main>, so a matching slot is
+    // created right after it (never inserted as an inline sibling — that
+    // left it jammed against the link text with no proper spacing).
     var slot = document.getElementById('search-trigger-slot');
-    var back = document.querySelector('main > a.back');
+    if (!slot) {
+      var back = document.querySelector('main > a.back');
+      if (back) {
+        slot = document.createElement('div');
+        slot.id = 'search-trigger-row';
+        back.insertAdjacentElement('afterend', slot);
+      }
+    }
     if (slot) {
       trigger.classList.add('inline');
       slot.appendChild(trigger);
-    } else if (back) {
-      trigger.classList.add('inline');
-      back.insertAdjacentElement('afterend', trigger);
     } else {
       document.body.appendChild(trigger);
     }
