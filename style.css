@@ -529,10 +529,10 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 
 #site-search-trigger:hover{color:var(--ink);border-color:var(--ink-soft);transform:translateY(-1px);}
 
-/* In-flow placement: under the brand row on the homepage (via
+/* In-flow placement: right under the name/role on the homepage (via
    #search-trigger-slot), or right after the "back" link everywhere else —
    see search.js. Only bare page layouts with neither fall back to fixed. */
-#site-search-trigger.inline{margin:14px 0 18px;}
+#site-search-trigger.inline{margin:10px 0 0;}
 
 #search-trigger-slot:empty{display:none;}
 
