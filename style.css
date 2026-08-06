@@ -339,11 +339,11 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   color:inherit;
   text-align:left;
   pointer-events:auto;
-  opacity:0.5;
+  opacity:0.9;
   transition:opacity 0.2s ease;
 }
 
-.now-toggle:hover{opacity:0.85;}
+.now-toggle:hover{opacity:1;}
 
 .now-toggle h3{
   display:flex;
@@ -355,7 +355,7 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   content:'+';
   font-family:monospace;
   font-weight:400;
-  opacity:0.7;
+  opacity:0.8;
 }
 
 .now-toggle[aria-expanded="true"] h3::after{content:'\2212';}
