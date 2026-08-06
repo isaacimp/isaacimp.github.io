@@ -605,9 +605,8 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 
 .site-search-result{
   display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:16px;
+  flex-direction:column;
+  gap:4px;
   padding:12px 18px;
   text-decoration:none;
   border-bottom:1px solid var(--line);
@@ -616,6 +615,13 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 .site-search-result:last-child{border-bottom:none;}
 
 .site-search-result:hover{background:color-mix(in srgb, var(--ink) 4%, transparent);}
+
+.site-search-result-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:16px;
+}
 
 .site-search-result-title{color:var(--ink);font-size:15px;}
 
@@ -626,6 +632,14 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   text-transform:uppercase;
   letter-spacing:0.5px;
   color:var(--ink-soft);
+}
+
+.site-search-result-snippet{
+  display:block;
+  font-size:13px;
+  font-style:italic;
+  color:var(--ink-soft);
+  line-height:1.5;
 }
 
 .site-search-empty{padding:16px 18px;color:var(--ink-soft);font-style:italic;font-size:14px;}
