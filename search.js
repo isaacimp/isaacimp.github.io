@@ -121,7 +121,22 @@
       '<span class="site-search-icon">&#9906;</span>' +
       '<span class="site-search-label">Search</span>' +
       '<span class="site-search-kbd">/</span>';
-    document.body.appendChild(trigger);
+
+    // Prefer sitting in-flow near the page's own navigation: the homepage
+    // has a dedicated slot under the header; other pages just have a
+    // "back to home" link at the top of <main>. Only fall back to a fixed
+    // floating button if neither exists.
+    var slot = document.getElementById('search-trigger-slot');
+    var back = document.querySelector('main > a.back');
+    if (slot) {
+      trigger.classList.add('inline');
+      slot.appendChild(trigger);
+    } else if (back) {
+      trigger.classList.add('inline');
+      back.insertAdjacentElement('afterend', trigger);
+    } else {
+      document.body.appendChild(trigger);
+    }
 
     var overlay = document.createElement('div');
     overlay.id = 'site-search-overlay';
