@@ -174,6 +174,23 @@
       .slice(0, 20);
   }
 
+  function escapeHtml(str) {
+    return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // Escapes text and wraps the first case-insensitive match of q in <mark>,
+  // so the matched word is visually obvious inside a body-text snippet
+  // instead of just showing the surrounding context.
+  function highlight(text, q) {
+    text = text || '';
+    if (!q) return escapeHtml(text);
+    var idx = text.toLowerCase().indexOf(q);
+    if (idx === -1) return escapeHtml(text);
+    return escapeHtml(text.slice(0, idx)) +
+      '<mark>' + escapeHtml(text.slice(idx, idx + q.length)) + '</mark>' +
+      escapeHtml(text.slice(idx + q.length));
+  }
+
   function injectUI() {
     var trigger = document.createElement('button');
     trigger.type = 'button';
@@ -216,7 +233,7 @@
     // articles/posts have a head start by the time someone actually types.
     var itemsReady = dataReady.then(buildIndex);
 
-    function renderMatches(matches) {
+    function renderMatches(matches, q) {
       if (!input.value.trim()) {
         results.innerHTML = '';
         return;
@@ -227,11 +244,13 @@
       }
       results.innerHTML = matches.map(function (m) {
         var meta = [m.item.type, m.item.date].filter(Boolean).join(' · ');
-        var snippet = m.snippet ? '<span class="site-search-result-snippet">' + m.snippet + '</span>' : '';
+        // Snippets come from body/tag text, not the title, so that's where
+        // the match is easy to lose in context — highlight it there.
+        var snippet = m.snippet ? '<span class="site-search-result-snippet">' + highlight(m.snippet, q) + '</span>' : '';
         return '<a class="site-search-result" href="' + m.item.url + '">' +
           '<span class="site-search-result-head">' +
-            '<span class="site-search-result-title">' + m.item.title + '</span>' +
-            '<span class="site-search-result-meta">' + meta + '</span>' +
+            '<span class="site-search-result-title">' + highlight(m.item.title, q) + '</span>' +
+            '<span class="site-search-result-meta">' + escapeHtml(meta) + '</span>' +
           '</span>' +
           snippet +
         '</a>';
@@ -240,10 +259,11 @@
 
     function runAndRender() {
       var query = input.value;
+      var q = query.trim().toLowerCase();
       itemsReady.then(function (items) {
         // Bail if the query changed while we were waiting on fetches.
         if (input.value !== query) return;
-        renderMatches(runSearch(items, query));
+        renderMatches(runSearch(items, query), q);
       });
     }
 

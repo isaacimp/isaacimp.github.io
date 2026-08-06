@@ -642,6 +642,13 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   line-height:1.5;
 }
 
+.site-search-result mark{
+  background:color-mix(in srgb, var(--link) 30%, transparent);
+  color:inherit;
+  border-radius:2px;
+  padding:0 1px;
+}
+
 .site-search-empty{padding:16px 18px;color:var(--ink-soft);font-style:italic;font-size:14px;}
 
 @media (max-width:600px){
