@@ -1,10 +1,5 @@
-/* --paper is a warm off-white rather than pure #fff — glare from a
-   near-white background is what actually drives eye strain/halation on a
-   backlit screen during long reading sessions, more so than dark text
-   being literally black. Still ~17:1 contrast against --ink, well above
-   WCAG AAA's 7:1 floor. */
 :root{
-  --paper:#F5F2EA;
+  --paper:#F4EBD6;
   --ink:#1A1A18;
   --ink-soft:#5C5A52;
   --line:#E9E7E0;
@@ -22,13 +17,9 @@
   }
 }
 
-/* Manual override from the theme toggle (theme.js) — takes precedence over
-   the OS preference above via specificity, not source order, so picking
-   "light" while the OS is in dark mode (or vice versa) works correctly.
-   No attribute at all (data-theme absent) means "system", which is exactly
-   the default behavior already covered above. */
+/* Manual override from the theme toggle (theme.js) */
 :root[data-theme="light"]{
-  --paper:#F5F2EA;
+  --paper:#F4EBD6;
   --ink:#1A1A18;
   --ink-soft:#5C5A52;
   --line:#E9E7E0;
