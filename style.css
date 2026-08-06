@@ -157,7 +157,7 @@ ul.lead li::before{
 /* plain flowing lists — spacing and colour carry the separation, not a rule */
 
 ul.plain{list-style:none;}
-ul.plain li{padding:16px 0;max-width:60ch;transition:background-color .4s ease, color .3s ease;scroll-margin-top:16px;}
+ul.plain li{padding:6px 0;max-width:60ch;transition:background-color .4s ease, color .3s ease;scroll-margin-top:16px;}
 ul.plain li:target{background:color-mix(in srgb, var(--ink) 4%, transparent);}
 
 details.more{margin-top:6px;font-size:17px;}
