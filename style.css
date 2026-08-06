@@ -70,12 +70,9 @@ header{padding-bottom:4px;}
 
 .brand{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
 
-.logo-link{display:block;flex-shrink:0;text-decoration:none;transition:opacity .2s ease, transform .2s ease;}
-.logo-link:hover{opacity:0.7;transform:scale(1.03);}
-
-.lemniscate{display:block;width:220px;height:169px;color:var(--link);opacity:0.85;}
-@media (max-width:700px){ .lemniscate{width:170px;height:131px;} }
-@media (max-width:420px){ .lemniscate{width:150px;height:115px;} }
+/* the name is the home link */
+.name-link{display:inline-block;text-decoration:none;color:inherit;transition:opacity .2s ease, transform .2s ease;}
+.name-link:hover{opacity:0.7;transform:translateY(-1px);}
 
 .id h1{font-size:19px;font-weight:600;letter-spacing:0.2px;}
 .id .role{margin-top:3px;font-size:13px;font-style:italic;color:var(--ink-soft);}
@@ -91,6 +88,10 @@ header{padding-bottom:4px;}
   color:var(--ink);
   opacity:0;
   font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  white-space:nowrap; /* the Chinese chars need more width than "Isaac" did —
+                          without this they wrap since the absolutely
+                          positioned box shrinks to fit the (narrower)
+                          containing block instead of its own content */
   transition:opacity 0.25s ease;
   pointer-events:none;
 }

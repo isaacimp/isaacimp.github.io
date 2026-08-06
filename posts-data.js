@@ -12,5 +12,5 @@
 //       ['idea', 'health']. Each renders as a clickable chip that links to
 //       /tags.html?t=<tag>, showing every post/article sharing that tag.
 const POSTS = [
-  { slug: 'thoughts-on-you-and-your-research-speech', title: 'My thoughts on: You and Your Research', date: '2026-08-06', tags: ['philosophy'] ['life']},
+  { slug: 'thoughts-on-you-and-your-research-speech', title: 'My thoughts on: You and Your Research', date: '2026-08-06', tags: ['philosophy', 'life'] },
 ];
