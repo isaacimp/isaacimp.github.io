@@ -116,8 +116,11 @@
     var trigger = document.createElement('button');
     trigger.type = 'button';
     trigger.id = 'site-search-trigger';
-    trigger.setAttribute('aria-label', 'Search this site');
-    trigger.innerHTML = '&#9906;';
+    trigger.setAttribute('aria-label', 'Search this site (press / )');
+    trigger.innerHTML =
+      '<span class="site-search-icon">&#9906;</span>' +
+      '<span class="site-search-label">Search</span>' +
+      '<span class="site-search-kbd">/</span>';
     document.body.appendChild(trigger);
 
     var overlay = document.createElement('div');
