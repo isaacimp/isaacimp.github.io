@@ -7,9 +7,8 @@ const NOW_ENTRIES = [
   {
     date: '2026-08-06',
     html: `
-      <p>Keeping my eye on: <a href="https://keepsite.org">keepsite</a> by Derek <a href="https://sive.rs>sive.rs</a> which looks like a very interesting idea and one which I would likely use for my own site.</p>
+      <p>Keeping my eye on: <a href="https://keepsite.org">keepsite</a> by Derek <a href="https://sive.rs">sive.rs</a> which looks like a very interesting idea and one which I would likely use for my own site.</p>
       <p>I have a new design for my speech to data, ai, health tracking device to allow for entering of specific values which will help with the accuracy issue of using voice to text and ai.</p>
-      <p>test</p>
     `
   },
   {
@@ -25,7 +24,7 @@ const NOW_ENTRIES = [
     html: `
       <p>Reading <em>Seveneves</em> (almost finished), <a href="/articles/poorcharlie.html" >Poor Charlies Almanack</a></em> by Peter D. Kaufman and flipping through various others like <em>Generative Energy</em> by Raymond Peat and <em>Hypothyroidism: The Unexpected Illness</em> by Broda O. Barnes and Lawrence Galton</p>
       <p>Im now at the stage where I have basically all of the parts needed to make a prototype of my voice health tracking device so I am starting to piece it together and work through the documentation for the nRF52840-DK and the software so I can get an initial prototype in my hands and start testing it.</p>
-      <p>I also just read this article: <a href="https://wiki.chadnet.org/files/using-sunlight-to-sustain-life.pdf" target=_blank">Using Sunlight to Sustain Life</a> which I think provides a quite good explaination and description of light and its important in our successful biological functioning and energy production. Its winter now so I have not been getting enough light but I will try to get more artificial light while indoors as well as keep blinds open to get sun through the window. If I notice skin issues I will further reduce PUFA consumption or wear a safe sunscreen like zinc maybe but my skin is pretty robust it seems.</p>
+      <p>I also just read this article: <a href="https://wiki.chadnet.org/files/using-sunlight-to-sustain-life.pdf">Using Sunlight to Sustain Life</a> which I think provides a quite good explaination and description of light and its important in our successful biological functioning and energy production. Its winter now so I have not been getting enough light but I will try to get more artificial light while indoors as well as keep blinds open to get sun through the window. If I notice skin issues I will further reduce PUFA consumption or wear a safe sunscreen like zinc maybe but my skin is pretty robust it seems.</p>
       `
   },
   {
