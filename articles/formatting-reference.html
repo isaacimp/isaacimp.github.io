@@ -35,7 +35,7 @@
   <article class="article-content">
     <header class="article-header">
       <h3>Formatting reference</h3>
-      <p class="article-meta"><time datetime="2026-07-08">Jul 8, 2026</time> <span class="tag">meta</span></p>
+      <p class="article-meta"><time datetime="2026-07-08">Jul 8, 2026</time> <span class="tags"><a class="tag" href="/tags.html?t=meta">meta</a></span></p>
     </header>
 
     <p>This is a demo article showing everything the <code>.article-content</code> class styles automatically. Copy <code>articles/template.html</code> to start a real post — this page is just a cheat sheet.</p>
@@ -50,7 +50,7 @@
     <ul>
       <li>Plain <code>&lt;ul&gt;</code> and <code>&lt;ol&gt;</code> lists work as expected.</li>
       <li>Inline <code>code</code> and full code blocks are both styled.</li>
-      <li>A category like <span class="tag">this</span> just needs a <code>&lt;span class="tag"&gt;</code> in the meta line — colour marks it, no box around it.</li>
+      <li>Tags like <span class="tags"><a class="tag" href="/tags.html?t=this">this</a></span> — or <span class="tags"><a class="tag" href="/tags.html?t=as">as</a><a class="tag" href="/tags.html?t=many">many</a><a class="tag" href="/tags.html?t=as">as</a><a class="tag" href="/tags.html?t=you-like">you-like</a></span> — just need <code>&lt;a class="tag" href="/tags.html?t=..."&gt;</code> chips inside a <code>&lt;span class="tags"&gt;</code> in the meta line. Clicking one lists every post/article sharing that tag.</li>
     </ul>
 
     <pre><code>const example = "code blocks are just monospace + an indent";</code></pre>
@@ -59,5 +59,6 @@
   </article>
 </main>
 
+<script src="/search.js"></script>
 </body>
 </html>

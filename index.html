@@ -65,6 +65,7 @@
       <a href="#log">log</a>
       -->
       <a href="now/index.html">now</a>
+      <a href="posts/index.html">posts</a>
       <a href="bookmarks.html">bookmarks</a>
     </nav>
   </header>
@@ -105,15 +106,33 @@
         2. Fill in the title, meta description, date, and tag
         3. Write the body as plain p / h3 / ul / blockquote / pre — same
            .article-content formatting as everywhere else on the site
-        4. Add a <li> below linking to it (newest at the top)
+        4. Add one entry to the TOP of articles-data.js (newest first) —
+           the list below renders from it automatically
         5. Add a <url> entry for it in sitemap.xml
-      See README.md for the full walkthrough.
     -->
 
-    <ul class="plain">
-      <li><a href="articles/treatise-on-health.html">treatise-on-health.html</a> - <em>Aug, 2026 (in progress)</em></li>
-      <li><a href="articles/productivity-and-coercion.html">productivity-and-coercion.html</a> - <em>Jul, 2026</em></li>
-    </ul>
+    <ul class="plain" id="articles-index"></ul>
+  </section>
+
+  <section id="posts">
+    <h2>Posts</h2>
+    <p>Shorter than an article — ideas, thoughts, book reviews, anything in between.</p>
+
+    <!--
+      NEW POST: each post is a standalone page in /posts/, not written
+      inline here. To publish one:
+        1. Copy posts/template.html to posts/your-slug.html
+        2. Fill in the title, meta description, date, and tag, then write
+           the body — same .article-content formatting as articles, but a
+           post can be as short as a single paragraph
+        3. Add one entry to the TOP of posts-data.js: { slug, title, date, tag }
+        4. Add a <url> entry for it in sitemap.xml
+      That's it — the full post below and the /posts/ list both render
+      automatically from posts-data.js + the standalone page.
+    -->
+
+    <div id="recent-post"></div>
+    <p><a href="posts/index.html">View all posts →</a></p>
   </section>
 <!--
   <section id="log">
@@ -270,6 +289,8 @@
 </div>
 
 <script src="now-data.js"></script>
+<script src="articles-data.js"></script>
+<script src="posts-data.js"></script>
 <script>
   const galleryPool = [
     'img/baleknewton.jpg',
@@ -338,6 +359,54 @@
       nowOverride = !nowBody.classList.contains('open');
       setNowOpen(nowOverride);
     });
+  }
+
+  // Renders a tags array as clickable chips linking to /tags.html?t=<tag>,
+  // used for both the Articles and Posts homepage lists.
+  function tagLinksHtml(tags) {
+    if (!tags || !tags.length) return '';
+    const chips = tags.map(t => `<a class="tag" href="/tags.html?t=${encodeURIComponent(t)}">${t}</a>`).join('');
+    return `<span class="tags">${chips}</span>`;
+  }
+
+  // Articles list — rendered from articles-data.js so publishing a new
+  // article only means adding one entry there.
+  const articlesList = document.getElementById('articles-index');
+  if (articlesList && typeof ARTICLES !== 'undefined') {
+    articlesList.innerHTML = ARTICLES.map(a =>
+      `<li><a href="articles/${a.slug}.html">${a.file}</a> - <em>${a.dateLabel}</em> ${tagLinksHtml(a.tags)}</li>`
+    ).join('');
+  }
+
+  // Posts: homepage shows the full content of the most recent post, pulled
+  // straight from its own standalone page (posts/<slug>.html) so there's
+  // no need to keep the text in two places. posts-data.js just supplies
+  // which post is newest.
+  const recentPostEl = document.getElementById('recent-post');
+  if (recentPostEl) {
+    if (typeof POSTS !== 'undefined' && POSTS.length) {
+      const latest = POSTS[0];
+      fetch(`posts/${latest.slug}.html`)
+        .then(res => res.ok ? res.text() : Promise.reject(res))
+        .then(html => {
+          const temp = document.createElement('div');
+          temp.innerHTML = html;
+          const body = temp.querySelector('#post-body');
+          if (!body) throw new Error('post-body not found');
+          const article = document.createElement('article');
+          article.className = 'article-content';
+          article.innerHTML = body.innerHTML;
+          const permalink = document.createElement('p');
+          permalink.innerHTML = `<a href="posts/${latest.slug}.html">Permalink →</a>`;
+          article.appendChild(permalink);
+          recentPostEl.replaceChildren(article);
+        })
+        .catch(() => {
+          recentPostEl.innerHTML = `<p><a href="posts/${latest.slug}.html">${latest.title}</a> — <em>${latest.date}</em>. <a href="posts/${latest.slug}.html">Read it →</a></p>`;
+        });
+    } else {
+      recentPostEl.innerHTML = '<p><em>No posts yet — check back soon.</em></p>';
+    }
   }
 
   // Flash a section's heading when you jump to it from the nav, then let it fade
@@ -487,6 +556,7 @@
     }
   });
 </script>
+<script src="/search.js"></script>
 
 </body>
 </html>

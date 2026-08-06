@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posts — Isaac</title>
+<meta name="description" content="Short ideas, longer thoughts, and book reviews — everything smaller than a full article.">
+<link rel="canonical" href="https://isaacmp.xyz/posts/">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Posts — Isaac">
+<meta property="og:description" content="Short ideas, longer thoughts, and book reviews — everything smaller than a full article.">
+<meta property="og:url" content="https://isaacmp.xyz/posts/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Posts — Isaac">
+<meta name="twitter:description" content="Short ideas, longer thoughts, and book reviews — everything smaller than a full article.">
+
+<meta name="theme-color" content="#FAFAF7">
+<meta name="theme-color" content="#17171A" media="(prefers-color-scheme: dark)">
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<main>
+  <a href="../index.html#posts" class="back">&larr; isaacmp.xyz</a>
+
+  <section id="posts-list">
+    <h2>Posts</h2>
+    <p>Short ideas, longer thoughts, and book reviews — anything smaller than a full article.</p>
+    <ul class="plain" id="posts-index"></ul>
+  </section>
+</main>
+
+<script src="../posts-data.js"></script>
+<script>
+  function tagLinksHtml(tags) {
+    if (!tags || !tags.length) return '';
+    const chips = tags.map(t => `<a class="tag" href="/tags.html?t=${encodeURIComponent(t)}">${t}</a>`).join('');
+    return `<span class="tags">${chips}</span>`;
+  }
+
+  const list = document.getElementById('posts-index');
+  if (POSTS.length) {
+    list.innerHTML = POSTS.map(post =>
+      `<li><a href="${post.slug}.html">${post.title}</a> - <em>${post.date}</em> ${tagLinksHtml(post.tags)}</li>`
+    ).join('');
+  } else {
+    list.outerHTML = '<p><em>No posts yet — check back soon.</em></p>';
+  }
+</script>
+<script src="/search.js"></script>
+</body>
+</html>

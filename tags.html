@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tags — Isaac</title>
+<meta name="description" content="Posts and articles filtered by tag.">
+<link rel="canonical" href="https://isaacmp.xyz/tags.html">
+<!-- Filter view of content that's already indexed on its own pages, so
+     keep this out of search results to avoid thin/duplicate content. -->
+<meta name="robots" content="noindex, follow">
+
+<meta name="theme-color" content="#FAFAF7">
+<meta name="theme-color" content="#17171A" media="(prefers-color-scheme: dark)">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main>
+  <a href="index.html" class="back">&larr; isaacmp.xyz</a>
+
+  <section id="tags">
+    <h2 id="tags-heading">Tags</h2>
+    <p id="tags-intro">Every post and article sharing a tag, newest first.</p>
+    <ul class="plain" id="tags-results"></ul>
+  </section>
+</main>
+
+<script src="articles-data.js"></script>
+<script src="posts-data.js"></script>
+<script>
+  function getTag() {
+    const params = new URLSearchParams(location.search);
+    return (params.get('t') || '').trim();
+  }
+
+  function tagLinksHtml(tags) {
+    if (!tags || !tags.length) return '';
+    const chips = tags.map(t => `<a class="tag" href="/tags.html?t=${encodeURIComponent(t)}">${t}</a>`).join('');
+    return `<span class="tags">${chips}</span>`;
+  }
+
+  const tag = getTag();
+  const heading = document.getElementById('tags-heading');
+  const intro = document.getElementById('tags-intro');
+  const list = document.getElementById('tags-results');
+
+  if (!tag) {
+    heading.textContent = 'Tags';
+    intro.textContent = 'No tag specified — click a tag on any post or article to see everything else filed under it.';
+  } else {
+    heading.textContent = `Tag: ${tag}`;
+    intro.textContent = `Posts and articles tagged "${tag}", newest first.`;
+
+    const matches = (tags) => (tags || []).some(t => t.toLowerCase() === tag.toLowerCase());
+
+    const results = []
+      .concat((typeof ARTICLES !== 'undefined' ? ARTICLES : []).filter(a => matches(a.tags)).map(a => ({
+        title: a.title || a.file,
+        type: 'article',
+        date: a.date,
+        url: `articles/${a.slug}.html`,
+        tags: a.tags
+      })))
+      .concat((typeof POSTS !== 'undefined' ? POSTS : []).filter(p => matches(p.tags)).map(p => ({
+        title: p.title,
+        type: 'post',
+        date: p.date,
+        url: `posts/${p.slug}.html`,
+        tags: p.tags
+      })))
+      .sort((a, b) => (a.date < b.date ? 1 : -1));
+
+    if (!results.length) {
+      list.outerHTML = '<p><em>Nothing tagged that yet.</em></p>';
+    } else {
+      list.innerHTML = results.map(r =>
+        `<li><a href="${r.url}">${r.title}</a> - <em>${r.type}, ${r.date}</em> ${tagLinksHtml(r.tags)}</li>`
+      ).join('');
+    }
+  }
+</script>
+<script src="/search.js"></script>
+</body>
+</html>

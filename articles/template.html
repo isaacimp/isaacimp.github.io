@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 1. Update the title, description, canonical URL, and OG/Twitter tags below. -->
+<!-- 1. Update the title, description, canonical URL, and OG/Twitter tags below.
+     Then add one entry to the TOP of ../articles-data.js and a <url> entry
+     to ../sitemap.xml — the homepage list renders from articles-data.js. -->
 <title>Your Article Title — Isaac</title>
 <meta name="description" content="One or two sentences summarizing the article — this is what shows up in Google search results, so make it count.">
 <link rel="canonical" href="https://isaacmp.xyz/articles/your-slug.html">
@@ -51,7 +53,10 @@
   <article class="article-content">
     <header class="article-header">
       <h3>Your Article Title</h3>
-      <p class="article-meta"><time datetime="2026-07-08">Jul 8, 2026</time> <span class="tag">category</span></p>
+      <!-- Add as many <a class="tag"> chips as you want inside .tags — each
+           links to /tags.html?t=<tag>, which lists every post/article that
+           shares that tag (matched case-insensitively). -->
+      <p class="article-meta"><time datetime="2026-07-08">Jul 8, 2026</time> <span class="tags"><a class="tag" href="/tags.html?t=category">category</a></span></p>
     </header>
 
     <p>Opening paragraph — renders slightly larger, like a lede.</p>
@@ -71,5 +76,6 @@
   </article>
 </main>
 
+<script src="/search.js"></script>
 </body>
 </html>
