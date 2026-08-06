@@ -5,6 +5,13 @@
 // homepage always shows entries[0], and /now lists all of them.
 const NOW_ENTRIES = [
   {
+    date: '2026-08-06',
+    html: `
+      <p>Keeping my eye on: <a href="https://keepsite.org">keepsite</a> by Derek <a href="https://sive.rs>sive.rs</a> which looks like a very interesting idea and one which I would likely use for my own site.</p>
+      <p>I have a new design for my speech to data, ai, health tracking device to allow for entering of specific values which will help with the accuracy issue of using voice to text and ai.</p>
+    `
+  },
+  {
     date: '2026-08-04',
     html: `
       <p>Reading <em>Seveneves</em> (almost finished), <a href="/articles/poorcharlie.html" >Poor Charlies Almanack</a></em> by Peter D. Kaufman and flipping through various others like <em>Generative Energy</em> by Raymond Peat and <em>Hypothyroidism: The Unexpected Illness</em> by Broda O. Barnes and Lawrence Galton</p>
