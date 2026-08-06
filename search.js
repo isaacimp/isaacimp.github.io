@@ -119,8 +119,9 @@
         items.push({
           title: b.title,
           type: b.type || 'bookmark',
-          date: b.date,
-          url: '/bookmarks.html',
+          bookmark: true, // bookmark "type" values (article/video/paper/…) can collide
+          date: b.date,   // with content types, so this flag — not the type string — is
+          url: '/bookmarks.html', // what the sort uses to push bookmarks last.
           excerpt: b.note || '',
           body: ''
         });
@@ -170,7 +171,13 @@
         return score === null ? null : { item: item, score: score, snippet: snippetFor(item, q) };
       })
       .filter(Boolean)
-      .sort(function (a, b) { return b.score - a.score; })
+      .sort(function (a, b) {
+        // Bookmarks are still fully searchable, just always shown last —
+        // they're saved links, not your own writing, so your own content
+        // should surface first.
+        if (!!a.item.bookmark !== !!b.item.bookmark) return a.item.bookmark ? 1 : -1;
+        return b.score - a.score;
+      })
       .slice(0, 20);
   }
 
