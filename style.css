@@ -601,6 +601,22 @@ a.back:has(+ #search-trigger-row){margin-bottom:10px;}
 @media (max-width:600px){
   #site-search-trigger:not(.inline){top:14px;right:14px;padding:8px 10px;}
   .site-search-kbd{display:none;}
+
+  /* Small circular icon-only buttons on mobile — the full pill (icon +
+     label + kbd hint) is sized for a desktop hover target; on a narrow
+     screen next to the Now chip it just read as mismatched clutter. */
+  #site-search-trigger.inline, #theme-toggle.inline{
+    width:38px;
+    height:38px;
+    padding:0;
+    justify-content:center;
+    border-radius:50%;
+    margin-top:12px;
+  }
+  #site-search-trigger.inline .site-search-label,
+  #theme-toggle.inline .theme-toggle-label{
+    display:none;
+  }
 }
 
 #site-search-overlay{
