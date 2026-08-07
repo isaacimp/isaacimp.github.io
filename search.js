@@ -203,13 +203,7 @@
     trigger.type = 'button';
     trigger.id = 'site-search-trigger';
     trigger.setAttribute('aria-label', 'Search this site (press / )');
-    trigger.innerHTML =
-      '<svg class="site-search-icon" viewBox="0 0 20 20" width="15" height="15" aria-hidden="true">' +
-        '<circle cx="8.3" cy="8.3" r="5.8" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
-        '<line x1="12.7" y1="12.7" x2="17.5" y2="17.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
-      '</svg>' +
-      '<span class="site-search-label">Search</span>' +
-      '<span class="site-search-kbd">/</span>';
+    trigger.textContent = '🔍';
 
     // Prefer sitting in-flow near the page's own navigation: the homepage
     // has a dedicated slot under the header; other pages just have a

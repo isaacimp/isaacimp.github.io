@@ -594,14 +594,14 @@ a.back:has(+ #search-trigger-row){margin-bottom:14px;}
   border:1px solid var(--line);
   border-radius:6px;
   background:none;
-  color:var(--ink-soft);
+  font-size:16px;
+  line-height:1;
   cursor:pointer;
   z-index:900;
-  transition:color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  transition:border-color 0.2s ease, background-color 0.2s ease;
 }
 
 #site-search-trigger:hover, #theme-toggle:hover{
-  color:var(--ink);
   border-color:var(--ink-soft);
   background:color-mix(in srgb, var(--ink) 5%, transparent);
 }
@@ -613,13 +613,6 @@ a.back:has(+ #search-trigger-row){margin-bottom:14px;}
 }
 
 #theme-toggle:not(.inline){right:70px;}
-
-.site-search-icon{display:block;}
-
-/* Icon-only button: the text label and kbd hint that search.js/theme.js
-   build into the markup aren't shown — aria-label already covers what
-   each button does and, for search, that "/" opens it. */
-.site-search-label, .theme-toggle-label, .site-search-kbd{display:none;}
 
 @media (max-width:600px){
   #site-search-trigger:not(.inline), #theme-toggle:not(.inline){top:14px;right:14px;}

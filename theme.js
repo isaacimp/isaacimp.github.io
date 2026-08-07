@@ -1,70 +1,36 @@
-// Site-wide theme toggle: cycles Light -> Dark -> System (Auto), remembers
-// the choice in localStorage, and applies it via a data-theme attribute on
-// <html>. "System" just removes the attribute entirely, which falls back
-// to the prefers-color-scheme media query already in style.css.
+// Site-wide theme toggle: Light <-> Dark, remembered in localStorage,
+// applied via a data-theme attribute on <html>. No "system" option — on
+// a first-ever visit (nothing stored yet) it just picks a starting point
+// from the OS preference once, then it's a plain user-controlled toggle
+// from then on, same as any other setting.
 //
-// The actual attribute is set as early as possible by a tiny inline
-// script in <head> (before <link rel="stylesheet">) to avoid a flash of
-// the wrong theme on load — this file only builds the button UI and
-// handles clicks; see the inline snippet at the top of every page's head.
+// The attribute is set as early as possible by a tiny inline script in
+// <head> (before <link rel="stylesheet">) to avoid a flash of the wrong
+// theme on load — this file only builds the button and handles clicks.
 (function () {
   'use strict';
 
   var STORAGE_KEY = 'theme';
   var root = document.documentElement;
-  var ORDER = ['light', 'dark', 'system'];
-  var LABELS = { light: 'Light', dark: 'Dark', system: 'Auto' };
-  var ICONS = {
-    light:
-      '<svg class="site-search-icon" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true">' +
-        '<circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
-        '<g stroke="currentColor" stroke-width="1.5" stroke-linecap="round">' +
-          '<line x1="10" y1="1.5" x2="10" y2="3.4"/><line x1="10" y1="16.6" x2="10" y2="18.5"/>' +
-          '<line x1="1.5" y1="10" x2="3.4" y2="10"/><line x1="16.6" y1="10" x2="18.5" y2="10"/>' +
-          '<line x1="4.2" y1="4.2" x2="5.5" y2="5.5"/><line x1="14.5" y1="14.5" x2="15.8" y2="15.8"/>' +
-          '<line x1="4.2" y1="15.8" x2="5.5" y2="14.5"/><line x1="14.5" y1="5.5" x2="15.8" y2="4.2"/>' +
-        '</g>' +
-      '</svg>',
-    dark:
-      '<svg class="site-search-icon" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true">' +
-        '<path d="M17.2 12.3A7.5 7.5 0 1 1 8.7 2.9a6.1 6.1 0 0 0 8.5 9.4Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>' +
-      '</svg>',
-    system:
-      '<svg class="site-search-icon" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true">' +
-        '<rect x="2" y="3.5" width="16" height="10.5" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
-        '<line x1="7" y1="17.3" x2="13" y2="17.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
-        '<line x1="10" y1="14" x2="10" y2="17.3" stroke="currentColor" stroke-width="1.5"/>' +
-      '</svg>'
-  };
+  var ICON = { light: '☀️', dark: '🌙' }; // sun / crescent moon
+  var COLOR = { light: '#F7F7F5', dark: '#17171A' };
 
   function getStored() {
     try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
   }
-
   function setStored(mode) {
     try { localStorage.setItem(STORAGE_KEY, mode); } catch (e) {}
   }
 
-  function systemPrefersDark() {
-    return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  }
-
   function apply(mode) {
-    if (mode === 'light' || mode === 'dark') root.setAttribute('data-theme', mode);
-    else root.removeAttribute('data-theme');
-
-    var isDark = mode === 'dark' || (mode === 'system' && systemPrefersDark());
-    var color = isDark ? '#17171A' : '#F7F7F5';
-    // Only the plain (non media-qualified) theme-color tag needs updating —
-    // the one with media="(prefers-color-scheme: dark)" already tracks the
-    // OS on its own, which is exactly right for "system" mode.
+    root.setAttribute('data-theme', mode);
     var meta = document.querySelector('meta[name="theme-color"]:not([media])');
-    if (meta) meta.setAttribute('content', color);
+    if (meta) meta.setAttribute('content', COLOR[mode]);
   }
 
-  var mode = getStored() || 'system';
-  if (ORDER.indexOf(mode) === -1) mode = 'system';
-  apply(mode); // the inline head snippet already set data-theme; this just syncs theme-color
+  var systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var mode = getStored() === 'dark' || (!getStored() && systemPrefersDark) ? 'dark' : 'light';
+  apply(mode); // inline head snippet already set data-theme if something was stored; this covers the first-ever visit and syncs theme-color either way
 
   function injectUI() {
     var button = document.createElement('button');
@@ -72,13 +38,13 @@
     button.id = 'theme-toggle';
 
     function render() {
-      button.innerHTML = ICONS[mode] + '<span class="theme-toggle-label">' + LABELS[mode] + '</span>';
-      button.setAttribute('aria-label', 'Theme: ' + LABELS[mode] + '. Click to switch.');
+      button.textContent = ICON[mode];
+      button.setAttribute('aria-label', 'Switch to ' + (mode === 'light' ? 'dark' : 'light') + ' mode');
     }
     render();
 
     button.addEventListener('click', function () {
-      mode = ORDER[(ORDER.indexOf(mode) + 1) % ORDER.length];
+      mode = mode === 'light' ? 'dark' : 'light';
       apply(mode);
       setStored(mode);
       render();
@@ -108,13 +74,5 @@
     document.addEventListener('DOMContentLoaded', injectUI);
   } else {
     injectUI();
-  }
-
-  // Keep the address-bar color in sync if the OS theme changes live while
-  // in "system" mode.
-  if (window.matchMedia) {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
-      if (mode === 'system') apply('system');
-    });
   }
 })();
