@@ -170,7 +170,7 @@ function renderPage(type, meta, bodyHtml, srcRelPath) {
 <meta name="twitter:title" content="${titleEsc}">
 <meta name="twitter:description" content="${descEsc}">
 
-<meta name="theme-color" content="#F5F2EA">
+<meta name="theme-color" content="#F7F7F5">
 <meta name="theme-color" content="#17171A" media="(prefers-color-scheme: dark)">
 
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">

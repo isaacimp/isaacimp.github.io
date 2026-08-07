@@ -1,5 +1,5 @@
 :root{
-  --paper:#F4EBD6;
+  --paper:#F7F7F5;
   --ink:#1A1A18;
   --ink-soft:#5C5A52;
   --line:#E9E7E0;
@@ -19,7 +19,7 @@
 
 /* Manual override from the theme toggle (theme.js) */
 :root[data-theme="light"]{
-  --paper:#F4EBD6;
+  --paper:#F7F7F5;
   --ink:#1A1A18;
   --ink-soft:#5C5A52;
   --line:#E9E7E0;
@@ -537,38 +537,41 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 /* ---------- site search + theme toggle ---------- */
 
 /* Both buttons (search.js, theme.js) share this slot/row so they sit
-   together as one small cluster of site controls. */
+   together as one small cluster of site controls. Styled like the rest of
+   the site's inline toggles (.now-toggle, .jumplinks, .back) — plain
+   text/icon with a colour shift on hover, no box/border/background —
+   rather than as boxed pill buttons. */
 #search-trigger-slot, #search-trigger-row{
   display:flex;
   align-items:center;
   flex-wrap:wrap;
-  gap:8px;
+  gap:18px;
 }
 
 #site-search-trigger, #theme-toggle{
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  padding:8px 14px;
-  border-radius:999px;
-  background:var(--paper);
-  border:1px solid var(--line);
+  gap:6px;
+  background:none;
+  border:none;
+  padding:0;
+  margin:0;
   color:var(--ink-soft);
   font-family:inherit;
   font-size:13px;
   cursor:pointer;
   z-index:900;
-  transition:color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition:color 0.2s ease, transform 0.2s ease;
 }
 
-#site-search-trigger:hover, #theme-toggle:hover{color:var(--ink);border-color:var(--ink-soft);transform:translateY(-1px);}
+#site-search-trigger:hover, #theme-toggle:hover{color:var(--link);transform:translateY(-1px);}
 
 /* In-flow placement: right under the name/role on the homepage (via
    #search-trigger-slot), or right after the "back" link everywhere else,
    in a matching row created on the fly (#search-trigger-row) by whichever
    of search.js / theme.js runs first — see either file. Only bare page
    layouts with neither fall back to fixed. */
-#site-search-trigger.inline, #theme-toggle.inline{margin:10px 0 0;}
+#site-search-trigger.inline, #theme-toggle.inline{margin-top:10px;}
 
 #search-trigger-slot:empty{display:none;}
 
@@ -582,37 +585,27 @@ a.back:has(+ #search-trigger-row){margin-bottom:10px;}
   position:fixed;
   top:20px;
   right:24px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.06);
 }
 
-#theme-toggle:not(.inline){right:130px;}
+#theme-toggle:not(.inline){right:110px;}
 
 .site-search-icon{display:block;flex-shrink:0;}
 
 .site-search-kbd{
   font-family:monospace;
   font-size:10.5px;
-  padding:1px 6px;
-  border:1px solid var(--line);
-  border-radius:4px;
-  opacity:0.8;
+  opacity:0.7;
 }
 
 @media (max-width:600px){
-  #site-search-trigger:not(.inline){top:14px;right:14px;padding:8px 10px;}
+  #site-search-trigger:not(.inline){top:14px;right:14px;}
   .site-search-kbd{display:none;}
 
-  /* Small circular icon-only buttons on mobile — the full pill (icon +
-     label + kbd hint) is sized for a desktop hover target; on a narrow
-     screen next to the Now chip it just read as mismatched clutter. */
-  #site-search-trigger.inline, #theme-toggle.inline{
-    width:38px;
-    height:38px;
-    padding:0;
-    justify-content:center;
-    border-radius:50%;
-    margin-top:12px;
-  }
+  /* Icon only on mobile — the text label and kbd hint are desktop
+     affordances (kbd hint especially, since "/" only means anything with
+     a physical keyboard) — sized up slightly since there's no box to help
+     with the tap target anymore. */
+  .site-search-icon{width:18px;height:18px;}
   #site-search-trigger.inline .site-search-label,
   #theme-toggle.inline .theme-toggle-label{
     display:none;
@@ -1001,28 +994,31 @@ article.article-content:first-of-type{padding-top:0;}
 
 /* ---------- bookmarks ---------- */
 
-.bookmark-filters{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 6px;}
+.bookmark-filters{display:flex;flex-wrap:wrap;gap:16px;margin:24px 0 6px;}
 
+/* Plain text toggles, not boxed pills — active state shown with an
+   underline (the same visual language every link on this site already
+   uses) instead of a filled background. */
 .bookmark-filter-btn{
   font-family:monospace;
   font-size:11.5px;
   text-transform:uppercase;
   letter-spacing:0.6px;
-  padding:5px 11px;
-  border:1px solid var(--line);
-  border-radius:20px;
+  padding:0;
+  border:none;
   background:none;
   color:var(--ink-soft);
   cursor:pointer;
-  transition:color .2s ease, border-color .2s ease, background-color .2s ease;
+  transition:color .2s ease;
 }
 
-.bookmark-filter-btn:hover{color:var(--ink);border-color:var(--ink-soft);}
+.bookmark-filter-btn:hover{color:var(--ink);}
 
 .bookmark-filter-btn.active{
-  color:var(--paper);
-  background:var(--ink);
-  border-color:var(--ink);
+  color:var(--ink);
+  text-decoration:underline;
+  text-decoration-color:var(--link);
+  text-underline-offset:3px;
 }
 
 .bookmark-entry{
@@ -1049,8 +1045,8 @@ article.article-content:first-of-type{padding-top:0;}
 }
 
 .bookmark-entry-type{
-  padding:2px 8px;
-  border-radius:20px;
+  padding:2px 6px;
+  border-radius:3px;
   background:color-mix(in srgb, var(--ink) 8%, transparent);
 }
 

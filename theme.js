@@ -54,7 +54,7 @@
     else root.removeAttribute('data-theme');
 
     var isDark = mode === 'dark' || (mode === 'system' && systemPrefersDark());
-    var color = isDark ? '#17171A' : '#F5F2EA';
+    var color = isDark ? '#17171A' : '#F7F7F5';
     // Only the plain (non media-qualified) theme-color tag needs updating —
     // the one with media="(prefers-color-scheme: dark)" already tracks the
     // OS on its own, which is exactly right for "system" mode.
