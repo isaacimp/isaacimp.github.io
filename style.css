@@ -329,26 +329,38 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   pointer-events:none;
 }
 
+/* Matches the search/theme button treatment (small square outline, not a
+   filled pill) — this is the same kind of thing, an action that expands a
+   panel in place, not a plain navigation link. */
 .now-toggle{
+  display:inline-flex;
+  align-items:center;
   background:none;
-  border:none;
-  padding:0;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:7px 11px;
   margin:0;
   cursor:pointer;
   font:inherit;
-  color:inherit;
+  color:var(--ink-soft);
   text-align:left;
   pointer-events:auto;
-  opacity:0.9;
-  transition:opacity 0.2s ease;
+  transition:color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.now-toggle:hover{opacity:1;}
+.now-toggle:hover{
+  color:var(--ink);
+  border-color:var(--ink-soft);
+  background:color-mix(in srgb, var(--ink) 5%, transparent);
+}
 
 .now-toggle h3{
   display:flex;
   align-items:center;
   gap:6px;
+  opacity:1; /* .info-widget h3's opacity:0.4 was tuned for plain text on
+                the page background — too faint against the button's own
+                border now that it's boxed like search/theme */
 }
 
 .now-toggle h3::after{
@@ -364,6 +376,7 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   overflow:hidden;
   max-height:0;
   opacity:0;
+  margin-top:10px;
   pointer-events:none;
   transition:max-height 0.35s ease, opacity 0.25s ease;
 }
