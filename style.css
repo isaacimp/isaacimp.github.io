@@ -7,6 +7,8 @@
   --serif:'Source Serif 4', Georgia, serif;
 }
 
+/* Dark mode follows the OS/browser setting only — no manual override, no
+   JS needed for it at all. */
 @media (prefers-color-scheme: dark){
   :root{
     --paper:#17171A;
@@ -15,23 +17,6 @@
     --line:#302F29;
     --link:#8CB4E8;
   }
-}
-
-/* Manual override from the theme toggle (theme.js) */
-:root[data-theme="light"]{
-  --paper:#F7F7F5;
-  --ink:#1A1A18;
-  --ink-soft:#5C5A52;
-  --line:#E9E7E0;
-  --link:#2C5AA0;
-}
-
-:root[data-theme="dark"]{
-  --paper:#17171A;
-  --ink:#EDECE6;
-  --ink-soft:#ADAA9F;
-  --line:#302F29;
-  --link:#8CB4E8;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -558,116 +543,62 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   transform:scale(1.1);
 }
 
-/* ---------- site search + theme toggle ---------- */
+/* ---------- site search ---------- */
 
-/* Both buttons (search.js, theme.js) share this slot/row so they sit
-   together as one small cluster of site controls.
-
-   Search and the theme toggle are ACTIONS (open a panel / change a
-   setting), not navigation — unlike .jumplinks, .now-toggle, .back etc.,
-   which all take you somewhere and are styled as plain links. So these
-   get an actual button treatment: a small square outline, not a filled
-   rounded pill. Icon-only, identical at every screen size — no separate
-   mobile variant to keep in sync, no text label to wrap or hide. */
+/* search.js drops the whole search bar (input + results dropdown) into
+   this slot/row — no button, no modal, just click in and type. */
 #search-trigger-slot, #search-trigger-row{
   display:flex;
   align-items:center;
-  gap:10px;
 }
 
 #search-trigger-slot{margin:18px 0 26px;}
 #search-trigger-slot:empty{display:none;}
 
 /* .back normally carries a big margin-bottom to separate it from the page
-   content below; when the search row sits right under it instead, most of
-   that gap belongs after the row, not before it. */
+   content below; when the search bar sits right under it instead, most of
+   that gap belongs after it, not before it. */
 a.back:has(+ #search-trigger-row){margin-bottom:14px;}
 #search-trigger-row{margin-bottom:26px;}
 
-#site-search-trigger, #theme-toggle{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:36px;
-  height:36px;
-  padding:0;
-  border:1px solid var(--line);
-  border-radius:6px;
-  background:none;
-  font-size:16px;
-  line-height:1;
-  cursor:pointer;
-  z-index:900;
-  transition:border-color 0.2s ease, background-color 0.2s ease;
-}
-
-#site-search-trigger:hover, #theme-toggle:hover{
-  border-color:var(--ink-soft);
-  background:color-mix(in srgb, var(--ink) 5%, transparent);
-}
-
-#site-search-trigger:not(.inline), #theme-toggle:not(.inline){
-  position:fixed;
-  top:20px;
-  right:24px;
-}
-
-#theme-toggle:not(.inline){right:70px;}
-
-@media (max-width:600px){
-  #site-search-trigger:not(.inline), #theme-toggle:not(.inline){top:14px;right:14px;}
-  #theme-toggle:not(.inline){right:58px;}
-}
-
-#site-search-overlay{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-  display:none;
-  align-items:flex-start;
-  justify-content:center;
-  padding:12vh 20px 20px;
-  z-index:1100;
-}
-
-#site-search-overlay.active{display:flex;}
-
-#site-search-panel{
-  width:100%;
-  max-width:560px;
-  max-height:70vh;
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:10px;
-  box-shadow:0 12px 40px rgba(0,0,0,0.25);
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-}
+#site-search{position:relative;width:100%;max-width:240px;}
 
 #site-search-input{
   width:100%;
-  padding:16px 18px;
-  font-family:var(--serif);
-  font-size:16px;
+  padding:8px 12px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:none;
   color:var(--ink);
-  background:transparent;
-  border:none;
-  border-bottom:1px solid var(--line);
+  font-family:var(--serif);
+  font-size:14px;
 }
 
-#site-search-input:focus{outline:none;}
+#site-search-input::placeholder{color:var(--ink-soft);}
+#site-search-input:focus{outline:none;border-color:var(--ink-soft);}
 
-#site-search-results{overflow-y:auto;}
+#site-search-results{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  left:0;
+  width:min(420px, 90vw);
+  max-height:60vh;
+  overflow-y:auto;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.15);
+  z-index:1000;
+}
+
+#site-search-results.active{display:block;}
 
 .site-search-result{
   display:flex;
   flex-direction:column;
   gap:4px;
-  padding:12px 18px;
+  padding:12px 14px;
   text-decoration:none;
   border-bottom:1px solid var(--line);
 }
@@ -709,12 +640,7 @@ a.back:has(+ #search-trigger-row){margin-bottom:14px;}
   padding:0 1px;
 }
 
-.site-search-empty{padding:16px 18px;color:var(--ink-soft);font-style:italic;font-size:14px;}
-
-@media (max-width:600px){
-  #site-search-trigger{bottom:16px;right:16px;}
-  #site-search-overlay{padding:8vh 12px 12px;}
-}
+.site-search-empty{padding:12px 14px;color:var(--ink-soft);font-style:italic;font-size:14px;}
 
 /* ---------- mobile extras ---------- */
 

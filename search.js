@@ -1,8 +1,9 @@
-// Site-wide search. Self-contained: injects its own trigger button and
-// overlay into whatever page includes it, and pulls in whichever data
-// files (articles-data.js, posts-data.js, now-data.js, bookmarks-data.js)
-// aren't already loaded on that page. Add <script src="/search.js"></script>
-// near the end of <body> on any page to get it — nothing else required.
+// Site-wide search. Self-contained: injects a plain search input (no
+// button, no modal — just click in and type) into whatever page includes
+// it, and pulls in whichever data files (articles-data.js, posts-data.js,
+// now-data.js, bookmarks-data.js) aren't already loaded on that page. Add
+// <script src="/search.js"></script> near the end of <body> on any page
+// to get it — nothing else required.
 //
 // The index is built from the same metadata files that drive the
 // Articles/Posts/Now/Bookmarks lists elsewhere on the site, so a new
@@ -199,11 +200,14 @@
   }
 
   function injectUI() {
-    var trigger = document.createElement('button');
-    trigger.type = 'button';
-    trigger.id = 'site-search-trigger';
-    trigger.setAttribute('aria-label', 'Search this site (press / )');
-    trigger.textContent = '🔍';
+    var wrap = document.createElement('div');
+    wrap.id = 'site-search';
+    wrap.innerHTML =
+      '<input id="site-search-input" type="text" placeholder="Search…" autocomplete="off" spellcheck="false" aria-label="Search this site">' +
+      '<div id="site-search-results"></div>';
+
+    var input = wrap.querySelector('#site-search-input');
+    var results = wrap.querySelector('#site-search-results');
 
     // Prefer sitting in-flow near the page's own navigation: the homepage
     // has a dedicated slot under the header; other pages just have a
@@ -220,35 +224,25 @@
       }
     }
     if (slot) {
-      trigger.classList.add('inline');
-      slot.appendChild(trigger);
+      wrap.classList.add('inline');
+      slot.appendChild(wrap);
     } else {
-      document.body.appendChild(trigger);
+      document.body.appendChild(wrap);
     }
 
-    var overlay = document.createElement('div');
-    overlay.id = 'site-search-overlay';
-    overlay.innerHTML =
-      '<div id="site-search-panel" role="dialog" aria-label="Site search">' +
-        '<input id="site-search-input" type="text" placeholder="Search articles, posts, now, bookmarks…" autocomplete="off" spellcheck="false">' +
-        '<div id="site-search-results"></div>' +
-      '</div>';
-    document.body.appendChild(overlay);
-
-    var input = overlay.querySelector('#site-search-input');
-    var results = overlay.querySelector('#site-search-results');
-
-    // Kick off eagerly (not on first open) so the full-text fetches for
-    // articles/posts have a head start by the time someone actually types.
+    // Kick off eagerly (not on first keystroke) so the full-text fetches
+    // for articles/posts have a head start by the time someone types.
     var itemsReady = dataReady.then(buildIndex);
 
     function renderMatches(matches, q) {
       if (!input.value.trim()) {
+        results.classList.remove('active');
         results.innerHTML = '';
         return;
       }
       if (!matches.length) {
         results.innerHTML = '<p class="site-search-empty">No matches.</p>';
+        results.classList.add('active');
         return;
       }
       results.innerHTML = matches.map(function (m) {
@@ -264,6 +258,7 @@
           snippet +
         '</a>';
       }).join('');
+      results.classList.add('active');
     }
 
     function runAndRender() {
@@ -276,35 +271,30 @@
       });
     }
 
-    function open() {
-      overlay.classList.add('active');
-      input.value = '';
-      results.innerHTML = '';
-      setTimeout(function () { input.focus(); }, 0);
-    }
-
-    function close() {
-      overlay.classList.remove('active');
-    }
-
-    trigger.addEventListener('click', open);
     input.addEventListener('input', runAndRender);
 
-    overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) close();
+    // Re-show the dropdown if you click back into an input that already
+    // has a query, and hide it when clicking anywhere outside the widget.
+    input.addEventListener('focus', function () {
+      if (input.value.trim()) results.classList.add('active');
+    });
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) results.classList.remove('active');
     });
 
     document.addEventListener('keydown', function (e) {
-      if (overlay.classList.contains('active')) {
-        if (e.key === 'Escape') close();
+      if (e.key === 'Escape' && document.activeElement === input) {
+        input.value = '';
+        results.classList.remove('active');
+        results.innerHTML = '';
+        input.blur();
         return;
       }
       var active = document.activeElement;
       var typing = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
-      var isShortcut = (e.key === '/' && !typing) || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k');
-      if (isShortcut) {
+      if (e.key === '/' && !typing) {
         e.preventDefault();
-        open();
+        input.focus();
       }
     });
   }
