@@ -16,3 +16,23 @@ My goal with health is to bring myself to the state where the body does not get 
 The gut is one of the more common problem areas of the body. Part of this is due to the fact that it is constantly exposed to everything we eat or drink, but it also contains the second highest concentration of neurons in the body — second of course to the brain. The number of neurons in the gut amounts to ~0.2% to ~0.6% of the total neurons in the body. This sounds measly, but it's still a significant number at an estimated 100–500 million neurons (roughly the same as a cat has in its brain). Biologically speaking, we are wired to sense the slightest changes occurring in the gut. The share of the neurons is highest in the small intestine, which holds around half of the total neurons of the gut, followed by the colon/large intestine. This also speaks to the importance of the health of the gut, as we have evolved to be highly sensitive there — more so than any other part of our biology, excluding the brain.
 
 Since the gut is exposed to everything that we eat *and* is very sensitive, it is a good starting point when trying to improve general health, as it has far-reaching effects on many systems in the body. The rise in colon cancer and other maladies of the gut sheds some light on just how bad our situation is, with the occurrence of these issues happening younger and more often than ever in recent tracked history. The reasons for this are numerous, however there are many quite obvious or very well understood mechanisms where the gut is harmed directly and indirectly, in ways which can be mitigated without much issue.
+
+<!--
+    <h3>Bacterial Overgrowth / Dysbiosis / SIBO</h3>
+
+    <p><strong>Symptoms:</strong></p>
+    <ul>
+      <li>Pain</li>
+      <li>Lactic acid taste</li>
+      <li>Bloating / cortisol symptoms</li>
+    </ul>
+
+    <p><strong>Potential fixes:</strong></p>
+    <ul>
+      <li>Reducing the things that are feeding the bacteria — certain starches, lots of sugar and cane sugar at once (especially on an empty stomach?)</li>
+    </ul>
+
+    <h3>Headache</h3>
+    <p><strong>Thyroid.</strong></p>
+    <p>Went away with salty corn chips with cheese, a raw carrot, and coke with ginger (later).</p>
+  -->
