@@ -352,13 +352,13 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 }
 
 .now-toggle h3::after{
-  content:'+';
+  content:'+show';
   font-family:monospace;
   font-weight:400;
   opacity:0.8;
 }
 
-.now-toggle[aria-expanded="true"] h3::after{content:'\2212';}
+.now-toggle[aria-expanded="true"] h3::after{content:'-hide';}
 
 .now-body{
   overflow:hidden;
