@@ -98,18 +98,7 @@ header{padding-bottom:4px;}
 .name-zh-swap:hover{color:transparent;}
 .name-zh-swap:hover::after{opacity:1;}
 
-/* Search/theme buttons + nav links as one grouped row, symmetric margin
-   above and below so it sits centered in the gap between the name block
-   and the first section heading rather than hugging either one. */
-.header-controls{
-  display:flex;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:10px 24px;
-  margin:28px 0;
-}
-
-.jumplinks{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px;}
+.jumplinks{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:0px;font-size:14px;}
 .jumplinks a{color:var(--ink-soft);text-decoration:none;display:inline-block;transition:color .2s ease, transform .2s ease;}
 .jumplinks a:hover{color:var(--link);transform:translateY(-1px);}
 
@@ -577,11 +566,20 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 
 #site-search-trigger:hover, #theme-toggle:hover{color:var(--link);transform:translateY(-1px);}
 
-/* In-flow placement: inside .header-controls, grouped with the nav, on
-   the homepage (via #search-trigger-slot), or right after the "back" link
-   everywhere else, in a matching row created on the fly
-   (#search-trigger-row) by whichever of search.js / theme.js runs first —
-   see either file. Only bare page layouts with neither fall back to fixed. */
+/* In-flow placement: right under the name/role on the homepage (via
+   #search-trigger-slot), or right after the "back" link everywhere else,
+   in a matching row created on the fly (#search-trigger-row) by whichever
+   of search.js / theme.js runs first — see either file. Only bare page
+   layouts with neither fall back to fixed. */
+#site-search-trigger.inline, #theme-toggle.inline{margin-top:5px;}
+
+/* Homepage only: push the whole name -> buttons -> nav stack down a
+   little further so it isn't crammed right up against "Melbourne". */
+#search-trigger-slot #site-search-trigger.inline,
+#search-trigger-slot #theme-toggle.inline{
+  margin-top:20px;
+}
+
 #search-trigger-slot:empty{display:none;}
 
 /* .back normally carries a big margin-bottom to separate it from the page
