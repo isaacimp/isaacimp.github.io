@@ -502,9 +502,16 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   box-shadow:0 8px 32px rgba(0,0,0,0.6);
 }
 
+.lightbox-close:before{
+  content: "×";
+  font-size: 28px;
+  line-height: 1;
+  transform: translateY(-1.4px);
+}
+
 .lightbox-close{
   position:absolute;
-  top:-40px;
+  top:-35px;
   right:0;
   width:32px;
   height:32px;
@@ -516,7 +523,7 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  font-size:20px;
+  font-size:30px;
   font-weight:600;
   transition:background-color 0.2s ease, transform 0.2s ease;
 }
