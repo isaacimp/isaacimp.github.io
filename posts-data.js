@@ -5,5 +5,5 @@
 // whose page errored on the last build) are carried over unchanged, as
 // long as their HTML file still exists.
 const POSTS = [
-  { slug: 'thoughts-on-you-and-your-research-speech', title: 'My thoughts on:You and Your Research. A speech by Richard Hemming', date: '2026-08-06', tags: ['life'] },
+  { slug: 'thoughts-on-you-and-your-research-speech', title: 'My thoughts on:You and Your Research. A speech by Richard Hemming', date: '2026-08-06', tags: ['life', 'productivity'] },
 ];
