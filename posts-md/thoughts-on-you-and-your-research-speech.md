@@ -1,5 +1,5 @@
 ---
-title: My thoughts on - You and Your Research - a speech by Richard Hemming
+title: My thoughts on - You and Your Research - a speech by Richard Hamming
 date: 2026-08-06
 description: Some inital thoughts after reading the you and your reseach speech transcript.
 tags: [life, productivity]
