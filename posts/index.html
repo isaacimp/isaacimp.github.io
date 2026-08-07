@@ -34,27 +34,47 @@
 
   <section id="posts-list">
     <h2>Posts</h2>
-    <ul class="plain" id="posts-index"></ul>
+    <div id="posts-index"></div>
   </section>
 </main>
 
 <script src="../posts-data.js"></script>
 <script>
-  function tagLinksHtml(tags) {
-    if (!tags || !tags.length) return '';
-    const chips = tags.map(t => `<a class="tag" href="/tags.html?t=${encodeURIComponent(t)}">${t}</a>`).join('');
-    return `<span class="tags">${chips}</span>`;
-  }
+  // Every post's full content, stacked newest-first — fetched from each
+  // post's own standalone page so there's still just one copy of the text
+  // (same approach the homepage uses for just the latest post).
+  const container = document.getElementById('posts-index');
 
-  const list = document.getElementById('posts-index');
-  if (POSTS.length) {
-    list.innerHTML = POSTS.map(post =>
-      `<li><a href="${post.slug}.html">${post.title}</a> - <em>${post.date}</em> ${tagLinksHtml(post.tags)}</li>`
-    ).join('');
+  if (!POSTS.length) {
+    container.outerHTML = '<p><em>No posts yet — check back soon.</em></p>';
   } else {
-    list.outerHTML = '<p><em>No posts yet — check back soon.</em></p>';
+    POSTS.forEach(post => {
+      const holder = document.createElement('div');
+      holder.id = 'post-' + post.slug;
+      container.appendChild(holder);
+
+      fetch(`${post.slug}.html`)
+        .then(res => res.ok ? res.text() : Promise.reject(res))
+        .then(html => {
+          const temp = document.createElement('div');
+          temp.innerHTML = html;
+          const body = temp.querySelector('#post-body');
+          if (!body) throw new Error('post-body not found');
+          const article = document.createElement('article');
+          article.className = 'article-content';
+          article.innerHTML = body.innerHTML;
+          const permalink = document.createElement('p');
+          permalink.innerHTML = `<a href="${post.slug}.html">Permalink →</a>`;
+          article.appendChild(permalink);
+          holder.replaceChildren(article);
+        })
+        .catch(() => {
+          holder.innerHTML = `<p><a href="${post.slug}.html">${post.title}</a> — <em>${post.date}</em>. <a href="${post.slug}.html">Read it →</a></p>`;
+        });
+    });
   }
 </script>
 <script src="/search.js"></script>
+<script src="/theme.js"></script>
 </body>
 </html>
