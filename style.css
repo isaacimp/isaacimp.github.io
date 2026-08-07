@@ -735,21 +735,29 @@ a.back:has(+ #search-trigger-row){margin-bottom:10px;}
   cursor:pointer;
   list-style:none;
   display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-size:16px;
-  font-weight:600;
-  padding:10px 16px;
-  border:1px solid var(--line);
-  border-radius:999px;
+  align-items:baseline;
+  gap:6px;
+  font-size:15px;
+  font-weight:500;
+  color:var(--ink);
+  transition:color 0.2s ease;
 }
 
+.mobile-now-info summary:hover{color:var(--link);}
+
+/* <summary> gets a native disclosure marker in most browsers regardless of
+   list-style — Safari/Chrome both still render a ::marker triangle even
+   with list-style:none, on top of the -webkit-specific one below, so this
+   was rendering two indicators (a native triangle plus our own +/-)
+   unless both are explicitly killed. */
 .mobile-now-info summary::-webkit-details-marker{display:none;}
+.mobile-now-info summary::marker{content:'';display:none;}
 
 .mobile-now-info summary::after{
   content:'+';
   color:var(--ink-soft);
   font-weight:400;
+  font-size:13px;
 }
 
 .mobile-now-info[open] summary::after{content:'\2212';}
