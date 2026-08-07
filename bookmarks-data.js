@@ -9,6 +9,13 @@
 //
 const BOOKMARKS = [
   {
+    date: '2026-08-07',
+    url: 'https://heavenlypath.notion.site',
+    title: 'Chinese learning materials resource',
+    type: 'website',
+    note: '',
+  },
+  {
     date: '2026-08-05',
     url: 'https://homepages.inf.ed.ac.uk/wadler/papers/firbush/hamming.pdf',
     title: 'You and Your Research -- Richard Hamming',

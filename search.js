@@ -1,17 +1,6 @@
 // Site-wide search. Self-contained: injects a plain search input (no
-// button, no modal — just click in and type) into whatever page includes
-// it, and pulls in whichever data files (articles-data.js, posts-data.js,
-// now-data.js, bookmarks-data.js) aren't already loaded on that page. Add
-// <script src="/search.js"></script> near the end of <body> on any page
-// to get it — nothing else required.
-//
-// The index is built from the same metadata files that drive the
-// Articles/Posts/Now/Bookmarks lists elsewhere on the site, so a new
-// entry in any of those automatically becomes searchable too. Articles
-// and posts don't carry their own body text in those metadata files, so
-// their standalone pages are fetched once (in the background, same-origin)
-// to pull in the full text — this only works when served over http(s), not
-// opened via file://. Title matches are ranked above tag/body matches.
+// <script src="/search.js"></script> near end of <body> on any page to get search for it
+
 (function () {
   'use strict';
 
