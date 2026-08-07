@@ -329,48 +329,59 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   pointer-events:none;
 }
 
-/* Matches the search/theme button treatment (small square outline, not a
-   filled pill) — this is the same kind of thing, an action that expands a
-   panel in place, not a plain navigation link. */
+/* Not a button-with-a-border — instead borrows the site's own "start of a
+   section" marker (the same short accent line used above every article
+   header and every /now/ archive entry), so it reads as its own distinct
+   block. A real rotating chevron (not "+show"/"-hide" text) signals that
+   it's a dropdown. */
 .now-toggle{
-  display:inline-flex;
-  align-items:center;
+  display:block;
   background:none;
-  border:1px solid var(--line);
-  border-radius:6px;
-  padding:7px 11px;
+  border:none;
+  padding:0;
   margin:0;
   cursor:pointer;
   font:inherit;
   color:var(--ink-soft);
   text-align:left;
   pointer-events:auto;
-  transition:color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  transition:color 0.2s ease;
 }
 
-.now-toggle:hover{
-  color:var(--ink);
-  border-color:var(--ink-soft);
-  background:color-mix(in srgb, var(--ink) 5%, transparent);
+.now-toggle:hover{color:var(--ink);}
+
+.now-toggle::before{
+  content:'';
+  display:block;
+  width:28px;
+  height:2px;
+  margin-bottom:14px;
+  background:var(--ink);
+  opacity:0.5;
 }
 
 .now-toggle h3{
   display:flex;
   align-items:center;
-  gap:6px;
-  opacity:1; /* .info-widget h3's opacity:0.4 was tuned for plain text on
-                the page background — too faint against the button's own
-                border now that it's boxed like search/theme */
+  gap:7px;
+  opacity:1; /* .info-widget h3's opacity:0.4 was tuned for plain text with
+                nothing else marking it as a section — the accent line
+                above now does that job instead */
 }
 
 .now-toggle h3::after{
-  content:'+show';
-  font-family:monospace;
-  font-weight:400;
-  opacity:0.8;
+  content:'';
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor;
+  opacity:0.7;
+  transform:rotate(45deg);
+  transition:transform 0.25s ease;
 }
 
-.now-toggle[aria-expanded="true"] h3::after{content:'-hide';}
+.now-toggle[aria-expanded="true"] h3::after{transform:rotate(225deg);}
 
 .now-body{
   overflow:hidden;
