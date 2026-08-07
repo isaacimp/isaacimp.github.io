@@ -1,0 +1,64 @@
+#!/bin/bash
+# post-receive hook: goes in the hooks/ dir of the BARE repo on your NAS.
+# Triggers the markdown build automatically the moment you push.
+#
+# A bare repo has no working tree of its own, so this hook checks the
+# pushed branch out into a normal directory and runs the build there —
+# exactly the same as running `node build.js` by hand, just triggered by
+# the push instead.
+#
+# ---- ONE-TIME SETUP ON THE NAS ----
+#   1. Create the bare repo (if you haven't already):
+#        git init --bare /path/to/isaacmp-site.git
+#   2. Create a working-tree directory next to it — this is what Nginx
+#      should actually serve from:
+#        mkdir -p /path/to/isaacmp-site
+#   3. Copy this file into the bare repo's hooks/ dir and make it
+#      executable:
+#        cp hooks/post-receive /path/to/isaacmp-site.git/hooks/post-receive
+#        chmod +x /path/to/isaacmp-site.git/hooks/post-receive
+#   4. Edit WORK_TREE and BRANCH below to match your actual setup.
+#   5. Make sure `node` (and therefore `npm`) is on PATH for whatever user
+#      the git server process runs as — this hook runs non-interactively,
+#      so it won't pick up a shell profile / nvm the way an interactive
+#      login shell would. If `node` was installed via nvm, either symlink
+#      it into a system bin dir the hook's PATH already includes, or set
+#      NODE_BIN below to an absolute path.
+#   6. From your dev machine:
+#        git remote add nas ssh://USER@nas-host/path/to/isaacmp-site.git
+#        git push nas main
+#      That push now checks out + builds automatically.
+#
+# You can still run `node build.js` by hand at any time (e.g. from
+# WORK_TREE, to preview locally before pushing) — this hook doesn't change
+# that, it just automates the same command after a push.
+
+set -euo pipefail
+
+WORK_TREE="/path/to/isaacmp-site"   # <-- EDIT to the real path on your NAS
+BRANCH="main"                        # <-- EDIT if you push to a different branch
+NODE_BIN="node"                      # <-- EDIT to an absolute path if `node` isn't on the hook's PATH
+
+while read -r oldrev newrev refname; do
+  if [ "$refname" != "refs/heads/$BRANCH" ]; then
+    echo "post-receive: ignoring push to $refname (watching refs/heads/$BRANCH)"
+    continue
+  fi
+
+  echo "post-receive: checking out $BRANCH into $WORK_TREE"
+  mkdir -p "$WORK_TREE"
+  git --work-tree="$WORK_TREE" --git-dir="$(pwd)" checkout -f "$BRANCH"
+
+  echo "post-receive: installing dependencies (if needed)"
+  cd "$WORK_TREE"
+  if [ ! -d node_modules ]; then
+    npm install --omit=dev
+  fi
+
+  echo "post-receive: running build"
+  if "$NODE_BIN" build.js; then
+    echo "post-receive: build finished cleanly"
+  else
+    echo "post-receive: build finished with errors (see above) — files that failed were left untouched, nothing crashed"
+  fi
+done
