@@ -8,6 +8,12 @@
 // },
 //
 const BOOKMARKS = [
+  {date: '2026-08-13',
+    url: 'https://longestlevers.com/anabology-top/good-foods.html',
+    title: '"Good Foods" from: Anabology at longestlevers.com',
+    type: 'website',
+    note: '',
+  },
   {
     date: '2026-08-07',
     url: 'https://heavenlypath.notion.site',
