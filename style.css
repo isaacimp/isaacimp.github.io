@@ -378,9 +378,11 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 }
 
 .now-body.open{
-  max-height:800px;
+  max-height:min(800px, calc(100vh - 140px));
   opacity:1;
   pointer-events:auto;
+  overflow-y:auto;
+  overscroll-behavior:contain;
 }
 
 .info-widget{
