@@ -67,7 +67,7 @@
           title: a.title || a.file,
           type: 'article',
           date: a.date,
-          url: '/articles/' + a.slug + '.html',
+          url: '/' + a.slug + '.html',
           excerpt: (a.tags || []).join(', '),
           body: ''
         };

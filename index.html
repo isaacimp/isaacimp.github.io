@@ -97,15 +97,17 @@
     <h2>Articles</h2>
 
     <!--
-      NEW ARTICLE: each article is a standalone page in /articles/, not
-      written inline here. To publish one:
-        1. Copy articles/template.html to articles/your-slug.html
-        2. Fill in the title, meta description, date, and tag
-        3. Write the body as plain p / h3 / ul / blockquote / pre — same
-           .article-content formatting as everywhere else on the site
-        4. Add one entry to the TOP of articles-data.js (newest first) —
-           the list below renders from it automatically
-        5. Add a <url> entry for it in sitemap.xml
+      NEW ARTICLE: each article is a standalone page at the site root
+      (isaacmp.xyz/your-slug), not written inline here. To publish one:
+        1. Add articles-md/your-slug.md with title/date/description/tags
+           front matter (copy articles-md/_template.md as a starting point)
+        2. Run `node build.js` — it renders your-slug.html at the repo
+           root and rewrites articles-data.js; the list below renders
+           from that automatically
+        3. Add a <url> entry for it in sitemap.xml
+      Pick slugs short and memorable (Sivers-style) and avoid names that
+      collide with existing top-level files (see RESERVED_ROOT_SLUGS in
+      build.js) — a collision would overwrite that file on build.
     -->
 
     <ul class="plain" id="articles-index"></ul>
@@ -368,7 +370,7 @@
   const articlesList = document.getElementById('articles-index');
   if (articlesList && typeof ARTICLES !== 'undefined') {
     articlesList.innerHTML = ARTICLES.map(a =>
-      `<li><a href="articles/${a.slug}.html">${a.file}</a> - <em>${a.dateLabel}</em> ${tagLinksHtml(a.tags)}</li>`
+      `<li><a href="${a.slug}.html">${a.file}</a> - <em>${a.dateLabel}</em> ${tagLinksHtml(a.tags)}</li>`
     ).join('');
   }
 

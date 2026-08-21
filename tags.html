@@ -65,7 +65,7 @@
         title: a.title || a.file,
         type: 'article',
         date: a.date,
-        url: `articles/${a.slug}.html`,
+        url: `${a.slug}.html`,
         tags: a.tags
       })))
       .concat((typeof POSTS !== 'undefined' ? POSTS : []).filter(p => matches(p.tags)).map(p => ({

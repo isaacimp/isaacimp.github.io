@@ -15,6 +15,8 @@ More paragraphs, **bold**, *italic*, and [links](https://example.com) all work a
 
 Keep going.
 
+# Testing a main heading addition
+
 > A pulled quote or a point worth highlighting.
 
 - Bullet
