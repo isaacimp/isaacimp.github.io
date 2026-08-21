@@ -6,5 +6,5 @@
 // long as their HTML file still exists.
 const ARTICLES = [
   { slug: 'treatise-on-health', title: 'Treatise on Health', file: 'treatise-on-health.html', date: '2026-08-07', dateLabel: 'Aug, 2026', tags: ['health'] },
-  { slug: 'coerce', title: 'Productivity and Coercion', file: 'coerce.html', date: '2026-07-20', dateLabel: 'Jul, 2026', tags: ['philosophy', 'epistimology'] },
+  { slug: 'coercion', title: 'Productivity and Coercion', file: 'coercion.html', date: '2026-07-20', dateLabel: 'Jul, 2026', tags: ['philosophy', 'epistimology'] },
 ];
