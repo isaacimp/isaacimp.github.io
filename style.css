@@ -925,6 +925,10 @@ article.article-content:first-of-type{padding-top:0;}
 .now-entry p{margin-bottom:10px;line-height:1.72;}
 .now-entry p:last-child{margin-bottom:0;}
 
+#now-content img,
+#now-content-mobile img,
+.now-entry img{max-width:100%;height:auto;display:block;border-radius:6px;margin-top:10px;}
+
 /* ---------- bookmarks ---------- */
 
 .bookmark-filters{display:flex;flex-wrap:wrap;gap:16px;margin:24px 0 6px;}
