@@ -7,7 +7,8 @@ const NOW_ENTRIES = [
   {
     date: `2026-08-21`,
     html:  `<p>I'm going to the only two countries in the world starting with /taɪ/ in a couple of months. Thailand and Taiwan. I haven't been to either one and I am really looking forward to it. The most recent of my travels was in January 2026 to Vietnam, Bali, and Singapore. Amy and I are only really going to Thailand to help my sister out for a week but then Amy is heading back to Australia for school and I will continue on to Taiwan which is where I really want to go. I have about 60 days to prepare and hopefully learn a good amount of Mandarin but we'll see. In the meantime I will try and save some money so I can actually take my time there and not have to worry too much about money.</p>
-    <p>I feel like my website is in a pretty good spot now where I can just focus on writing and posting to it. There are a few things I am not yet satisfied with but I'll figure that out when they become problematic.</p>`
+            <p>I feel like my website is in a pretty good spot now where I can just focus on writing and posting to it. There are a few things I am not yet satisfied with but I'll figure that out when they become problematic.</p>
+            <p>I have been hanging a lot lately too as well as doing pull ups and sime gym ring exercises and it feels great. <img src="img/hang.jpg></p>`
   },
   {
     date: '2026-08-10',
