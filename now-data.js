@@ -9,7 +9,7 @@ const NOW_ENTRIES = [
     html: `<p>I am still in my Apartment in Melbourne with Amy. We have been trying to make this place feel like home for awhile now and we have made great progress but there is still work to be done and I don't think that we can get to a satisfying point until we have our own house that we own.</p>
     <p>There are so many different ideas that I am interested in thinking more about and working on that I get a bit stuck and don't know what to do. I think I really should just allow myself to follow the ideas to their natural conclusions and let them take me on a journey even if I spend the whole day thinking about something seemingly simple.</p>
     
-    <p>I am still booking flights for my upcoming trip and planning the general time frame and movements of my time in Taipei. It's coming up so fast before I know it, I will be on the plane so I really need to get a move on and get things organised.</p>
+    <p>I am still booking flights for my upcoming trip and planning the general time frame and movements of my time in Taiwan. It's coming up so fast before I know it, I will be on the plane so I really need to get a move on and get things organised.</p>
     <p>The main things on my mind at the moment are mostly to do with health/ diet, thinking about what to spend my time on, and thinking about my job (not in a good way). I think all of those things are not very good to be thinking about as they should all be just natural things that are just background factors and don't take up too much mental space but alas. I'll see what I can do becuase I think ideally I would stop thinking about all of them so much.</p>
     `
   },
