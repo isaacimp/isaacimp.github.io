@@ -247,10 +247,10 @@
 
 <aside class="side-info left" id="now-widget">
   <div class="info-widget">
-    <button type="button" id="now-toggle" class="now-toggle" aria-expanded="false" aria-controls="now-body">
+    <button type="button" id="now-toggle" class="now-toggle" aria-expanded="true" aria-controls="now-body">
       <h3>Now <time id="now-timestamp" class="now-timestamp"></time></h3>
     </button>
-    <div id="now-body" class="now-body">
+    <div id="now-body" class="now-body open">
       <div id="now-content"></div>
       <p><a href="/now/">View past now entries →</a></p>
     </div>
@@ -338,9 +338,9 @@
     nowContentMobile.innerHTML = nowContent.innerHTML;
   }
 
-  // Desktop "Now" widget: auto-shows/hides with scroll by default (below),
-  // but the toggle click always wins — lets it be opened without scrolling
-  // or closed while scrolled, until the page reloads.
+  // Desktop "Now" widget: starts open and auto-closes once you scroll by
+  // default (below), but the toggle click always wins — lets it be closed
+  // without scrolling or opened while scrolled, until the page reloads.
   const nowToggle = document.getElementById('now-toggle');
   const nowBody = document.getElementById('now-body');
   let nowOverride = null; // null = follow scroll, true/false = manual pin
@@ -450,7 +450,7 @@
     });
 
     if (nowOverride === null) {
-      setNowOpen(currentScroll > 100);
+      setNowOpen(currentScroll <= 100);
     }
 
     // Update progress bar
