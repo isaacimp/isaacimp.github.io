@@ -299,6 +299,14 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 }
 
 .side-info.left{left:40px;}
+
+/* Now widget specifically gets a wider box than the default 280px,
+   pulling its right edge toward the middle so its bigger text has more
+   room to spread out instead of wrapping tightly. Scales with viewport
+   width (rather than a flat px value) so it keeps a constant ~30px gap
+   from main's left edge instead of overlapping it near the 1400px
+   breakpoint where the sidebar is hidden. */
+#now-widget{width:clamp(280px, calc(50vw - 380px), 440px);}
 .side-info.right{right:40px;}
 
 .side-info.visible{
@@ -327,13 +335,13 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   margin:0;
   cursor:pointer;
   font:inherit;
-  color:var(--ink-soft);
+  color:var(--ink);
   text-align:left;
   pointer-events:auto;
   transition:color 0.2s ease;
 }
 
-.now-toggle:hover{color:var(--ink);}
+.now-toggle:hover{color:var(--link);}
 
 .now-toggle::before{
   content:'';
@@ -345,10 +353,17 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   opacity:0.5;
 }
 
-.now-toggle h3{
+/* Scoped with the #now-widget id (not just .now-toggle h3) because
+   .info-widget h3 below is declared later in the file with the same
+   0-1-1 specificity — without the id bump it would silently win the
+   cascade and these overrides would never actually apply. */
+#now-widget .now-toggle h3{
   display:flex;
   align-items:center;
   gap:7px;
+  font-size:16px;
+  font-weight:600;
+  letter-spacing:0.6px;
   opacity:1; /* .info-widget h3's opacity:0.4 was tuned for plain text with
                 nothing else marking it as a section — the accent line
                 above now does that job instead */
@@ -383,6 +398,15 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   pointer-events:auto;
   overflow-y:auto;
   overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:color-mix(in srgb, var(--ink) 25%, transparent) transparent;
+}
+
+.now-body.open::-webkit-scrollbar{width:5px;}
+.now-body.open::-webkit-scrollbar-track{background:transparent;}
+.now-body.open::-webkit-scrollbar-thumb{
+  background:color-mix(in srgb, var(--ink) 25%, transparent);
+  border-radius:3px;
 }
 
 .info-widget{
@@ -403,6 +427,10 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   text-transform:none;
   letter-spacing:0.3px;
   margin-left:6px;
+  font-size:12px;
+  font-weight:400;
+  font-family:monospace;
+  color:var(--ink-soft);
 }
 
 .info-widget p{
@@ -412,6 +440,15 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 }
 
 .info-widget p:last-child{margin-bottom:0;}
+
+/* Now widget's body text specifically — bumped above the shared
+   .info-widget p size so the actual now-content reads comfortably at
+   its fixed 280px width. */
+#now-content p{
+  font-size:15.5px;
+  line-height:1.75;
+  color:var(--ink);
+}
 
 .info-widget em{
   font-style:italic;
