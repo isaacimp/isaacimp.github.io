@@ -117,7 +117,7 @@
   </section>
 
   <section id="posts">
-    <h2>Posts</h2>
+    <h2>Latest Writing</h2>
     <!--
       NEW POST: each post is a standalone page in /posts/, not written
       inline here. To publish one:
@@ -127,11 +127,12 @@
            post can be as short as a single paragraph
         3. Add one entry to the TOP of posts-data.js: { slug, title, date, tag }
         4. Add a <url> entry for it in sitemap.xml
-      That's it — the full post below and the /posts/ list both render
-      automatically from posts-data.js + the standalone page.
+      The section below shows whichever is most recent, post or article,
+      pulled straight from its own standalone page — same as the /posts/
+      feed — so there's nothing to keep in sync by hand.
     -->
     <div id="recent-post"></div>
-    <p><a href="posts/index.html">View all posts →</a></p>
+    <p><a href="writing.html">View all writing →</a></p>
   </section>
 <!--
   <section id="log">
@@ -377,34 +378,78 @@
     ).join('');
   }
 
-  // Posts: homepage shows the full content of the most recent post, pulled
-  // straight from its own standalone page (posts/<slug>.html) so there's
-  // no need to keep the text in two places. posts-data.js just supplies
-  // which post is newest.
+  // Latest writing: homepage shows the full content of whichever entry —
+  // post or article — is most recent, pulled straight from its own
+  // standalone page so there's no need to keep the text in two places.
+  // Long entries clip with a fade and expand in place on "Show more",
+  // same as the /posts/ feed.
   const recentPostEl = document.getElementById('recent-post');
+  const RECENT_COLLAPSED_HEIGHT = 480;
+
   if (recentPostEl) {
-    if (typeof POSTS !== 'undefined' && POSTS.length) {
-      const latest = POSTS[0];
-      fetch(`posts/${latest.slug}.html`)
+    const candidates = []
+      .concat((typeof ARTICLES !== 'undefined' ? ARTICLES : []).map(a => ({ title: a.title, date: a.date, url: a.file })))
+      .concat((typeof POSTS !== 'undefined' ? POSTS : []).map(p => ({ title: p.title, date: p.date, url: `posts/${p.slug}.html` })));
+    const latest = candidates.sort((a, b) => (a.date < b.date ? 1 : -1))[0];
+
+    if (latest) {
+      fetch(latest.url)
         .then(res => res.ok ? res.text() : Promise.reject(res))
         .then(html => {
           const temp = document.createElement('div');
           temp.innerHTML = html;
-          const body = temp.querySelector('#post-body');
-          if (!body) throw new Error('post-body not found');
+          const body = temp.querySelector('.article-content');
+          if (!body) throw new Error('article body not found');
+
           const article = document.createElement('article');
           article.className = 'article-content';
           article.innerHTML = body.innerHTML;
+
+          const wrap = document.createElement('div');
+          wrap.className = 'feed-entry-body-wrap';
+          const fade = document.createElement('div');
+          fade.className = 'feed-entry-fade';
+          fade.hidden = true;
+          wrap.append(article, fade);
+
+          const moreBtn = document.createElement('button');
+          moreBtn.className = 'feed-entry-more';
+          moreBtn.textContent = 'Show more ⌄';
+          moreBtn.hidden = true;
+
           const permalink = document.createElement('p');
-          permalink.innerHTML = `<a href="posts/${latest.slug}.html">Permalink →</a>`;
-          article.appendChild(permalink);
-          recentPostEl.replaceChildren(article);
+          permalink.innerHTML = `<a href="${latest.url}">Permalink →</a>`;
+
+          recentPostEl.replaceChildren(wrap, moreBtn, permalink);
+
+          requestAnimationFrame(() => {
+            const fullHeight = article.scrollHeight;
+            if (fullHeight > RECENT_COLLAPSED_HEIGHT + 100) {
+              wrap.style.maxHeight = RECENT_COLLAPSED_HEIGHT + 'px';
+              fade.hidden = false;
+              moreBtn.hidden = false;
+              let expanded = false;
+              moreBtn.addEventListener('click', () => {
+                expanded = !expanded;
+                if (expanded) {
+                  wrap.style.maxHeight = fullHeight + 'px';
+                  fade.hidden = true;
+                  moreBtn.textContent = 'Show less ⌃';
+                } else {
+                  wrap.style.maxHeight = RECENT_COLLAPSED_HEIGHT + 'px';
+                  fade.hidden = false;
+                  moreBtn.textContent = 'Show more ⌄';
+                  recentPostEl.scrollIntoView({ block: 'start', behavior: 'smooth' });
+                }
+              });
+            }
+          });
         })
         .catch(() => {
-          recentPostEl.innerHTML = `<p><a href="posts/${latest.slug}.html">${latest.title}</a> — <em>${latest.date}</em>. <a href="posts/${latest.slug}.html">Read it →</a></p>`;
+          recentPostEl.innerHTML = `<p><a href="${latest.url}">${latest.title}</a> — <em>${latest.date}</em>. <a href="${latest.url}">Read it →</a></p>`;
         });
     } else {
-      recentPostEl.innerHTML = '<p><em>No posts yet — check back soon.</em></p>';
+      recentPostEl.innerHTML = '<p><em>No writing yet — check back soon.</em></p>';
     }
   }
 
