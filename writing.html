@@ -35,7 +35,7 @@
     <h2>Writing</h2>
     <p>My writings. Articles tend to be longer and more thought out while posts are usually shorter kind of like a twitter feed.</p>
 
-    <div class="bookmark-filters" id="writing-type-filters"></div>
+    <div class="bookmark-filters bookmark-type-filters" id="writing-type-filters"></div>
     <div class="bookmark-filters" id="writing-tag-filters"></div>
     <div id="writing-list"></div>
   </section>
@@ -103,7 +103,7 @@
     typeFilters.innerHTML = '';
     types.forEach(type => {
       const btn = document.createElement('button');
-      btn.className = 'bookmark-filter-btn' + (type === activeType ? ' active' : '');
+      btn.className = 'bookmark-filter-btn bookmark-type-filter-btn' + (type === activeType ? ' active' : '');
       btn.textContent = type === 'all' ? 'all' : type + 's';
       btn.addEventListener('click', () => {
         activeType = type;

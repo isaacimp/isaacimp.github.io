@@ -997,6 +997,28 @@ article.article-content:first-of-type{padding-top:0;}
   text-underline-offset:3px;
 }
 
+/* Type filters (e.g. all/articles/posts) are the primary, top-level
+   control — boxed pills so they read as a distinct control from the
+   plain-text tag toggles beneath them. */
+.bookmark-type-filters{gap:8px;}
+
+.bookmark-type-filter-btn{
+  padding:4px 10px;
+  border:1px solid color-mix(in srgb, var(--ink-soft) 40%, transparent);
+  border-radius:999px;
+}
+
+.bookmark-type-filter-btn:hover{
+  border-color:var(--ink-soft);
+}
+
+.bookmark-type-filter-btn.active{
+  color:var(--paper);
+  background:var(--ink);
+  border-color:var(--ink);
+  text-decoration:none;
+}
+
 .bookmark-entry{
   padding:18px 0;
   max-width:60ch;
