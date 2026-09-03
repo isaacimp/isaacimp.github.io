@@ -218,6 +218,7 @@ ${indentedBody}
   </article>${footer}
 </main>
 
+<script src="/back.js"></script>
 <script src="/search.js"></script>
 </body>
 </html>

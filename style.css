@@ -49,6 +49,12 @@ main{max-width:620px;margin:0 auto;padding:64px 24px 100px;}
 .back{display:inline-block;margin-bottom:40px;font-size:14px;color:var(--ink-soft);text-decoration:none;}
 .back:hover{color:var(--link);}
 
+/* back.js inserts a "← Back" link (to wherever the visitor actually came
+   from) plus this separator before the existing home link, whenever that
+   referrer is another page on the site. */
+.back-prev{margin-bottom:0;}
+.back-sep{display:inline-block;margin:0 8px;font-size:14px;color:var(--ink-soft);}
+
 /* ---------- header ---------- */
 
 header{padding-bottom:4px;}
