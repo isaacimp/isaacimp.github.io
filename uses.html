@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uses — Isaac</title>
+<meta name="description" content="Tech, gadgets, and other things I actually use.">
+<link rel="canonical" href="https://isaacmp.xyz/uses.html">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Uses — Isaac">
+<meta property="og:description" content="Tech, gadgets, and other things I actually use.">
+<meta property="og:url" content="https://isaacmp.xyz/uses.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Uses — Isaac">
+<meta name="twitter:description" content="Tech, gadgets, and other things I actually use.">
+
+<meta name="theme-color" content="#F7F7F5">
+<meta name="theme-color" content="#17171A" media="(prefers-color-scheme: dark)">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main>
+  <a href="https://isaacmp.xyz" class="back">&larr; isaacmp.xyz</a>
+
+  <section id="uses">
+    <h2>Uses</h2>
+    <p>Tech, gadgets, and other things I actually use — not exhaustive, just what's stuck around.</p>
+
+    <div class="bookmark-filters bookmark-type-filters" id="uses-filters"></div>
+    <div class="uses-grid" id="uses-grid"></div>
+  </section>
+</main>
+
+<script src="uses-data.js"></script>
+<script>
+  const grid = document.getElementById('uses-grid');
+  const filters = document.getElementById('uses-filters');
+  let activeCategory = 'all';
+
+  function cardHtml(item) {
+    return `
+      ${item.image ? `<img class="uses-card-img" src="${item.image}" alt="">` : ''}
+      <div class="uses-card-body">
+        <div class="uses-card-category">${item.category}</div>
+        <div class="uses-card-name">${item.name}</div>
+        ${item.blurb ? `<p class="uses-card-blurb">${item.blurb}</p>` : ''}
+        ${item.link ? `<a class="uses-card-link" href="${item.link}" target="_blank" rel="noopener">Visit &#8599;</a>` : ''}
+      </div>
+    `;
+  }
+
+  function render() {
+    grid.innerHTML = '';
+    const items = USES.filter(item => activeCategory === 'all' || item.category === activeCategory);
+    items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'uses-card';
+      card.innerHTML = cardHtml(item);
+      grid.appendChild(card);
+    });
+    if (!items.length) {
+      grid.innerHTML = '<p class="bookmark-empty">Nothing here yet.</p>';
+    }
+  }
+
+  function renderFilters() {
+    const categories = ['all', ...new Set(USES.map(i => i.category))];
+    filters.innerHTML = '';
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'bookmark-filter-btn bookmark-type-filter-btn' + (cat === activeCategory ? ' active' : '');
+      btn.textContent = cat === 'all' ? 'all' : cat;
+      btn.addEventListener('click', () => {
+        activeCategory = cat;
+        filters.querySelectorAll('.bookmark-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+      });
+      filters.appendChild(btn);
+    });
+  }
+
+  renderFilters();
+  render();
+</script>
+<script src="/back.js"></script>
+<script src="/search.js"></script>
+</body>
+</html>
