@@ -5,6 +5,12 @@
 // homepage always shows entries[0], and /now lists all of them.
 const NOW_ENTRIES = [
   {
+    date: `2026-09-04`,
+    html: `<p>Just bought an <a href="https://store.insta360.com/au/product/go-ultra">insta360 ultra</a> for potentially filming some videos for youtube and some personal projects of mine as well as for filming my travel adventures in a couple months.</p>
+           <p>I've been playing Path of Exile 2 and Deadlock.</p>
+           <p>Currently I am really focused on developing a philosophy of daily life in the sense of understanding how to think about my time and what to do with it. This is based heavily on the work and writings of David Deutsch, Derek Sivers, Lulie Tanett, and other related thinkers. I will likely write a bit about it when I have a more clear idea.</p>`
+  },
+  {
     date: `2026-09-01`,
     html: `<p>I am still in my Apartment in Melbourne with Amy. We have been trying to make this place feel like home for awhile now and we have made great progress but there is still work to be done and I don't think that we can get to a satisfying point until we have our own house that we own.</p>
     <p>There are so many different ideas that I am interested in thinking more about and working on that I get a bit stuck and don't know what to do. I think I really should just allow myself to follow the ideas to their natural conclusions and let them take me on a journey even if I spend the whole day thinking about something seemingly simple.</p>
