@@ -1136,3 +1136,10 @@ article.article-content:first-of-type{padding-top:0;}
 }
 
 .feed-entry-more:hover{text-decoration:underline;}
+
+/* Homepage-only: the show-more toggle sits directly above the permalink
+   and "view all writing" links, so it needs a bit more breathing room or
+   it reads as part of that link group instead of a control on the
+   content above it. */
+#recent-post .feed-entry-more{margin-bottom:14px;}
+#posts > p{margin-top:6px;}
