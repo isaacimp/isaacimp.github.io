@@ -39,18 +39,46 @@
 
 <script src="../posts-data.js"></script>
 <script>
-  // Every post's full content, stacked newest-first — fetched from each
-  // post's own standalone page so there's still just one copy of the text
-  // (same approach the homepage uses for just the latest post).
+  // Every post's full content, stacked newest-first as a feed — fetched
+  // from each post's own standalone page so there's still just one copy
+  // of the text (same approach the homepage uses for just the latest
+  // post). Long posts are clipped with a fade and expand in place on
+  // "Show more" rather than navigating away.
   const container = document.getElementById('posts-index');
+  const COLLAPSED_HEIGHT = 480;
+
+  function tagLinksHtml(tags) {
+    if (!tags || !tags.length) return '';
+    const chips = tags.map(t => `<a class="tag" href="/tags.html?t=${encodeURIComponent(t)}">${t}</a>`).join('');
+    return `<span class="tags">${chips}</span>`;
+  }
 
   if (!POSTS.length) {
     container.outerHTML = '<p><em>No posts yet — check back soon.</em></p>';
   } else {
     POSTS.forEach(post => {
-      const holder = document.createElement('div');
-      holder.id = 'post-' + post.slug;
-      container.appendChild(holder);
+      const entry = document.createElement('div');
+      entry.className = 'feed-entry';
+      entry.id = 'post-' + post.slug;
+      entry.innerHTML = `
+        <a class="feed-entry-title" href="${post.slug}.html">${post.title}</a>
+        <div class="feed-entry-meta">
+          <time datetime="${post.date}">${post.date}</time>
+          ${tagLinksHtml(post.tags)}
+        </div>
+        <div class="feed-entry-body-wrap">
+          <article class="article-content"><p><em>Loading…</em></p></article>
+          <div class="feed-entry-fade" hidden></div>
+        </div>
+        <button class="feed-entry-more" hidden>Show more ⌄</button>
+      `;
+      container.appendChild(entry);
+
+      const wrap = entry.querySelector('.feed-entry-body-wrap');
+      const article = entry.querySelector('.article-content');
+      const fade = entry.querySelector('.feed-entry-fade');
+      const moreBtn = entry.querySelector('.feed-entry-more');
+      let expanded = false;
 
       fetch(`${post.slug}.html`)
         .then(res => res.ok ? res.text() : Promise.reject(res))
@@ -59,16 +87,34 @@
           temp.innerHTML = html;
           const body = temp.querySelector('#post-body');
           if (!body) throw new Error('post-body not found');
-          const article = document.createElement('article');
-          article.className = 'article-content';
+          const header = body.querySelector('.article-header');
+          if (header) header.remove();
           article.innerHTML = body.innerHTML;
-          const permalink = document.createElement('p');
-          permalink.innerHTML = `<a href="${post.slug}.html">Permalink →</a>`;
-          article.appendChild(permalink);
-          holder.replaceChildren(article);
+
+          requestAnimationFrame(() => {
+            const fullHeight = article.scrollHeight;
+            if (fullHeight > COLLAPSED_HEIGHT + 100) {
+              wrap.style.maxHeight = COLLAPSED_HEIGHT + 'px';
+              fade.hidden = false;
+              moreBtn.hidden = false;
+              moreBtn.addEventListener('click', () => {
+                expanded = !expanded;
+                if (expanded) {
+                  wrap.style.maxHeight = fullHeight + 'px';
+                  fade.hidden = true;
+                  moreBtn.textContent = 'Show less ⌃';
+                } else {
+                  wrap.style.maxHeight = COLLAPSED_HEIGHT + 'px';
+                  fade.hidden = false;
+                  moreBtn.textContent = 'Show more ⌄';
+                  entry.scrollIntoView({ block: 'start', behavior: 'smooth' });
+                }
+              });
+            }
+          });
         })
         .catch(() => {
-          holder.innerHTML = `<p><a href="${post.slug}.html">${post.title}</a> — <em>${post.date}</em>. <a href="${post.slug}.html">Read it →</a></p>`;
+          article.innerHTML = `<p><a href="${post.slug}.html">${post.title}</a> — <em>${post.date}</em>. <a href="${post.slug}.html">Read it →</a></p>`;
         });
     });
   }
