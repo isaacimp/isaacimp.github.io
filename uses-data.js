@@ -51,5 +51,12 @@ const USES = [
     blurb: 'Barefoot shoes have been great for my feet and this pair still look brand new after 2 years.',
     link: 'https://www.vivobarefoot.com/',
     image: 'img/barefoot.jpg'
+  },
+  {
+    category: 'Biology',
+    name: 'Indoor pull-up bar',
+    blurb: 'Bought this pull up bar and Ive been using it almost every day. I also attachted my gym rings to it. I hang, one arm hang, pull up, chin up, and do other gym ring exercises.',
+    link: 'https://amzn.asia/d/07HuxKth',
+    image: ''
   }
 ];
