@@ -8,7 +8,7 @@ const USES = [
     name: 'MacBook Air M4',
     blurb: 'My main work device. I use this thing for everything and its been great.',
     link: 'https://www.apple.com/macbook-air/',
-    image: ''
+    image: 'img/macbook.jpg'
   },
   {
     category: 'Tech',
@@ -50,6 +50,6 @@ const USES = [
     name: 'Vivobarefoot Shoes',
     blurb: 'Barefoot shoes have been great for my feet and this pair still look brand new after 2 years.',
     link: 'https://www.vivobarefoot.com/',
-    image: 'img/macbook.jpg'
+    image: ''
   }
 ];
