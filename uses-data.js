@@ -50,6 +50,6 @@ const USES = [
     name: 'Vivobarefoot Shoes',
     blurb: 'Barefoot shoes have been great for my feet and this pair still look brand new after 2 years.',
     link: 'https://www.vivobarefoot.com/',
-    image: ''
+    image: 'img/macbook.jpg'
   }
 ];
