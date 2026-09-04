@@ -58,5 +58,12 @@ const USES = [
     blurb: 'Bought this pull up bar and Ive been using it almost every day. I also attachted my gym rings to it. I hang, one arm hang, pull up, chin up, and do other gym ring exercises.',
     link: 'https://amzn.asia/d/07HuxKth',
     image: ''
+  },
+  {
+  category: 'Software',
+  name: 'Obsidian',
+  blurb: 'The software I use for notetaking and organising my writing and markdown content. There is a lot you can do with it but I keep it pretty simple.',
+  link: 'https://obsidian.md',
+  image: 'img/obsidian.png'
   }
 ];
