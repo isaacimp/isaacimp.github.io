@@ -20,6 +20,7 @@
     if (typeof POSTS === 'undefined') loaders.push(loadScript('/posts-data.js'));
     if (typeof NOW_ENTRIES === 'undefined') loaders.push(loadScript('/now-data.js'));
     if (typeof BOOKMARKS === 'undefined') loaders.push(loadScript('/bookmarks-data.js'));
+    if (typeof USES === 'undefined') loaders.push(loadScript('/uses-data.js'));
     return Promise.all(loaders);
   }
 
@@ -44,14 +45,18 @@
       });
   }
 
-  // Hand-maintained entries for pages/sections with no data file of their own.
+  // Pages/sections which do not have their own content registry. Keep this
+  // aligned with the site's primary navigation so those pages remain
+  // discoverable even when their visible content is rendered client-side.
   var STATIC_PAGES = [
     { title: 'About', type: 'page', url: '/#about', excerpt: 'Isaac — about.' },
     { title: 'Projects', type: 'page', url: '/#projects', excerpt: 'bioenergetic.live, fourpots.com.' },
     { title: 'Now', type: 'page', url: '/now/', excerpt: 'What I am doing right now, archived.' },
     { title: 'Posts', type: 'page', url: '/posts/index.html', excerpt: 'Short ideas, longer thoughts, book reviews.' },
     { title: 'Articles', type: 'page', url: '/#articles', excerpt: 'Long-form writing.' },
-    { title: 'Bookmarks', type: 'page', url: '/bookmarks.html', excerpt: 'Things I have read, watched, and saved.' }
+    { title: 'Writing', type: 'page', url: '/writing.html', excerpt: 'Articles and posts, filterable by type and tag.' },
+    { title: 'Bookmarks', type: 'page', url: '/bookmarks.html', excerpt: 'Things I have read, watched, and saved.' },
+    { title: 'Uses', type: 'page', url: '/uses.html', excerpt: 'Tech, gadgets, and other things I actually use.' }
   ];
 
   // Builds the index and, for articles/posts, kicks off a background fetch
@@ -113,6 +118,22 @@
           date: b.date,   // with content types, so this flag — not the type string — is
           url: '/bookmarks.html', // what the sort uses to push bookmarks last.
           excerpt: b.note || '',
+          body: ''
+        });
+      });
+    }
+
+    // The Uses page renders from uses-data.js, so its cards are not present
+    // in the HTML that search can fetch. Index both the page (above) and its
+    // individual entries so a search for a product or its description lands
+    // on the Uses page.
+    if (typeof USES !== 'undefined') {
+      USES.forEach(function (u) {
+        items.push({
+          title: u.name || 'Uses',
+          type: 'uses',
+          url: '/uses.html',
+          excerpt: [u.category, u.blurb].filter(Boolean).join('. '),
           body: ''
         });
       });
