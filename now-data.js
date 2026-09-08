@@ -5,6 +5,11 @@
 // homepage always shows entries[0], and /now lists all of them.
 const NOW_ENTRIES = [
   {
+    date: `2026-09-08`,
+    html: `<p>I am reading a writing quite a bit about Halleys Comet and how it relates to epistimology and our understanding of the universe as a whole. This comet has been with us for thousands of years, it witnessed countless ages as we looked up at it, angry when we thought it would bring great turmoil, or happy, thinking it would be the beginning of great change. It wasn't until 1705 when Edmond Halley predicted it's return that we finally understood it and why it's there and where it's going with the help from Newtons great theories of large bodies. This shows that observation alone is wildly insufficent and even with a regular ball of ice crossong the sky over thousands of years, it takes a great leap in theory and our hypotheses in order to formulate a testable theory which is the only time that observation really matters.</p>
+          <p>I am working in ARM assembly mostly at the moment in an effort to better understand computers at a low level and be able to interact with them a few levels above their physical instantiations. My hope is to be able to write out a complete program in ARM64 from scratch. I am inspired by roller coaster tycoon and I hope to even replicate a fraction of that masterpiece.</p>`
+  },
+  {
     date: `2026-09-04`,
     html: `<p>Just bought an <a href="https://store.insta360.com/au/product/go-ultra">insta360 ultra</a> for potentially filming some videos for youtube and some personal projects of mine as well as for filming my travel adventures in a couple months.</p>
            <p>I've been playing Path of Exile 2 and Deadlock.</p>
