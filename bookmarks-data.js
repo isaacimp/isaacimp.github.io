@@ -8,6 +8,13 @@
 // },
 //
 const BOOKMARKS = [
+  {
+    date: '2026-09-22',
+    url: 'https://jamierubin.net',
+    title: '"cool website with lots of interesting things to read"',
+    type: 'website',
+    note: '',
+  },
   {date: '2026-08-13',
     url: 'https://longestlevers.com/anabology-top/good-foods.html',
     title: '"Good Foods" from: Anabology at longestlevers.com',
