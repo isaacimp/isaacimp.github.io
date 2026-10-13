@@ -5,6 +5,6 @@
 // whose page errored on the last build) are carried over unchanged, as
 // long as their HTML file still exists.
 const ARTICLES = [
-  { slug: 'treatise-on-health', title: 'Treatise on Health', file: 'treatise-on-health.html', date: '2026-08-07', dateLabel: 'Aug, 2026', tags: ['health'] },
-  { slug: 'coercion', title: 'Productivity and Coercion', file: 'coercion.html', date: '2026-07-20', dateLabel: 'Jul, 2026', tags: ['philosophy', 'epistimology'] },
+  { slug: 'treatise-on-health', title: 'Treatise on Health', file: 'treatise-on-health.html', date: '2026-08-07', dateLabel: 'Aug, 2026', tags: ['health'], description: 'This is in progess — I\'ve spent a long time researching health stuff and trying to solve my own problems and I want to write some things I have picked up in that time here. This may never be "finished" but right now it\'s definitely in an early state.' },
+  { slug: 'coercion', title: 'Productivity and Coercion', file: 'coercion.html', date: '2026-07-20', dateLabel: 'Jul, 2026', tags: ['philosophy', 'epistimology'], description: 'Some thoughts about coercion and how it may be at the core of many issues in life and in personal thoughts/ actions.' },
 ];

@@ -262,14 +262,16 @@ function toRegistryEntry(type, meta) {
       file: `${meta.slug}.html`,
       date: meta.date,
       dateLabel: meta.dateLabel,
-      tags: meta.tags
+      tags: meta.tags,
+      description: meta.description
     };
   }
   return {
     slug: meta.slug,
     title: meta.title,
     date: meta.date,
-    tags: meta.tags
+    tags: meta.tags,
+    description: meta.description
   };
 }
 
@@ -283,9 +285,9 @@ function serializeRegistry(type, entries) {
 
   const lines = sorted.map(e => {
     if (type.name === 'article') {
-      return `  { slug: '${jsStringEscape(e.slug)}', title: '${jsStringEscape(e.title)}', file: '${jsStringEscape(e.file)}', date: '${jsStringEscape(e.date)}', dateLabel: '${jsStringEscape(e.dateLabel)}', tags: ${serializeTags(e.tags)} },`;
+      return `  { slug: '${jsStringEscape(e.slug)}', title: '${jsStringEscape(e.title)}', file: '${jsStringEscape(e.file)}', date: '${jsStringEscape(e.date)}', dateLabel: '${jsStringEscape(e.dateLabel)}', tags: ${serializeTags(e.tags)}, description: '${jsStringEscape(e.description || '')}' },`;
     }
-    return `  { slug: '${jsStringEscape(e.slug)}', title: '${jsStringEscape(e.title)}', date: '${jsStringEscape(e.date)}', tags: ${serializeTags(e.tags)} },`;
+    return `  { slug: '${jsStringEscape(e.slug)}', title: '${jsStringEscape(e.title)}', date: '${jsStringEscape(e.date)}', tags: ${serializeTags(e.tags)}, description: '${jsStringEscape(e.description || '')}' },`;
   });
 
   const srcGlob = `${path.basename(type.srcDir)}/*.md`;
