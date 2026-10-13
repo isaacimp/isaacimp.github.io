@@ -92,7 +92,7 @@
   </section>
 
   <section id="articles">
-    <h2>Articles - IN PROGRESS</h2>
+    <h2>Articles</h2>
 
     <!--
       NEW ARTICLE: each article is a standalone page at the site root
@@ -371,7 +371,7 @@
   const articlesList = document.getElementById('articles-index');
   if (articlesList && typeof ARTICLES !== 'undefined') {
     articlesList.innerHTML = ARTICLES.map(a =>
-      `<li><a href="${a.slug}.html">${a.file}</a> - <em>${a.dateLabel}</em> ${tagLinksHtml(a.tags)}</li>`
+      `<li><a href="${a.slug}.html">${a.title}</a> - <em>${a.dateLabel}</em> ${tagLinksHtml(a.tags)}</li>`
     ).join('');
   }
 
