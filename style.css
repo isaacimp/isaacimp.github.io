@@ -1228,3 +1228,4 @@ section#now h2 .now-timestamp{margin-left:10px;font-size:13px;font-weight:400;le
 .feed-desc{margin-top:4px;color:var(--ink);font-size:17px;line-height:1.55;}
 .feed-meta{margin-top:6px;font-size:14px;color:var(--ink-soft);font-style:italic;}
 .feed-kind{font-style:normal;letter-spacing:0.04em;}
+.feed-meta .tags::before{content:" — ";}
