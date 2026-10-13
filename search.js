@@ -49,7 +49,6 @@
   // aligned with the site's primary navigation so those pages remain
   // discoverable even when their visible content is rendered client-side.
   var STATIC_PAGES = [
-    { title: 'About', type: 'page', url: '/#about', excerpt: 'Isaac — about.' },
     { title: 'Projects', type: 'page', url: '/#projects', excerpt: 'bioenergetic.live, fourpots.com.' },
     { title: 'Now', type: 'page', url: '/now/', excerpt: 'What I am doing right now, archived.' },
     { title: 'Posts', type: 'page', url: '/posts/index.html', excerpt: 'Short ideas, longer thoughts, book reviews.' },
