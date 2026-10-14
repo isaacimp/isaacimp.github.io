@@ -240,10 +240,8 @@ ${meta.images.length ? `    <div class="wiki-images">${meta.images.map(src => `<
 
 <link rel="icon" href="${type.assetPrefix}favicon.svg" type="image/svg+xml">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${type.assetPrefix}style.css">
+<script src="/fontpicker.js"></script>
 
 <script type="application/ld+json">
 {
@@ -268,7 +266,7 @@ ${indentedBody}
 </main>
 
 <script src="/back.js"></script>
-<script src="/search.js"></script>
+<script src="/search.js" defer></script>
 <script src="/prefetch.js" defer></script>
 </body>
 </html>
@@ -532,6 +530,19 @@ function buildNow() {
 
 // ---------- main ----------
 
+// Stamps today's date into the homepage's "Last Updated" field, so the page
+// needs no runtime API call to show it.
+function stampLastUpdated() {
+  const file = path.join(ROOT, 'index.html');
+  if (!fs.existsSync(file)) return;
+  const d = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const today = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const html = fs.readFileSync(file, 'utf8');
+  const next = html.replace(/(<span id="last-updated">)[^<]*(<\/span>)/, `$1${today}$2`);
+  if (next !== html) writeFileAtomic(file, next);
+}
+
 function main() {
   const results = [];
   for (const type of TYPES) {
@@ -549,6 +560,7 @@ function main() {
     console.log(`  (no .md files found in now-md/)`);
   }
   const nowResult = buildNow();
+  stampLastUpdated();
 
   let totalBuilt = 0, totalErrors = 0, totalRemoved = 0;
   console.log('\nSummary');

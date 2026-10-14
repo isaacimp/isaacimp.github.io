@@ -21,10 +21,8 @@
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="/fontpicker.js"></script>
 
 <script type="application/ld+json">
 {
@@ -124,8 +122,8 @@
        rendered from articles-data.js (title, hook, date, tags). -->
   <section id="articles">
     <h2>Articles</h2>
-    <p class="section-sub">Long-form, slower, still being worked on.</p>
-    <div id="articles-index" class="articles"></div>
+    <p class="section-sub">Long-form and slower; some are still in progress.</p>
+    <div id="articles-index" class="projects"></div>
   </section>
 
   <!-- Posts — short writing, newest first, shown in full right here and
@@ -215,18 +213,18 @@
   <details class="mobile-extras mobile-only-block">
     <summary>Images</summary>
     <div class="mobile-gallery-grid">
-      <img src="img/baleknewton.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/centaphnewton.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/coolearth.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/erath.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/jup.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/jupiter.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/mve.jpeg" alt="" class="mobile-gallery-img">
-      <img src="img/punch.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/spcshp.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/tin.png" alt="" class="mobile-gallery-img">
-      <img src="img/tkeoff.jpg" alt="" class="mobile-gallery-img">
-      <img src="img/cat-window.jpeg" alt="" class="mobile-gallery-img">
+      <img src="img/baleknewton.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/centaphnewton.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/coolearth.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/erath.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/jup.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/jupiter.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/mve.jpeg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/punch.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/spcshp.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/tin.png" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/tkeoff.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
+      <img src="img/cat-window.jpeg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
     </div>
   </details>
 <!--
@@ -282,7 +280,7 @@
     </div>
     <div class="meta-item">
       <span class="meta-label">Last Updated</span>
-      <span id="last-updated"></span>
+      <span id="last-updated">2026-10-14</span> <!-- stamped by build.js -->
     </div>
   </div>
 </aside>
@@ -382,12 +380,15 @@
   const articlesEl = document.getElementById('articles-index');
   if (articlesEl && typeof ARTICLES !== 'undefined') {
     articlesEl.innerHTML = ARTICLES.map(a => `
-      <a class="article-card" href="${a.file}">
-        <span class="article-card-meta">${a.dateLabel}${(a.tags || []).length ? ' · ' + a.tags.join(', ') : ''}</span>
-        <span class="article-card-title">${a.title}</span>
-        ${a.description ? `<span class="article-card-desc">${a.description}</span>` : ''}
-        <span class="article-card-go">Read article <span aria-hidden="true">→</span></span>
-      </a>`).join('');
+      <div class="project project--article">
+        <span class="project-idx">${a.dateLabel.replace(', ', ' ')}</span>
+        <span class="project-body">
+          <a class="project-name" href="${a.file}">${a.title}</a>
+          ${a.description ? `<span class="project-desc">${a.description}</span>` : ''}
+          ${(a.tags || []).length ? `<span class="project-tags">${a.tags.join(' · ')}</span>` : ''}
+        </span>
+        <span class="project-side"><a class="project-go" href="${a.file}" aria-label="Read ${a.title}">→</a></span>
+      </div>`).join('');
   }
 
   // Posts: infinite feed. Each post's full body is fetched from its own
@@ -546,33 +547,6 @@
     });
   });
 
-  // "Last Updated" — pulled from the repo's latest commit via the GitHub
-  // API, so it's automatic, never needs manual editing. Cached in
-  // localStorage for an hour so repeat visits don't all hit the API. If
-  // the fetch fails (offline, rate-limited), the static date already in
-  // the HTML stays put.
-  (function updateLastUpdated() {
-    const el = document.getElementById('last-updated');
-    if (!el) return;
-    const CACHE_KEY = 'lastUpdatedCache';
-    const CACHE_TTL = 60 * 60 * 1000; // 1 hour
-    try {
-      const cached = JSON.parse(localStorage.getItem(CACHE_KEY));
-      if (cached && Date.now() - cached.fetchedAt < CACHE_TTL) {
-        el.textContent = cached.date;
-        return;
-      }
-    } catch (e) {}
-    fetch('https://api.github.com/repos/isaacimp/isaacimp.github.io/commits?sha=main&per_page=1')
-      .then(res => res.ok ? res.json() : Promise.reject(res))
-      .then(commits => {
-        const date = commits[0].commit.author.date.slice(0, 10);
-        el.textContent = date;
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ date, fetchedAt: Date.now() }));
-      })
-      .catch(() => {});
-  })();
-
   // Update local time (Melbourne timezone)
   function updateTime() {
     const now = new Date();
@@ -618,7 +592,7 @@
     }
   });
 </script>
-<script src="/search.js"></script>
+<script src="/search.js" defer></script>
 <script src="/prefetch.js" defer></script>
 
 </body>
