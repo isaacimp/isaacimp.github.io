@@ -88,7 +88,7 @@
   panelMore.innerHTML =
     '<div class="dock-row"><span class="dock-label">Melbourne</span><span class="dock-time" id="dock-time">—</span></div>' +
     '<button type="button" class="dock-row dock-action" id="dock-copy"><span class="dock-label">Email</span><span id="dock-copy-text">' + EMAIL + ' · copy</span></button>' +
-    '<button type="button" class="dock-row dock-action" id="dock-top"><span class="dock-label">Page</span><span>Back to top ↑</span></button>' +
+    '<button type="button" class="dock-row dock-action" id="dock-top"><span class="dock-label">Page</span><span class="dock-go">Back to top <svg class="ico" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span></button>' +
     '<button type="button" class="dock-row dock-action" id="dock-hide"><span class="dock-label">Bar</span><span>Hide this bar</span></button>';
 
   dock.append(panelNow, panelMore, bar);
@@ -217,7 +217,7 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   } else if (isRead) {
-    var back = el('a', 'dock-link', '← Back');
+    var back = el('a', 'dock-link dock-ico', '<svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span class="trim">Back</span>');
     back.href = '/';
     // go to wherever they came from on this site, like back.js does
     try {
@@ -245,8 +245,8 @@
         if (i < 0) return;
         var url = function (x) { return kind === 'post' ? '/posts/' + x.slug + '.html' : '/' + x.slug + '.html'; };
         var older = list[i + 1], newer = list[i - 1];
-        if (older) { var o = el('a', 'dock-link dock-nav', '<span aria-hidden="true">‹</span> <span class="dock-nav-t">' + older.title + '</span>'); o.href = url(older); o.title = 'Older: ' + older.title; o.setAttribute('aria-label', 'Older: ' + older.title); ctx.appendChild(o); }
-        if (newer) { var n = el('a', 'dock-link dock-nav', '<span class="dock-nav-t">' + newer.title + '</span> <span aria-hidden="true">›</span>'); n.href = url(newer); n.title = 'Newer: ' + newer.title; n.setAttribute('aria-label', 'Newer: ' + newer.title); ctx.appendChild(n); }
+        if (older) { var o = el('a', 'dock-link dock-ico dock-nav', '<svg class="ico" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span class="dock-nav-t">' + older.title + '</span>'); o.href = url(older); o.title = 'Older: ' + older.title; o.setAttribute('aria-label', 'Older: ' + older.title); ctx.appendChild(o); }
+        if (newer) { var n = el('a', 'dock-link dock-ico dock-nav', '<span class="dock-nav-t">' + newer.title + '</span><svg class="ico" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>'); n.href = url(newer); n.title = 'Newer: ' + newer.title; n.setAttribute('aria-label', 'Newer: ' + newer.title); ctx.appendChild(n); }
       });
     }
   } else {

@@ -23,7 +23,7 @@
 
 <link rel="preload" href="/fonts/charter-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/win95fa-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=9b576449">
+<link rel="stylesheet" href="style.css?v=f76b1b5c">
 
 <script type="application/ld+json">
 {
@@ -85,24 +85,24 @@
         <span class="project-idx">01</span>
         <span class="project-body"><a class="project-name" href="https://transferfil.es">transferfil.es</a><span class="project-desc">Smooth and private WiFi file share.</span></span>
         <span class="project-side">
-          <a class="project-go" href="https://transferfil.es" aria-label="Visit transferfil.es">↗</a>
-          <span class="project-info"><a href="/projects/transferfil.html" aria-label="About transferfil.es: how it works and how it was made" title="About this project">i</a></span>
+          <a class="project-go" href="https://transferfil.es" aria-label="Visit transferfil.es"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          <span class="project-info"><a href="/projects/transferfil.html" aria-label="About transferfil.es: how it works and how it was made" title="About this project"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="1.2" fill="currentColor" stroke="none"/><path d="M12 11.5V18"/></svg></a></span>
         </span>
       </div>
       <div class="project">
         <span class="project-idx">02</span>
         <span class="project-body"><a class="project-name" href="https://bioenergetic.live/">bioenergetic.live</a><span class="project-desc">24/7 live loop of all the interviews and conversation with Ray Peat.</span></span>
         <span class="project-side">
-          <a class="project-go" href="https://bioenergetic.live/" aria-label="Visit bioenergetic.live">↗</a>
-          <span class="project-info"><a href="/projects/bioenergetic.html" aria-label="About bioenergetic.live: how it works and how it was made" title="About this project">i</a></span>
+          <a class="project-go" href="https://bioenergetic.live/" aria-label="Visit bioenergetic.live"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          <span class="project-info"><a href="/projects/bioenergetic.html" aria-label="About bioenergetic.live: how it works and how it was made" title="About this project"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="1.2" fill="currentColor" stroke="none"/><path d="M12 11.5V18"/></svg></a></span>
         </span>
       </div>
       <div class="project">
         <span class="project-idx">03</span>
         <span class="project-body"><a class="project-name" href="https://fourpots.com/">fourpots.com</a><span class="project-desc">Health tracking tech.</span></span>
         <span class="project-side">
-          <a class="project-go" href="https://fourpots.com/" aria-label="Visit fourpots.com">↗</a>
-          <span class="project-info"><a href="/projects/fourpots.html" aria-label="About fourpots.com: how it works and how it was made" title="About this project">i</a></span>
+          <a class="project-go" href="https://fourpots.com/" aria-label="Visit fourpots.com"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          <span class="project-info"><a href="/projects/fourpots.html" aria-label="About fourpots.com: how it works and how it was made" title="About this project"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="1.2" fill="currentColor" stroke="none"/><path d="M12 11.5V18"/></svg></a></span>
         </span>
       </div>
     </div>
@@ -353,7 +353,7 @@
           ${a.description ? `<span class="project-desc">${a.description}</span>` : ''}
           ${(a.tags || []).length ? `<span class="project-tags">${a.tags.join(' · ')}</span>` : ''}
         </span>
-        <span class="project-side"><a class="project-go" href="${a.file}" aria-label="Read ${a.title}">→</a></span>
+        <span class="project-side"><a class="project-go" href="${a.file}" aria-label="Read ${a.title}"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
       </div>`).join('');
   }
 
@@ -378,8 +378,8 @@
         <p class="post-meta"><time datetime="${p.date}">${fmtDate(p.date)}</time>${tagLinksHtml(p.tags)}</p>
         <h3 class="post-title"><a href="${url}">${p.title}</a></h3>
         <div class="post-body-wrap"><div class="post-body article-content"></div><div class="post-fade" hidden></div></div>
-        <button type="button" class="post-more" hidden>Read more ⌄</button>
-        <a class="post-open" href="${url}">Open post <span aria-hidden="true">↗</span></a>`;
+        <button type="button" class="post-more" aria-expanded="false" hidden><span class="lbl">Read more</span><svg class="ico" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <a class="post-open" href="${url}"><span class="lbl">Open post</span><svg class="ico" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>`;
       return fetch(url)
         .then(r => r.ok ? r.text() : Promise.reject(r))
         .then(html => {
@@ -412,7 +412,8 @@
         open = !open;
         wrap.style.maxHeight = open ? full + 'px' : POST_COLLAPSED_HEIGHT + 'px';
         fade.hidden = open;
-        btn.textContent = open ? 'Show less ⌃' : 'Read more ⌄';
+        btn.querySelector('.lbl').textContent = open ? 'Show less' : 'Read more';
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
         if (!open) el.scrollIntoView({ block: 'start', behavior: 'smooth' });
       });
     }
@@ -519,6 +520,6 @@
 <script src="/search.js?v=df9f0342" defer></script>
 <script src="/prefetch.js?v=143384e0" defer></script>
 
-<script src="/dock.js?v=aab838e5" defer></script>
+<script src="/dock.js?v=85662b80" defer></script>
 </body>
 </html>
