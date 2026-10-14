@@ -1397,3 +1397,13 @@ main,.dock-panel{overflow-wrap:anywhere;}
 /* ...but never inside form controls: wrapping a placeholder/typed text shows only half of it */
 input,textarea,select,button{overflow-wrap:normal;word-break:normal;}
 #site-search-input::placeholder{white-space:nowrap;overflow-wrap:normal;}
+
+/* ---------- optical centring ----------
+   Charter's ascent (0.98em) is far larger than its descent (0.24em), so text
+   centred by its line box sits low: ~0.08em for mixed case, ~0.035em for
+   caps. Every control that centres text by padding or a fixed row nudges the
+   text up by that amount (same total height, so nothing else moves). */
+.mobile-extras summary{padding:calc(9px - .08em) 14px calc(9px + .08em);}
+.post-more{padding:calc(6px - .035em) 12px calc(6px + .035em);}
+.dock-link,.dock-pct{box-sizing:border-box;padding-bottom:.11em;}
+.dock-btn.dock-now{padding-bottom:.11em;}
