@@ -1258,15 +1258,16 @@ article.article-content:first-of-type{padding-top:0;}
 
 /* headings, titles and nav use --head (same as --serif in the default pairing) */
 h1,h2,h3,.project-name,.post-title,.feed-entry-title,.article-card-title{font-family:var(--pixel);font-weight:400 !important;letter-spacing:0.06em;-webkit-font-smoothing:none;}
-/* pixel font is only crisp at multiples of 16px */
+/* pixel font is crisp at multiples of 11px: title 44 > ## 33 > ### 22 > small 16 */
 .project-name,.feed-entry-title,.article-card-title{font-size:16px;line-height:1.5;}
-.post-title{font-size:32px;line-height:1.2;}
-.id h1{font-size:32px;line-height:1.1;}
-section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3,.article-content h3{font-size:16px;}
+.post-title{font-size:33px;line-height:1.2;}
+.id h1{font-size:33px;line-height:1.1;}
+section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3{font-size:16px;}
 /* page title > h2 > h3 */
-.article-header h3{font-size:48px;line-height:1.1;overflow-wrap:break-word;}
-@media (max-width:700px){.article-header h3{font-size:32px;}.article-header .article-meta{grid-column:1;margin-top:8px;}}
-.article-content h2{font-size:32px;line-height:1.2;}
+.article-content .article-header h3{font-size:44px;line-height:1.1;overflow-wrap:break-word;}
+@media (max-width:700px){.article-header .article-meta{grid-column:1;margin-top:8px;}}
+.article-content h2{font-size:33px;line-height:1.2;}
+.article-content h3{font-size:22px;line-height:1.3;}
 .jumplinks,.id .role,.mobile-now-info summary,.now-toggle h3,.section-sub{font-family:var(--head);}
 
 /* ---------- bottom dock (dock.js) ---------- */
