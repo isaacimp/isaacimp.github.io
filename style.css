@@ -1398,12 +1398,27 @@ main,.dock-panel{overflow-wrap:anywhere;}
 input,textarea,select,button{overflow-wrap:normal;word-break:normal;}
 #site-search-input::placeholder{white-space:nowrap;overflow-wrap:normal;}
 
-/* ---------- optical centring ----------
-   Charter's ascent (0.98em) is far larger than its descent (0.24em), so text
-   centred by its line box sits low: ~0.08em for mixed case, ~0.035em for
-   caps. Every control that centres text by padding or a fixed row nudges the
-   text up by that amount (same total height, so nothing else moves). */
-.mobile-extras summary{padding:calc(9px - .08em) 14px calc(9px + .08em);}
-.post-more{padding:calc(6px - .035em) 12px calc(6px + .035em);}
-.dock-link,.dock-pct{box-sizing:border-box;padding-bottom:.11em;}
-.dock-btn.dock-now{padding-bottom:.11em;}
+/* ---------- exact vertical centring of text ----------
+   Charter reserves far more space above its baseline than below, so a
+   line box centred by CSS leaves the letters visibly low. text-box trims
+   the line box to the cap height and the baseline, so what gets centred
+   is the letters themselves: exact, for any font, no magic numbers.
+   (Chrome 133+, Safari 18.2+.) */
+@supports (text-box: trim-both cap alphabetic){
+  /* mixed-case labels: centre the x-height band (it coincides with the centre
+     of the ascender-to-descender extent); all-caps text: centre the caps */
+  .trim,.dock-link,.dock-pct{text-box:trim-both ex alphabetic;}
+  .post-more{text-box:trim-both cap alphabetic;}
+  .trim{display:block;}
+  .dock-link,.dock-pct{display:block;height:auto;padding:0;}
+  .dock-link{position:relative;}
+  /* keep the tap target as big as before */
+  .dock-link::after{content:'';position:absolute;top:-10px;right:-4px;bottom:-10px;left:-4px;}
+}
+/* older browsers: approximate with a small nudge up (~0.08em) */
+@supports not (text-box: trim-both cap alphabetic){
+  .mobile-extras summary{padding:calc(9px - .08em) 14px calc(9px + .08em);}
+  .post-more{padding:calc(6px - .035em) 12px calc(6px + .035em);}
+  .dock-link,.dock-pct{box-sizing:border-box;padding-bottom:.11em;}
+  .dock-btn.dock-now{padding-bottom:.11em;}
+}

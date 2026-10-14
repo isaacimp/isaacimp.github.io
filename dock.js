@@ -59,7 +59,7 @@
   var ctx = el('div', 'dock-ctx');
   var tools = el('div', 'dock-tools');
 
-  var btnNow = el('button', 'dock-btn dock-now', '<span class="dock-dot" aria-hidden="true"></span>Now');
+  var btnNow = el('button', 'dock-btn dock-now', '<span class="dock-dot" aria-hidden="true"></span><span class="trim">Now</span>');
   btnNow.type = 'button';
   btnNow.setAttribute('aria-expanded', 'false');
   var btnSearch = el('button', 'dock-btn dock-icon', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>');
