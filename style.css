@@ -12,8 +12,10 @@
 @font-face{font-family:'Literata';src:url('/fonts/literata-latin-wght-italic.woff2') format('woff2');font-weight:200 900;font-style:italic;font-display:swap;}
 @font-face{font-family:'Inter';src:url('/fonts/inter-latin-wght-normal.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap;}
 @font-face{font-family:'JetBrains Mono';src:url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');font-weight:100 800;font-style:normal;font-display:swap;}
+@font-face{font-family:'Win95FA';src:url('/fonts/win95fa-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
 
 :root{
+  --pixel:'Win95FA',var(--head);
   --serif:'Literata',Georgia,'Times New Roman',serif;
   --head:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
   --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
@@ -1258,7 +1260,12 @@ article.article-content:first-of-type{padding-top:0;}
 .wiki-toc-label{font-family:var(--mono);font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
 
 /* headings, titles and nav use --head (same as --serif in the default pairing) */
-h1,h2,h3,.jumplinks,.project-name,.post-title,.article-card-title,.feed-entry-title,.id .role,.mobile-now-info summary,.now-toggle h3,.section-sub{font-family:var(--head);}
+h1,h2,h3{font-family:var(--pixel);font-weight:400 !important;letter-spacing:0;-webkit-font-smoothing:none;}
+/* pixel font is only crisp at multiples of 16px */
+.id h1{font-size:32px;line-height:1.1;}
+section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3,.article-header h3,.article-content h3{font-size:16px;}
+.article-content h2{font-size:32px;line-height:1.2;}
+.jumplinks,.project-name,.post-title,.article-card-title,.feed-entry-title,.id .role,.mobile-now-info summary,.now-toggle h3,.section-sub{font-family:var(--head);}
 
 /* ---------- bottom dock (dock.js) ---------- */
 .site-foot{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
