@@ -5,7 +5,7 @@
 // whose page errored on the last build) are carried over unchanged, as
 // long as their HTML file still exists.
 const PROJECTS = [
-  { slug: 'bioenergetic', title: 'bioenergetic.live', date: '2026-10-14', tags: ['project'], description: '24/7 live loop of all the interviews and conversation with Ray Peat.', url: 'https://bioenergetic.live/', images: ['img/projects/bioenergetic-1.png'] },
+  { slug: 'bioenergetic', title: 'bioenergetic.live', date: '2026-10-14', tags: ['project'], description: '24/7 live loop of all the interviews and conversation with Ray Peat.', url: 'https://bioenergetic.live/', images: ['img/projects/bioenergetic-1.jpg'] },
   { slug: 'fourpots', title: 'fourpots.com', date: '2026-10-14', tags: ['project'], description: 'Health tracking tech.', url: 'https://fourpots.com/', images: [] },
   { slug: 'transferfil', title: 'transferfil.es', date: '2026-10-14', tags: ['project'], description: 'Smooth and private WiFi file share.', url: 'https://transferfil.es', images: [] },
 ];
