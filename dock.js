@@ -62,11 +62,11 @@
   var btnNow = el('button', 'dock-btn dock-now', '<span class="dock-dot" aria-hidden="true"></span>Now');
   btnNow.type = 'button';
   btnNow.setAttribute('aria-expanded', 'false');
-  var btnSearch = el('button', 'dock-btn dock-icon', '<span aria-hidden="true">⌕</span>');
+  var btnSearch = el('button', 'dock-btn dock-icon', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>');
   btnSearch.type = 'button';
   btnSearch.setAttribute('aria-label', 'Search (or press /)');
   btnSearch.title = 'Search  ( / )';
-  var btnMore = el('button', 'dock-btn dock-icon', '<span aria-hidden="true">⋯</span>');
+  var btnMore = el('button', 'dock-btn dock-icon', '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" stroke="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>');
   btnMore.type = 'button';
   btnMore.setAttribute('aria-label', 'More');
   btnMore.setAttribute('aria-expanded', 'false');

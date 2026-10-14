@@ -1294,7 +1294,7 @@ section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3{font-size:1
   position:fixed;left:50%;bottom:14px;transform:translateX(-50%);
   z-index:900;
   width:max-content;max-width:calc(100vw - 16px);
-  font-family:var(--head);font-size:14px;line-height:1;
+  font-family:var(--head);font-size:14px;line-height:34px;
 }
 .dock[hidden]{display:none;}
 .dock-bar{
@@ -1309,7 +1309,7 @@ section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3{font-size:1
 .dock-progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:transparent;}
 .dock-progress-fill{height:100%;width:0;background:var(--link);opacity:0.8;}
 .dock-ctx{display:flex;align-items:center;gap:14px;min-width:0;}
-.dock-link{color:var(--ink-soft);text-decoration:none;white-space:nowrap;padding:8px 0;}
+.dock-link{display:inline-flex;align-items:center;height:34px;line-height:1;color:var(--ink-soft);text-decoration:none;white-space:nowrap;padding:0;}
 .dock-link:hover{color:var(--link);}
 .dock-link.on{color:var(--ink);font-weight:600;}
 .dock-pct{font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-width:3ch;}
@@ -1318,11 +1318,14 @@ section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3{font-size:1
 .dock-btn{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
   height:34px;padding:0 12px;
-  font:inherit;color:var(--ink-soft);
+  font:inherit;line-height:1;color:var(--ink-soft);
   background:none;border:0;border-radius:999px;cursor:pointer;
 }
 .dock-btn:hover,.dock-btn[aria-expanded="true"]{color:var(--ink);background:color-mix(in srgb, var(--ink) 7%, transparent);}
-.dock-icon{width:34px;padding:0;font-size:17px;}
+.dock-icon{width:34px;padding:0;}
+.dock-icon svg{display:block;}
+.dock-ctx>*{line-height:1;}
+.dock-pct{display:inline-flex;align-items:center;height:34px;}
 .dock-dot{width:7px;height:7px;border-radius:50%;background:var(--link);}
 .dock-btn:focus-visible,.dock-link:focus-visible,.dock-restore:focus-visible{outline:2px solid var(--link);outline-offset:2px;}
 
