@@ -73,13 +73,16 @@
     </nav>
   </header>
 
-  <!-- Now — inline at every width: the "what am I doing" answer, shown as
-       the latest entry's opening paragraph with a link to the full archive. -->
-  <section id="now">
-    <h2>Now <time id="now-timestamp" class="now-timestamp"></time></h2>
-    <div id="now-content" class="now-inline"></div>
-    <p><a href="/now/">Read more, and past entries →</a></p>
-  </section>
+  <!-- Now widget — collapsed by default on mobile so it doesn't push
+       everything else down; tap the summary to expand in place. -->
+  <details class="mobile-now-info mobile-only-block">
+    <summary>Now <time id="now-timestamp-mobile" class="now-timestamp"></time></summary>
+    <div id="now-content-mobile"></div>
+    <div class="mobile-time">
+      <span class="time-label">Local Time:</span>
+      <span id="mobile-local-time">—</span>
+    </div>
+  </details>
 
   <!-- Writing — one feed of articles and posts, newest first, rendered
        from articles-data.js + posts-data.js (title, date, tags, and the
@@ -213,6 +216,18 @@
   </figure>
 </aside>
 
+<aside class="side-info left" id="now-widget">
+  <div class="info-widget">
+    <button type="button" id="now-toggle" class="now-toggle" aria-expanded="true" aria-controls="now-body">
+      <h3>Now <time id="now-timestamp" class="now-timestamp"></time></h3>
+    </button>
+    <div id="now-body" class="now-body open">
+      <div id="now-content"></div>
+      <p><a href="/now/">View past now entries →</a></p>
+    </div>
+  </div>
+</aside>
+
 <aside class="side-info right">
   <div class="progress-bar">
     <div class="progress-bar-fill"></div>
@@ -274,21 +289,45 @@
   const localTimeSpan = document.getElementById('local-time');
 
   // Mobile extras functionality
+  const mobileLocalTimeSpan = document.getElementById('mobile-local-time');
   const mobileGalleryImages = document.querySelectorAll('.mobile-gallery-img');
 
-  // "Now" is rendered from now-data.js (the same source /now/ reads from):
-  // the latest entry's first paragraph only, the rest lives on /now/.
+  // "Now" widget is rendered from now-data.js (the same source /now/ reads
+  // from) and cloned into the mobile panel, so there's only one place to edit.
   const nowContent = document.getElementById('now-content');
+  const nowContentMobile = document.getElementById('now-content-mobile');
   const nowTimestamp = document.getElementById('now-timestamp');
+  const nowTimestampMobile = document.getElementById('now-timestamp-mobile');
   if (nowContent && typeof NOW_ENTRIES !== 'undefined' && NOW_ENTRIES.length) {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = NOW_ENTRIES[0].html;
-    const first = tmp.querySelector('p');
-    nowContent.innerHTML = first ? first.outerHTML : NOW_ENTRIES[0].html;
-    if (nowTimestamp) {
-      nowTimestamp.textContent = NOW_ENTRIES[0].date;
-      nowTimestamp.setAttribute('datetime', NOW_ENTRIES[0].date);
-    }
+    nowContent.innerHTML = NOW_ENTRIES[0].html;
+    [nowTimestamp, nowTimestampMobile].forEach(el => {
+      if (!el) return;
+      el.textContent = NOW_ENTRIES[0].date;
+      el.setAttribute('datetime', NOW_ENTRIES[0].date);
+    });
+  }
+  if (nowContent && nowContentMobile) {
+    nowContentMobile.innerHTML = nowContent.innerHTML;
+  }
+
+  // Desktop "Now" widget: starts open and auto-closes once you scroll by
+  // default (below), but the toggle click always wins — lets it be closed
+  // without scrolling or opened while scrolled, until the page reloads.
+  const nowToggle = document.getElementById('now-toggle');
+  const nowBody = document.getElementById('now-body');
+  let nowOverride = null; // null = follow scroll, true/false = manual pin
+
+  function setNowOpen(open) {
+    if (!nowBody || !nowToggle) return;
+    nowBody.classList.toggle('open', open);
+    nowToggle.setAttribute('aria-expanded', String(open));
+  }
+
+  if (nowToggle) {
+    nowToggle.addEventListener('click', () => {
+      nowOverride = !nowBody.classList.contains('open');
+      setNowOpen(nowOverride);
+    });
   }
 
   // Renders a tags array as clickable chips linking to /tags.html?t=<tag>,
@@ -363,6 +402,10 @@
       }
     });
 
+    if (nowOverride === null) {
+      setNowOpen(currentScroll <= 100);
+    }
+
     // Update progress bar
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercent = (currentScroll / docHeight) * 100;
@@ -429,6 +472,9 @@
       hour12: false
     }).format(now);
     localTimeSpan.textContent = melbourneTime;
+    if (mobileLocalTimeSpan) {
+      mobileLocalTimeSpan.textContent = melbourneTime;
+    }
   }
   updateTime();
   setInterval(updateTime, 1000);

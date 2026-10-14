@@ -1216,10 +1216,6 @@ article.article-content:first-of-type{padding-top:0;}
 #recent-post .feed-entry-more{margin-bottom:14px;}
 #posts > p{margin-top:6px;}
 
-/* ---------- inline Now (home) ---------- */
-.now-inline p{max-width:58ch;margin-bottom:10px;}
-section#now h2 .now-timestamp{margin-left:10px;font-size:13px;font-weight:400;letter-spacing:0;}
-
 /* ---------- writing feed (home) ---------- */
 .feed-item{padding:14px 0 16px;max-width:60ch;}
 .feed-title{font-size:20px;font-weight:600;line-height:1.35;letter-spacing:-0.01em;}
