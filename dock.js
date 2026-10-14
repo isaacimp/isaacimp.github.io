@@ -85,7 +85,8 @@
   panelMore.innerHTML =
     '<div class="dock-row"><span class="dock-label">Melbourne</span><span class="dock-time" id="dock-time">—</span></div>' +
     '<button type="button" class="dock-row dock-action" id="dock-copy"><span class="dock-label">Email</span><span id="dock-copy-text">' + EMAIL + ' · copy</span></button>' +
-    '<button type="button" class="dock-row dock-action" id="dock-top"><span class="dock-label">Page</span><span>Back to top ↑</span></button>';
+    '<button type="button" class="dock-row dock-action" id="dock-top"><span class="dock-label">Page</span><span>Back to top ↑</span></button>' +
+    '<button type="button" class="dock-row dock-action" id="dock-hide"><span class="dock-label">Bar</span><span>Hide this bar</span></button>';
 
   dock.append(panelNow, panelMore, bar);
 
@@ -162,7 +163,9 @@
     timer = setInterval(function () { if (panelMore.hidden) clearInterval(timer); else tick(); }, 15000);
   });
   panelMore.addEventListener('click', function (e) {
-    if (e.target.closest('#dock-top')) {
+    if (e.target.closest('#dock-hide')) {
+      setHidden(true);
+    } else if (e.target.closest('#dock-top')) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       closePanels();
     } else if (e.target.closest('#dock-copy')) {
