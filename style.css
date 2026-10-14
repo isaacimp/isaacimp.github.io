@@ -1217,27 +1217,47 @@ article.article-content:first-of-type{padding-top:0;}
 
 .section-sub{margin:-6px 0 18px;font-size:15px;color:var(--ink-soft);max-width:58ch;}
 
-/* Projects — one big link per row, hairlines between, arrow nudges on hover */
+/* Projects — a plain table of rows. The name link is stretched over the
+   whole row; ↗ and "i" sit above it. No motion: colour/background only. */
 .projects{border-top:1px solid var(--line);}
 .project{
+  position:relative;
   display:grid;
-  grid-template-columns:34px 1fr auto;
-  align-items:baseline;
+  grid-template-columns:34px 1fr 40px;
+  align-items:start;
   gap:0 14px;
-  padding:16px 8px 16px 0;
+  padding:16px 0;
   border-bottom:1px solid var(--line);
-  color:var(--ink);
-  text-decoration:none;
-  
 }
 .project:hover{background:color-mix(in srgb, var(--link) 5%, transparent);}
-.project-idx{font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
+.project-idx{font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding-top:6px;}
 .project-body{display:flex;flex-direction:column;gap:2px;}
-.project-name{font-weight:600;font-size:19px;letter-spacing:-0.01em;transition:color .2s ease;}
+.project-name{font-weight:600;font-size:19px;letter-spacing:-0.01em;color:var(--ink);text-decoration:none;}
+.project-name::after{content:'';position:absolute;inset:0;}
 .project:hover .project-name{color:var(--link);}
 .project-desc{font-size:16px;color:var(--ink-soft);line-height:1.5;}
-.project-go{font-family:var(--mono);color:var(--ink-soft);transition:color .2s ease;}
-.project:hover .project-go{color:var(--link);}
+.project-side{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:2px;}
+.project-go,.project-info > a{
+  display:flex;align-items:center;justify-content:center;
+  width:26px;height:26px;
+  font-family:var(--mono);font-size:13px;line-height:1;
+  color:var(--ink-soft);text-decoration:none;
+  border:1px solid var(--line);border-radius:50%;
+}
+.project-info > a{font-style:italic;font-family:var(--serif);font-size:14px;}
+.project-go:hover,.project-info > a:hover{color:var(--link);border-color:var(--link);}
+.project-info{position:relative;}
+/* hover/focus preview — only exists if .project-preview markup is present */
+.project-preview{
+  display:none;position:absolute;right:34px;top:-6px;z-index:5;
+  width:260px;padding:6px;
+  background:var(--paper);border:1px solid var(--ink-soft);border-radius:3px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.18);
+}
+.project-preview img{display:block;width:100%;height:auto;margin-bottom:6px;}
+.project-preview img:last-child{margin-bottom:0;}
+.project-info:hover .project-preview,.project-info:focus-within .project-preview{display:block;}
+@media (max-width:600px){ .project-preview{display:none !important;} }
 
 /* Articles — a heavier block than a post: accent bar on the left, big title */
 .articles{display:flex;flex-direction:column;gap:14px;}
@@ -1283,3 +1303,13 @@ article.article-content:first-of-type{padding-top:0;}
 .post-open:hover{color:var(--link);}
 .posts-sentinel{height:1px;}
 .posts-end{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:15px;color:var(--ink-soft);}
+
+/* ---------- project wiki pages (/projects/*.html) ---------- */
+.wiki-header{margin-bottom:20px;}
+.wiki-tagline{grid-column:1 / -1;margin-top:10px;font-size:19px;color:var(--ink-soft);line-height:1.5;}
+.wiki-visit{font-style:normal;font-family:var(--mono);font-size:13px;}
+.wiki-images{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px;}
+.wiki-images a{flex:1 1 220px;max-width:100%;}
+.wiki-images img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:3px;}
+.wiki-toc{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0 0 8px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:15px;}
+.wiki-toc-label{font-family:var(--mono);font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}

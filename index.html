@@ -84,26 +84,39 @@
     </div>
   </details>
 
-  <!-- Projects — a short, finite list, so it goes first. Each row is one
-       big link: add a row by copying one <a class="project">. -->
+  <!-- Projects — a short, finite list, so it goes first. Each row: the name
+       (whole row) goes to the project itself; ↗ does the same; "i" opens
+       its wiki page in /projects/. To show screenshots on hover, build the
+       page from projects-md/<slug>.md and add inside .project-info:
+         <span class="project-preview"><img src="img/projects/<slug>-1.jpg" alt="" loading="lazy"></span>
+       Add a row by copying one .project block. -->
   <section id="projects">
     <h2>Projects</h2>
     <div class="projects">
-      <a class="project" href="https://transferfil.es">
+      <div class="project">
         <span class="project-idx">01</span>
-        <span class="project-body"><span class="project-name">transferfil.es</span><span class="project-desc">Smooth and private WiFi file share.</span></span>
-        <span class="project-go" aria-hidden="true">↗</span>
-      </a>
-      <a class="project" href="https://bioenergetic.live/">
+        <span class="project-body"><a class="project-name" href="https://transferfil.es">transferfil.es</a><span class="project-desc">Smooth and private WiFi file share.</span></span>
+        <span class="project-side">
+          <a class="project-go" href="https://transferfil.es" aria-label="Visit transferfil.es">↗</a>
+          <span class="project-info"><a href="/projects/transferfil.html" aria-label="About transferfil.es: how it works and how it was made" title="About this project">i</a></span>
+        </span>
+      </div>
+      <div class="project">
         <span class="project-idx">02</span>
-        <span class="project-body"><span class="project-name">bioenergetic.live</span><span class="project-desc">24/7 live loop of all the interviews and conversation with Ray Peat.</span></span>
-        <span class="project-go" aria-hidden="true">↗</span>
-      </a>
-      <a class="project" href="https://fourpots.com/">
+        <span class="project-body"><a class="project-name" href="https://bioenergetic.live/">bioenergetic.live</a><span class="project-desc">24/7 live loop of all the interviews and conversation with Ray Peat.</span></span>
+        <span class="project-side">
+          <a class="project-go" href="https://bioenergetic.live/" aria-label="Visit bioenergetic.live">↗</a>
+          <span class="project-info"><a href="/projects/bioenergetic.html" aria-label="About bioenergetic.live: how it works and how it was made" title="About this project">i</a></span>
+        </span>
+      </div>
+      <div class="project">
         <span class="project-idx">03</span>
-        <span class="project-body"><span class="project-name">fourpots.com</span><span class="project-desc">Health tracking tech.</span></span>
-        <span class="project-go" aria-hidden="true">↗</span>
-      </a>
+        <span class="project-body"><a class="project-name" href="https://fourpots.com/">fourpots.com</a><span class="project-desc">Health tracking tech.</span></span>
+        <span class="project-side">
+          <a class="project-go" href="https://fourpots.com/" aria-label="Visit fourpots.com">↗</a>
+          <span class="project-info"><a href="/projects/fourpots.html" aria-label="About fourpots.com: how it works and how it was made" title="About this project">i</a></span>
+        </span>
+      </div>
     </div>
   </section>
 
@@ -606,6 +619,7 @@
   });
 </script>
 <script src="/search.js"></script>
+<script src="/prefetch.js" defer></script>
 
 </body>
 </html>

@@ -84,6 +84,23 @@ const TYPES = [
     backLink: '../index.html#posts',
     articleIdAttr: ' id="post-body"',
     defaultRobots: 'index, follow'
+  },
+  {
+    // Project "wiki" pages: projects-md/<slug>.md -> projects/<slug>.html.
+    // Same markdown pipeline, but the header shows a tagline, a visit link
+    // and screenshots instead of a date, and a contents list is generated
+    // from the ## headings.
+    name: 'project',
+    label: 'Projects',
+    srcDir: path.join(ROOT, 'projects-md'),
+    outDir: path.join(ROOT, 'projects'),
+    registryFile: path.join(ROOT, 'projects-data.js'),
+    registryVar: 'PROJECTS',
+    urlDir: 'projects',
+    assetPrefix: '../',
+    backLink: '../index.html#projects',
+    articleIdAttr: '',
+    defaultRobots: 'index, follow'
   }
 ];
 
@@ -164,9 +181,35 @@ function renderPage(type, meta, bodyHtml, srcRelPath) {
   const descEsc = escapeHtml(meta.description);
   const robots = meta.robots || type.defaultRobots;
   const timeDisplay = formatDatetimeLabel(meta.date);
+  const isProject = type.name === 'project';
   const footer = type.name === 'post' ? '\n\n  <p><a href="index.html">&larr; all posts</a></p>' : '';
+  let wikiBody = bodyHtml;
+  let toc = '';
+  if (isProject) {
+    // give each ## heading an id and build a contents list from them
+    const heads = [];
+    wikiBody = bodyHtml.replace(/<h2>([\s\S]*?)<\/h2>/g, (m, inner) => {
+      const id = inner.replace(/<[^>]+>/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      heads.push({ id, text: inner.replace(/<[^>]+>/g, '') });
+      return `<h2 id="${id}">${inner}</h2>`;
+    });
+    if (heads.length >= 3) {
+      toc = `<nav class="wiki-toc" aria-label="Contents"><span class="wiki-toc-label">Contents</span>${heads.map(h => `<a href="#${h.id}">${escapeHtml(h.text)}</a>`).join('')}</nav>`;
+    }
+  }
+  const headerHtml = isProject
+    ? `<header class="article-header wiki-header">
+      <h3>${titleEsc}</h3>
+      <p class="article-meta">${meta.url ? `<a class="wiki-visit" href="${escapeHtml(meta.url)}">Visit ${escapeHtml(meta.url.replace(/^https?:\/\//, '').replace(/\/$/, ''))} ↗</a>` : ''} ${tagChips(meta.tags)}</p>
+      ${meta.description ? `<p class="wiki-tagline">${descEsc}</p>` : ''}
+    </header>
+${meta.images.length ? `    <div class="wiki-images">${meta.images.map(src => `<a href="${escapeHtml(src.startsWith('/') ? src : '../' + src)}"><img src="${escapeHtml(src.startsWith('/') ? src : '../' + src)}" alt="" loading="lazy"></a>`).join('')}</div>\n` : ''}${toc ? `    ${toc}\n` : ''}`
+    : `<header class="article-header">
+      <h3>${titleEsc}</h3>
+      <p class="article-meta"><time datetime="${meta.date}">${timeDisplay}</time> ${tagChips(meta.tags)}</p>
+    </header>`;
   // match the 4-space indent the rest of the site's hand-written .article-content bodies use
-  const indentedBody = bodyHtml
+  const indentedBody = wikiBody
     .replace(/\n$/, '')
     .split('\n')
     .map(line => (line ? `    ${line}` : line))
@@ -218,10 +261,7 @@ function renderPage(type, meta, bodyHtml, srcRelPath) {
   <a href="${type.backLink}" class="back">&larr; isaacmp.xyz</a>
 
   <article class="article-content"${type.articleIdAttr}>
-    <header class="article-header">
-      <h3>${titleEsc}</h3>
-      <p class="article-meta"><time datetime="${meta.date}">${timeDisplay}</time> ${tagChips(meta.tags)}</p>
-    </header>
+    ${headerHtml}
 
 ${indentedBody}
   </article>${footer}
@@ -229,6 +269,7 @@ ${indentedBody}
 
 <script src="/back.js"></script>
 <script src="/search.js"></script>
+<script src="/prefetch.js" defer></script>
 </body>
 </html>
 `;
@@ -266,6 +307,17 @@ function toRegistryEntry(type, meta) {
       description: meta.description
     };
   }
+  if (type.name === 'project') {
+    return {
+      slug: meta.slug,
+      title: meta.title,
+      date: meta.date,
+      tags: meta.tags,
+      description: meta.description,
+      url: meta.url,
+      images: meta.images
+    };
+  }
   return {
     slug: meta.slug,
     title: meta.title,
@@ -284,6 +336,9 @@ function serializeRegistry(type, entries) {
   const sorted = [...entries].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
   const lines = sorted.map(e => {
+    if (type.name === 'project') {
+      return `  { slug: '${jsStringEscape(e.slug)}', title: '${jsStringEscape(e.title)}', date: '${jsStringEscape(e.date)}', tags: ${serializeTags(e.tags)}, description: '${jsStringEscape(e.description || '')}', url: '${jsStringEscape(e.url || '')}', images: ${serializeTags(e.images)} },`;
+    }
     if (type.name === 'article') {
       return `  { slug: '${jsStringEscape(e.slug)}', title: '${jsStringEscape(e.title)}', file: '${jsStringEscape(e.file)}', date: '${jsStringEscape(e.date)}', dateLabel: '${jsStringEscape(e.dateLabel)}', tags: ${serializeTags(e.tags)}, description: '${jsStringEscape(e.description || '')}' },`;
     }
@@ -336,7 +391,9 @@ function buildType(type) {
         dateLabel: fm.dateLabel ? String(fm.dateLabel) : formatDateLabel(date),
         tags: Array.isArray(fm.tags) ? fm.tags.map(String) : [],
         description: fm.description ? String(fm.description) : '',
-        robots: fm.robots ? String(fm.robots) : null
+        robots: fm.robots ? String(fm.robots) : null,
+        url: fm.url ? String(fm.url) : '',
+        images: Array.isArray(fm.images) ? fm.images.map(String) : []
       };
 
       const bodyHtml = marked.parse(parsed.content || '');
