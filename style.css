@@ -1244,15 +1244,19 @@ article.article-content:first-of-type{padding-top:0;}
 .project-info{position:relative;}
 /* hover/focus preview — only exists if .project-preview markup is present */
 .project-preview{
-  display:none;position:absolute;right:34px;top:-6px;z-index:5;
-  width:260px;padding:6px;
+  /* opens into the empty margin to the right of the content column, so it
+     never covers text: the width is whatever margin is available there */
+  display:none;position:absolute;left:38px;top:-6px;z-index:5;
+  box-sizing:border-box;
+  width:min(360px, calc((100vw - 572px) / 2 - 70px));padding:6px;
   background:var(--paper);border:1px solid var(--ink-soft);border-radius:3px;
   box-shadow:0 6px 18px rgba(0,0,0,0.18);
 }
 .project-preview img{display:block;width:100%;height:auto;margin-bottom:6px;}
 .project-preview img:last-child{margin-bottom:0;}
 .project-info:hover .project-preview,.project-info:focus-within .project-preview{display:block;}
-@media (max-width:600px){ .project-preview{display:none !important;} }
+/* no room in the margin on narrow screens (and no hover on touch) */
+@media (max-width:1040px){ .project-preview{display:none !important;} }
 
 /* Articles — same table as Projects, with the date in the left column */
 .project--article{grid-template-columns:84px 1fr 40px;}
