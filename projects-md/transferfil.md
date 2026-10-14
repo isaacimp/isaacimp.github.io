@@ -4,7 +4,7 @@ date: 2026-10-14
 description: Smooth and private WiFi file share.
 url: https://transferfil.es
 tags: [project]
-# images: [img/projects/transferfil-1.jpg, img/projects/transferfil-2.jpg]   # screenshots; first two also show on the homepage hover preview
+images: [img/projects/transfer-1.jpg]   # screenshots; first two also show on the homepage hover preview
 robots: "noindex, follow"   # stub — remove this line when the page is written
 ---
 
