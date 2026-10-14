@@ -84,21 +84,46 @@
     </div>
   </details>
 
-  <!-- Writing — one feed of articles and posts, newest first, rendered
-       from articles-data.js + posts-data.js (title, date, tags, and the
-       front-matter description as a one-line hook). Publishing is
-       unchanged: add the .md and run `node build.js`. -->
-  <section id="writing">
-    <h2>Writing</h2>
-    <div id="writing-feed" class="feed"></div>
-    <p><a href="writing.html">All writing →</a></p>
-  </section>
-
+  <!-- Projects — a short, finite list, so it goes first. Each row is one
+       big link: add a row by copying one <a class="project">. -->
   <section id="projects">
     <h2>Projects</h2>
-    <p><a href="https://transferfil.es">transferfil.es</a>: Smooth and private WIFI file share.</p>
-    <p><a href="https://bioenergetic.live/">bioenergetic.live</a>: 24/7 Live loop of all interviews and conversation with Ray Peat.</a></p>
-    <p><a href="https://fourpots.com/">fourpots.com</a>: Health tracking tech.</p>
+    <div class="projects">
+      <a class="project" href="https://transferfil.es">
+        <span class="project-idx">01</span>
+        <span class="project-body"><span class="project-name">transferfil.es</span><span class="project-desc">Smooth and private WiFi file share.</span></span>
+        <span class="project-go" aria-hidden="true">↗</span>
+      </a>
+      <a class="project" href="https://bioenergetic.live/">
+        <span class="project-idx">02</span>
+        <span class="project-body"><span class="project-name">bioenergetic.live</span><span class="project-desc">24/7 live loop of all the interviews and conversation with Ray Peat.</span></span>
+        <span class="project-go" aria-hidden="true">↗</span>
+      </a>
+      <a class="project" href="https://fourpots.com/">
+        <span class="project-idx">03</span>
+        <span class="project-body"><span class="project-name">fourpots.com</span><span class="project-desc">Health tracking tech.</span></span>
+        <span class="project-go" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Articles — the long-form pieces. Few, so they're listed in full and
+       rendered from articles-data.js (title, hook, date, tags). -->
+  <section id="articles">
+    <h2>Articles</h2>
+    <p class="section-sub">Long-form, slower, still being worked on.</p>
+    <div id="articles-index" class="articles"></div>
+  </section>
+
+  <!-- Posts — short writing, newest first, shown in full right here and
+       loading more as you scroll. Rendered from posts-data.js; each body is
+       pulled from its own standalone page so nothing is duplicated. -->
+  <section id="posts">
+    <h2>Posts</h2>
+    <p class="section-sub">Shorter notes and thoughts. Keeps going as you scroll. <a href="writing.html">Or browse everything by tag →</a></p>
+    <div id="posts-feed" class="posts-feed"></div>
+    <div id="posts-sentinel" class="posts-sentinel" aria-hidden="true"></div>
+    <p id="posts-end" class="posts-end" hidden>That's everything so far. <a href="writing.html">All writing →</a></p>
   </section>
 
 <!--
@@ -338,25 +363,99 @@
     return `<span class="tags">${chips}</span>`;
   }
 
-  // Writing feed — articles and posts merged, newest first. Articles get a
-  // small "article" label so long-form reads differently from short posts.
-  const FEED_LIMIT = 8;
-  const feedEl = document.getElementById('writing-feed');
-  if (feedEl) {
-    const monthYear = d => new Date(d + 'T00:00:00').toLocaleDateString('en-AU', { month: 'short', year: 'numeric' });
-    const entries = []
-      .concat((typeof ARTICLES !== 'undefined' ? ARTICLES : []).map(a => ({ kind: 'article', title: a.title, date: a.date, url: a.file, tags: a.tags, description: a.description })))
-      .concat((typeof POSTS !== 'undefined' ? POSTS : []).map(p => ({ kind: 'post', title: p.title, date: p.date, url: `posts/${p.slug}.html`, tags: p.tags, description: p.description })))
-      .sort((a, b) => (a.date < b.date ? 1 : -1))
-      .slice(0, FEED_LIMIT);
-    feedEl.innerHTML = entries.length ? entries.map(e => `
-      <article class="feed-item">
-        <h3 class="feed-title"><a href="${e.url}">${e.title}</a></h3>
-        ${e.description ? `<p class="feed-desc">${e.description}</p>` : ''}
-        <p class="feed-meta">
-          ${e.kind === 'article' ? '<span class="feed-kind">article</span> · ' : ''}<time datetime="${e.date}">${monthYear(e.date)}</time>${tagLinksHtml(e.tags)}
-        </p>
-      </article>`).join('') : '<p><em>No writing yet — check back soon.</em></p>';
+  const fmtDate = d => new Date(d + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  // Articles: a small finite set, each one a single big link block.
+  const articlesEl = document.getElementById('articles-index');
+  if (articlesEl && typeof ARTICLES !== 'undefined') {
+    articlesEl.innerHTML = ARTICLES.map(a => `
+      <a class="article-card" href="${a.file}">
+        <span class="article-card-meta">${a.dateLabel}${(a.tags || []).length ? ' · ' + a.tags.join(', ') : ''}</span>
+        <span class="article-card-title">${a.title}</span>
+        ${a.description ? `<span class="article-card-desc">${a.description}</span>` : ''}
+        <span class="article-card-go">Read article <span aria-hidden="true">→</span></span>
+      </a>`).join('');
+  }
+
+  // Posts: infinite feed. Each post's full body is fetched from its own
+  // page and shown inline (long ones clip with a fade + "Read more"),
+  // POSTS_PER_BATCH at a time as the sentinel scrolls into view.
+  const postsFeed = document.getElementById('posts-feed');
+  const postsSentinel = document.getElementById('posts-sentinel');
+  const postsEnd = document.getElementById('posts-end');
+  const POSTS_PER_BATCH = 3;
+  const POST_COLLAPSED_HEIGHT = 420;
+
+  if (postsFeed && typeof POSTS !== 'undefined') {
+    const queue = [...POSTS].sort((a, b) => (a.date < b.date ? 1 : -1));
+    let loading = false;
+
+    function buildPost(p) {
+      const url = `posts/${p.slug}.html`;
+      const el = document.createElement('article');
+      el.className = 'post';
+      el.innerHTML = `
+        <p class="post-meta"><time datetime="${p.date}">${fmtDate(p.date)}</time>${tagLinksHtml(p.tags)}</p>
+        <h3 class="post-title"><a href="${url}">${p.title}</a></h3>
+        <div class="post-body-wrap"><div class="post-body article-content"></div><div class="post-fade" hidden></div></div>
+        <button type="button" class="post-more" hidden>Read more ⌄</button>
+        <a class="post-open" href="${url}">Open post <span aria-hidden="true">↗</span></a>`;
+      return fetch(url)
+        .then(r => r.ok ? r.text() : Promise.reject(r))
+        .then(html => {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = html;
+          const src = tmp.querySelector('.article-content');
+          if (!src) throw new Error('no body');
+          src.querySelector('.article-header')?.remove(); // title/meta already shown above
+          el.querySelector('.post-body').innerHTML = src.innerHTML;
+          return el;
+        })
+        .catch(() => {
+          el.querySelector('.post-body').innerHTML = p.description ? `<p>${p.description}</p>` : '';
+          return el;
+        });
+    }
+
+    function wireClamp(el) {
+      const wrap = el.querySelector('.post-body-wrap');
+      const body = el.querySelector('.post-body');
+      const fade = el.querySelector('.post-fade');
+      const btn = el.querySelector('.post-more');
+      const full = body.scrollHeight;
+      if (full <= POST_COLLAPSED_HEIGHT + 120) return;
+      wrap.style.maxHeight = POST_COLLAPSED_HEIGHT + 'px';
+      fade.hidden = false;
+      btn.hidden = false;
+      let open = false;
+      btn.addEventListener('click', () => {
+        open = !open;
+        wrap.style.maxHeight = open ? full + 'px' : POST_COLLAPSED_HEIGHT + 'px';
+        fade.hidden = open;
+        btn.textContent = open ? 'Show less ⌃' : 'Read more ⌄';
+        if (!open) el.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    }
+
+    function loadBatch() {
+      if (loading || !queue.length) return;
+      loading = true;
+      Promise.all(queue.splice(0, POSTS_PER_BATCH).map(buildPost)).then(els => {
+        els.forEach(el => { postsFeed.appendChild(el); requestAnimationFrame(() => wireClamp(el)); });
+        loading = false;
+        if (!queue.length) {
+          observer && observer.disconnect();
+          postsEnd.hidden = false;
+        } else if (postsSentinel.getBoundingClientRect().top < window.innerHeight + 400) {
+          loadBatch(); // sentinel still on screen (tall viewport) — keep filling
+        }
+      });
+    }
+
+    const observer = 'IntersectionObserver' in window
+      ? new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) loadBatch(); }, { rootMargin: '400px 0px' })
+      : null;
+    if (observer) observer.observe(postsSentinel); else while (queue.length) loadBatch();
   }
 
   // Flash a section's heading when you jump to it from the nav, then let it fade
