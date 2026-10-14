@@ -1322,12 +1322,14 @@ h1,h2,h3,.jumplinks,.project-name,.post-title,.article-card-title,.feed-entry-ti
 .dock-restore{
   position:fixed;right:14px;bottom:14px;z-index:900;
   width:34px;height:34px;
-  font-size:17px;line-height:1;color:var(--ink-soft);
+  display:flex;align-items:center;justify-content:center;
+  padding:0;color:var(--ink-soft);
   background:var(--paper);
   border:1px solid color-mix(in srgb, var(--ink) 18%, transparent);
   border-radius:50%;cursor:pointer;
 }
 .dock-restore[hidden]{display:none;}
+.dock-btn svg,.dock-restore svg{display:block;}
 .dock-restore:hover{color:var(--ink);}
 
 @media (max-width:600px){

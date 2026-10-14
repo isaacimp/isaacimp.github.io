@@ -67,7 +67,10 @@
   btnMore.type = 'button';
   btnMore.setAttribute('aria-label', 'More');
   btnMore.setAttribute('aria-expanded', 'false');
-  var btnHide = el('button', 'dock-btn dock-icon', '<span aria-hidden="true">⌄</span>');
+  // password-style eye: open = bar is showing (click to hide), slashed = hidden (click to show)
+  var EYE = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var EYE_OFF = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path d="M3 3l18 18"/></svg>';
+  var btnHide = el('button', 'dock-btn dock-icon', EYE);
   btnHide.type = 'button';
   btnHide.setAttribute('aria-label', 'Hide this bar');
   btnHide.title = 'Hide bar';
@@ -86,7 +89,7 @@
 
   dock.append(panelNow, panelMore, bar);
 
-  var restore = el('button', 'dock-restore', '<span aria-hidden="true">⌃</span>');
+  var restore = el('button', 'dock-restore', EYE_OFF);
   restore.type = 'button';
   restore.setAttribute('aria-label', 'Show the quick-links bar');
   restore.title = 'Show bar';
