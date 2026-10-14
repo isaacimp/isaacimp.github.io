@@ -27,13 +27,16 @@
     return n;
   }
 
+  // shared with search.js: each data file is injected at most once per page
   function loadScript(src) {
-    return new Promise(function (resolve) {
+    var m = (window.__loaded = window.__loaded || {});
+    if (m[src]) return m[src];
+    return (m[src] = new Promise(function (resolve) {
       var s = document.createElement('script');
       s.src = src;
       s.onload = s.onerror = function () { resolve(); };
       document.head.appendChild(s);
-    });
+    }));
   }
 
   // ---- what kind of page is this? ---------------------------------------

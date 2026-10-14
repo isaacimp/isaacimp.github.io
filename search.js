@@ -4,14 +4,17 @@
 (function () {
   'use strict';
 
+  // shared with dock.js: each data file is injected at most once per page
   function loadScript(src) {
-    return new Promise(function (resolve) {
+    var m = (window.__loaded = window.__loaded || {});
+    if (m[src]) return m[src];
+    return (m[src] = new Promise(function (resolve) {
       var s = document.createElement('script');
       s.src = src;
       s.onload = function () { resolve(); };
       s.onerror = function () { resolve(); };
       document.head.appendChild(s);
-    });
+    }));
   }
 
   function loadData() {

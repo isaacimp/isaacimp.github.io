@@ -530,6 +530,42 @@ function buildNow() {
   return { built, errors, carriedOver: carriedOver.length };
 }
 
+// ---------- cache-busting ----------
+//
+// GitHub Pages lets browsers cache files for 10 minutes, so right after a
+// deploy a phone can hold the NEW html with the OLD style.css (or the other
+// way round) and render a broken page. Every local css/js reference is given
+// a ?v=<hash of that file's contents>, so a page can only ever pair with the
+// exact asset version it was built against.
+
+const ASSETS = ['style.css', 'dock.js', 'search.js', 'prefetch.js', 'back.js', 'now-data.js', 'posts-data.js', 'articles-data.js', 'bookmarks-data.js', 'uses-data.js', 'projects-data.js'];
+
+function versionAssets() {
+  const crypto = require('crypto');
+  const hashes = {};
+  for (const a of ASSETS) {
+    const f = path.join(ROOT, a);
+    if (fs.existsSync(f)) hashes[a] = crypto.createHash('md5').update(fs.readFileSync(f)).digest('hex').slice(0, 8);
+  }
+  const pages = [];
+  (function walk(dir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (e.name === 'node_modules' || e.name.startsWith('.') || e.name === 'layout-shots') continue;
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) walk(full);
+      else if (e.name.endsWith('.html')) pages.push(full);
+    }
+  })(ROOT);
+  const re = new RegExp('((?:href|src)="(?:/|\\.\\./|\\./)?)(' + ASSETS.map(a => a.replace('.', '\\.')).join('|') + ')(?:\\?v=[0-9a-f]+)?"', 'g');
+  let touched = 0;
+  for (const p of pages) {
+    const html = fs.readFileSync(p, 'utf8');
+    const next = html.replace(re, (m, pre, name) => hashes[name] ? `${pre}${name}?v=${hashes[name]}"` : m);
+    if (next !== html) { fs.writeFileSync(p, next, 'utf8'); touched++; }
+  }
+  console.log(`\nVersioned asset links in ${touched} page(s).`);
+}
+
 // ---------- main ----------
 
 // Stamps today's date into the homepage's "Last Updated" field, so the page
@@ -563,6 +599,7 @@ function main() {
   }
   const nowResult = buildNow();
   stampLastUpdated();
+  versionAssets();
 
   let totalBuilt = 0, totalErrors = 0, totalRemoved = 0;
   console.log('\nSummary');

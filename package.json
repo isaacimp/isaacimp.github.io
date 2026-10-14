@@ -4,12 +4,16 @@
   "private": true,
   "description": "Markdown -> HTML build pipeline for isaacmp.xyz",
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "check": "node build.js && node check-layout.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "gray-matter": "^4.0.3",
     "marked": "^18.0.9"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.64.0"
   }
 }
