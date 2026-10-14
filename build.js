@@ -240,7 +240,7 @@ ${meta.images.length ? `    <div class="wiki-images">${meta.images.map(src => `<
 
 <link rel="icon" href="${type.assetPrefix}favicon.svg" type="image/svg+xml">
 
-<link rel="preload" href="/fonts/martian-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/literata-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/win95fa-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${type.assetPrefix}style.css">
 
