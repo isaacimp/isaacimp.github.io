@@ -1260,12 +1260,14 @@ article.article-content:first-of-type{padding-top:0;}
 .wiki-toc-label{font-family:var(--mono);font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
 
 /* headings, titles and nav use --head (same as --serif in the default pairing) */
-h1,h2,h3{font-family:var(--pixel);font-weight:400 !important;letter-spacing:0;-webkit-font-smoothing:none;}
+h1,h2,h3,.project-name,.post-title,.feed-entry-title,.article-card-title{font-family:var(--pixel);font-weight:400 !important;letter-spacing:0;-webkit-font-smoothing:none;}
 /* pixel font is only crisp at multiples of 16px */
+.project-name,.feed-entry-title,.article-card-title{font-size:16px;line-height:1.5;}
+.post-title{font-size:32px;line-height:1.2;}
 .id h1{font-size:32px;line-height:1.1;}
 section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3,.article-header h3,.article-content h3{font-size:16px;}
 .article-content h2{font-size:32px;line-height:1.2;}
-.jumplinks,.project-name,.post-title,.article-card-title,.feed-entry-title,.id .role,.mobile-now-info summary,.now-toggle h3,.section-sub{font-family:var(--head);}
+.jumplinks,.id .role,.mobile-now-info summary,.now-toggle h3,.section-sub{font-family:var(--head);}
 
 /* ---------- bottom dock (dock.js) ---------- */
 .site-foot{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
