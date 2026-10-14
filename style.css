@@ -8,17 +8,14 @@
    and prints the @font-face lines to paste below; then set the family
    name in the three variables. Delete faces you stop using.
    ================================================================== */
-@font-face{font-family:'Literata';src:url('/fonts/literata-latin-wght-normal.woff2') format('woff2');font-weight:200 900;font-style:normal;font-display:swap;}
-@font-face{font-family:'Literata';src:url('/fonts/literata-latin-wght-italic.woff2') format('woff2');font-weight:200 900;font-style:italic;font-display:swap;}
-@font-face{font-family:'Inter';src:url('/fonts/inter-latin-wght-normal.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap;}
-@font-face{font-family:'JetBrains Mono';src:url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');font-weight:100 800;font-style:normal;font-display:swap;}
+@font-face{font-family:'Martian Mono';src:url('/fonts/martian-mono-latin-wght-normal.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap;}
 @font-face{font-family:'Win95FA';src:url('/fonts/win95fa-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
 
 :root{
   --pixel:'Win95FA',var(--head);
-  --serif:'Literata',Georgia,'Times New Roman',serif;
-  --head:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --serif:'Martian Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --head:var(--serif);
+  --mono:var(--serif);
 }
 
 :root{
@@ -50,8 +47,8 @@ body{
   background:var(--paper);
   color:var(--ink);
   font-family:var(--serif);
-  font-size:18px;
-  line-height:1.72;
+  font-size:15px;
+  line-height:1.75;
   -webkit-font-smoothing:antialiased;
   width:100%;
 }
@@ -1260,7 +1257,7 @@ article.article-content:first-of-type{padding-top:0;}
 .wiki-toc-label{font-family:var(--mono);font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
 
 /* headings, titles and nav use --head (same as --serif in the default pairing) */
-h1,h2,h3,.project-name,.post-title,.feed-entry-title,.article-card-title{font-family:var(--pixel);font-weight:400 !important;letter-spacing:0;-webkit-font-smoothing:none;}
+h1,h2,h3,.project-name,.post-title,.feed-entry-title,.article-card-title{font-family:var(--pixel);font-weight:400 !important;letter-spacing:0.06em;-webkit-font-smoothing:none;}
 /* pixel font is only crisp at multiples of 16px */
 .project-name,.feed-entry-title,.article-card-title{font-size:16px;line-height:1.5;}
 .post-title{font-size:32px;line-height:1.2;}
@@ -1345,11 +1342,15 @@ section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3,.article-co
 .dock-restore:hover{color:var(--ink);}
 
 @media (max-width:600px){
-  .dock{bottom:8px;font-size:13px;}
-  .dock-bar{gap:6px;padding-left:10px;}
-  .dock-ctx{gap:10px;}
-  .dock-btn{padding:0 8px;}
+  .dock{bottom:8px;font-size:11px;}
+  .dock-bar{gap:4px;padding-left:10px;}
+  .dock-ctx{gap:8px;}
+  .dock-btn{padding:0 6px;gap:5px;}
+  .dock-icon{width:28px;}
   .dock-nav-t{display:none;}
   .dock-panel{right:-4px;}
 }
 @media print{ .dock,.dock-restore{display:none;} }
+
+/* long URLs / words must wrap, never widen the page (mono font is wide) */
+main,.dock-panel{overflow-wrap:anywhere;}
