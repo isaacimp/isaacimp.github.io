@@ -269,6 +269,7 @@ ${indentedBody}
 <script src="/back.js"></script>
 <script src="/search.js" defer></script>
 <script src="/prefetch.js" defer></script>
+<script src="/dock.js" defer></script>
 </body>
 </html>
 `;

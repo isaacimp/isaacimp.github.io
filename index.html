@@ -72,17 +72,6 @@
     </nav>
   </header>
 
-  <!-- Now widget — collapsed by default on mobile so it doesn't push
-       everything else down; tap the summary to expand in place. -->
-  <details class="mobile-now-info mobile-only-block">
-    <summary>Now <time id="now-timestamp-mobile" class="now-timestamp"></time></summary>
-    <div id="now-content-mobile"></div>
-    <div class="mobile-time">
-      <span class="time-label">Local Time:</span>
-      <span id="mobile-local-time">—</span>
-    </div>
-  </details>
-
   <!-- Projects — a short, finite list, so it goes first. Each row: the name
        (whole row) goes to the project itself; ↗ does the same; "i" opens
        its wiki page in /projects/. To show screenshots on hover, build the
@@ -235,6 +224,7 @@
     <p style="margin-top:24px;font-size:14px;color:var(--ink-soft);">© 2026 Isaac Morris-Perrott, Melbourne.</p>
   </section>
 -->
+  <p class="site-foot">Last updated <span id="last-updated">2026-10-14</span></p>
 </main>
 
 <!-- One image, right side only, picked at random on each load — see the
@@ -265,26 +255,6 @@
   </div>
 </aside>
 
-<aside class="side-info right">
-  <div class="progress-bar">
-    <div class="progress-bar-fill"></div>
-  </div>
-
-  <div class="info-widget">
-    <div class="meta-item">
-      <span class="meta-label">Section</span>
-      <span id="current-section">—</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">Local Time</span>
-      <span id="local-time">—</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">Last Updated</span>
-      <span id="last-updated">2026-10-14</span> <!-- stamped by build.js -->
-    </div>
-  </div>
-</aside>
 
 <div class="lightbox">
   <div class="lightbox-content">
@@ -320,13 +290,8 @@
   const lightboxClose = lightbox.querySelector('.lightbox-close');
   const galleries = document.querySelectorAll('.side-gallery');
   const galleryImages = document.querySelectorAll('.side-gallery img');
-  const infoWidgets = document.querySelectorAll('.side-info.right');
-  const progressBarFill = document.querySelector('.progress-bar-fill');
-  const currentSectionSpan = document.getElementById('current-section');
-  const localTimeSpan = document.getElementById('local-time');
 
   // Mobile extras functionality
-  const mobileLocalTimeSpan = document.getElementById('mobile-local-time');
   const mobileGalleryImages = document.querySelectorAll('.mobile-gallery-img');
 
   // "Now" widget is rendered from now-data.js (the same source /now/ reads
@@ -508,33 +473,9 @@
       }
     });
 
-    infoWidgets.forEach(widget => {
-      if (currentScroll > 100) {
-        widget.classList.add('visible');
-      } else {
-        widget.classList.remove('visible');
-      }
-    });
-
     if (nowOverride === null) {
       setNowOpen(currentScroll <= 100);
     }
-
-    // Update progress bar
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = (currentScroll / docHeight) * 100;
-    progressBarFill.style.height = scrollPercent + '%';
-
-    // Update current section
-    const sections = document.querySelectorAll('section');
-    let currentSection = '';
-    sections.forEach(section => {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= 150 && rect.bottom >= 150) {
-        currentSection = section.querySelector('h2')?.textContent || '';
-      }
-    });
-    currentSectionSpan.textContent = currentSection || '—';
 
     lastScroll = currentScroll;
   });
@@ -547,24 +488,6 @@
       lightbox.classList.add('active');
     });
   });
-
-  // Update local time (Melbourne timezone)
-  function updateTime() {
-    const now = new Date();
-    const melbourneTime = new Intl.DateTimeFormat('en-AU', {
-      timeZone: 'Australia/Melbourne',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false
-    }).format(now);
-    localTimeSpan.textContent = melbourneTime;
-    if (mobileLocalTimeSpan) {
-      mobileLocalTimeSpan.textContent = melbourneTime;
-    }
-  }
-  updateTime();
-  setInterval(updateTime, 1000);
 
   galleryImages.forEach(img => {
     img.addEventListener('click', () => {
@@ -596,5 +519,6 @@
 <script src="/search.js" defer></script>
 <script src="/prefetch.js" defer></script>
 
+<script src="/dock.js" defer></script>
 </body>
 </html>
