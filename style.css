@@ -877,7 +877,7 @@ article.article-content:first-of-type{padding-top:0;}
 }
 .article-header h3{grid-column:1;align-self:baseline;font-size:23px;}
 
-@media (max-width:480px){
+@media (max-width:700px){
   .article-header{grid-template-columns:1fr;}
   .article-meta{grid-column:1;margin-top:6px;}
 }
@@ -1265,7 +1265,10 @@ h1,h2,h3,.project-name,.post-title,.feed-entry-title,.article-card-title{font-fa
 .project-name,.feed-entry-title,.article-card-title{font-size:16px;line-height:1.5;}
 .post-title{font-size:32px;line-height:1.2;}
 .id h1{font-size:32px;line-height:1.1;}
-section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3,.article-header h3,.article-content h3{font-size:16px;}
+section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3,.article-content h3{font-size:16px;}
+/* page title > h2 > h3 */
+.article-header h3{font-size:48px;line-height:1.1;overflow-wrap:break-word;}
+@media (max-width:700px){.article-header h3{font-size:32px;}.article-header .article-meta{grid-column:1;margin-top:8px;}}
 .article-content h2{font-size:32px;line-height:1.2;}
 .jumplinks,.id .role,.mobile-now-info summary,.now-toggle h3,.section-sub{font-family:var(--head);}
 
