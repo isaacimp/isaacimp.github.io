@@ -8,17 +8,17 @@
    and prints the @font-face lines to paste below; then set the family
    name in the three variables. Delete faces you stop using.
    ================================================================== */
-@font-face{font-family:'Literata';src:url('/fonts/literata-latin-wght-normal.woff2') format('woff2');font-weight:200 900;font-style:normal;font-display:swap;}
-@font-face{font-family:'Literata';src:url('/fonts/literata-latin-wght-italic.woff2') format('woff2');font-weight:200 900;font-style:italic;font-display:swap;}
-@font-face{font-family:'Inter';src:url('/fonts/inter-latin-wght-normal.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap;}
-@font-face{font-family:'JetBrains Mono';src:url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');font-weight:100 800;font-style:normal;font-display:swap;}
+@font-face{font-family:'Courier Prime';src:url('/fonts/courier-prime-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'Courier Prime';src:url('/fonts/courier-prime-latin-400-italic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:'Courier Prime';src:url('/fonts/courier-prime-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Courier Prime';src:url('/fonts/courier-prime-latin-700-italic.woff2') format('woff2');font-weight:700;font-style:italic;font-display:swap;}
 @font-face{font-family:'Win95FA';src:url('/fonts/win95fa-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
 
 :root{
   --pixel:'Win95FA',var(--head);
-  --serif:'Literata',Georgia,'Times New Roman',serif;
-  --head:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --serif:'Courier Prime','Courier New',Courier,ui-monospace,monospace;
+  --head:var(--serif);
+  --mono:var(--serif);
 }
 
 :root{
@@ -50,8 +50,8 @@ body{
   background:var(--paper);
   color:var(--ink);
   font-family:var(--serif);
-  font-size:18px;
-  line-height:1.72;
+  font-size:17px;
+  line-height:1.7;
   -webkit-font-smoothing:antialiased;
   width:100%;
 }
