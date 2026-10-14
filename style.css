@@ -584,7 +584,9 @@ a.back:has(+ #search-trigger-row){margin-bottom:14px;}
   border-radius:6px;
   background:transparent;
   color:var(--ink);
-  font-family:var(--serif);
+  /* system UI font on purpose: form controls get their own vertical metrics,
+     and a web font's metrics must never be able to clip the text */
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   font-size:16px;
   font-weight:400;
   white-space:nowrap;
