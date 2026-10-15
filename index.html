@@ -23,7 +23,7 @@
 
 <link rel="preload" href="/fonts/charter-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/win95fa-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=1a9ade39">
+<link rel="stylesheet" href="style.css?v=65db6704">
 
 <script type="application/ld+json">
 {
@@ -41,6 +41,7 @@
 <main>
 
   <header>
+   <div class="header-main">
     <div class="brand">
       <div class="id">
         <!-- the name is the home link -->
@@ -70,6 +71,11 @@
       <a href="uses.html">uses</a>
       <a href="mailto:mail@isaacmp.xyz">email</a>
     </nav>
+   </div>
+    <!-- random picture on each load (script below); on narrow screens it moves to the Images section -->
+    <figure class="frame frame--header">
+      <div class="outerBevel"><div class="flatSurface"><div class="innerBevel"><div class="mat"><img alt=""></div></div></div></div>
+    </figure>
   </header>
 
   <!-- Projects — a short, finite list, so it goes first. Each row: the name
@@ -211,7 +217,7 @@
        tucked behind a button. -->
   <section id="images">
     <h2>Images</h2>
-    <figure class="frame">
+    <figure class="frame frame--page">
       <div class="outerBevel"><div class="flatSurface"><div class="innerBevel"><div class="mat"><img alt=""></div></div></div></div>
     </figure>
     <details class="mobile-extras">
@@ -267,8 +273,8 @@
     'img/tkeoff.jpg',
     'img/cat-window.jpeg'
   ];
-  const rightGalleryImg = document.querySelector('.frame img');
-  if (rightGalleryImg) rightGalleryImg.src = galleryPool[Math.floor(Math.random() * galleryPool.length)];
+  const pick = galleryPool[Math.floor(Math.random() * galleryPool.length)];
+  document.querySelectorAll('.frame img').forEach(img => { img.src = pick; });
 
   // Lightbox functionality
   const lightbox = document.querySelector('.lightbox');
