@@ -23,7 +23,7 @@
 
 <link rel="preload" href="/fonts/charter-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/win95fa-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=d73078d8">
+<link rel="stylesheet" href="style.css?v=1a9ade39">
 
 <script type="application/ld+json">
 {
@@ -108,6 +108,13 @@
         </span>
       </div>
     </div>
+  </section>
+
+  <!-- Now — the latest entry from now-data.js, in the page itself. -->
+  <section id="now">
+    <h2>Now</h2>
+    <p class="section-sub"><time id="now-timestamp" class="now-stamp"></time> · <a href="/now/">past entries →</a></p>
+    <div id="now-content" class="now-block"></div>
   </section>
 
   <!-- Articles — the long-form pieces. Few, so they're listed in full and
@@ -200,11 +207,16 @@
     </ul>
   </section> -->
 
-  <!-- Images — tucked away at the bottom, collapsed by default; not
-       important enough to compete with the rest of the mobile page. -->
-  <details class="mobile-extras mobile-only-block">
-    <summary><span class="trim">Images</span></summary>
-    <div class="mobile-gallery-grid">
+  <!-- Images — one framed picture (random on each load) with the rest
+       tucked behind a button. -->
+  <section id="images">
+    <h2>Images</h2>
+    <figure class="frame">
+      <div class="outerBevel"><div class="flatSurface"><div class="innerBevel"><div class="mat"><img alt=""></div></div></div></div>
+    </figure>
+    <details class="mobile-extras">
+      <summary><span class="trim">More images</span></summary>
+      <div class="mobile-gallery-grid">
       <img src="img/baleknewton.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
       <img src="img/centaphnewton.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
       <img src="img/coolearth.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
@@ -218,7 +230,8 @@
       <img src="img/tkeoff.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
       <img src="img/cat-window.jpeg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
     </div>
-  </details>
+    </details>
+  </section>
 <!--
   <section id="contact">
     <h2>Contact</h2>
@@ -226,37 +239,8 @@
     <p style="margin-top:24px;font-size:14px;color:var(--ink-soft);">© 2026 Isaac Morris-Perrott, Melbourne.</p>
   </section>
 -->
-  <p class="site-foot">Last updated <span id="last-updated">2026-10-14</span></p>
+  <p class="site-foot">Last updated <span id="last-updated">2026-10-15</span></p>
 </main>
-
-<!-- One image, right side only, picked at random on each load — see the
-     gallery pool + shuffle in the script below -->
-<aside class="side-gallery right">
-  <figure class="frame">
-    <div class="outerBevel">
-      <div class="flatSurface">
-        <div class="innerBevel">
-          <div class="mat">
-            <img alt="">
-          </div>
-        </div>
-      </div>
-    </div>
-  </figure>
-</aside>
-
-<aside class="side-info left" id="now-widget">
-  <div class="info-widget">
-    <button type="button" id="now-toggle" class="now-toggle" aria-expanded="true" aria-controls="now-body">
-      <h3>Now <time id="now-timestamp" class="now-timestamp"></time></h3>
-    </button>
-    <div id="now-body" class="now-body open">
-      <div id="now-content"></div>
-      <p><a href="/now/">View past now entries →</a></p>
-    </div>
-  </div>
-</aside>
-
 
 <div class="lightbox">
   <div class="lightbox-content">
@@ -283,55 +267,31 @@
     'img/tkeoff.jpg',
     'img/cat-window.jpeg'
   ];
-  const rightGalleryImg = document.querySelector('.side-gallery.right img');
+  const rightGalleryImg = document.querySelector('.frame img');
   if (rightGalleryImg) rightGalleryImg.src = galleryPool[Math.floor(Math.random() * galleryPool.length)];
 
   // Lightbox functionality
   const lightbox = document.querySelector('.lightbox');
   const lightboxImg = lightbox.querySelector('img');
   const lightboxClose = lightbox.querySelector('.lightbox-close');
-  const galleries = document.querySelectorAll('.side-gallery');
-  const galleryImages = document.querySelectorAll('.side-gallery img');
+  const galleryImages = document.querySelectorAll('.frame img');
 
   // Mobile extras functionality
   const mobileGalleryImages = document.querySelectorAll('.mobile-gallery-img');
 
-  // "Now" widget is rendered from now-data.js (the same source /now/ reads
-  // from) and cloned into the mobile panel, so there's only one place to edit.
+  // "Now" is rendered from now-data.js (the same source /now/ reads from),
+  // so there's only one place to edit.
   const nowContent = document.getElementById('now-content');
-  const nowContentMobile = document.getElementById('now-content-mobile');
   const nowTimestamp = document.getElementById('now-timestamp');
-  const nowTimestampMobile = document.getElementById('now-timestamp-mobile');
   if (nowContent && typeof NOW_ENTRIES !== 'undefined' && NOW_ENTRIES.length) {
     nowContent.innerHTML = NOW_ENTRIES[0].html;
-    [nowTimestamp, nowTimestampMobile].forEach(el => {
-      if (!el) return;
-      el.textContent = NOW_ENTRIES[0].date;
-      el.setAttribute('datetime', NOW_ENTRIES[0].date);
-    });
+    if (nowTimestamp) {
+      nowTimestamp.textContent = fmtNowDate(NOW_ENTRIES[0].date);
+      nowTimestamp.setAttribute('datetime', NOW_ENTRIES[0].date);
+    }
   }
-  if (nowContent && nowContentMobile) {
-    nowContentMobile.innerHTML = nowContent.innerHTML;
-  }
-
-  // Desktop "Now" widget: starts open and auto-closes once you scroll by
-  // default (below), but the toggle click always wins — lets it be closed
-  // without scrolling or opened while scrolled, until the page reloads.
-  const nowToggle = document.getElementById('now-toggle');
-  const nowBody = document.getElementById('now-body');
-  let nowOverride = null; // null = follow scroll, true/false = manual pin
-
-  function setNowOpen(open) {
-    if (!nowBody || !nowToggle) return;
-    nowBody.classList.toggle('open', open);
-    nowToggle.setAttribute('aria-expanded', String(open));
-  }
-
-  if (nowToggle) {
-    nowToggle.addEventListener('click', () => {
-      nowOverride = !nowBody.classList.contains('open');
-      setNowOpen(nowOverride);
-    });
+  function fmtNowDate(d) {
+    return new Date(d + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
   // Renders a tags array as clickable chips linking to /tags.html?t=<tag>,
@@ -460,28 +420,6 @@
   if (location.hash) {
     flashSectionHeading(location.hash.slice(1));
   }
-
-  // Hide galleries / show info widgets when scrolling
-  let lastScroll = 0;
-
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-
-    // Toggle gallery and info widgets
-    galleries.forEach(gallery => {
-      if (currentScroll > 100) {
-        gallery.classList.add('hidden');
-      } else {
-        gallery.classList.remove('hidden');
-      }
-    });
-
-    if (nowOverride === null) {
-      setNowOpen(currentScroll <= 100);
-    }
-
-    lastScroll = currentScroll;
-  });
 
   // Mobile gallery images lightbox
   mobileGalleryImages.forEach(img => {

@@ -63,7 +63,9 @@ a:hover{text-decoration-color:var(--link);}
 
 em{color:var(--ink-soft);font-style:italic;}
 
-main{max-width:620px;margin:0 auto;padding:64px 24px 100px;}
+main{max-width:900px;margin:0 auto;padding:64px 24px 100px;}
+/* wide page for lists and rows; running text keeps a readable line length */
+.post-body,.article-content,.now-entry{max-width:70ch;}
 @media (max-width:600px){ main{padding:44px 18px 80px;} }
 
 /* ---------- back link (article pages) ---------- */
@@ -182,24 +184,6 @@ details.more summary{cursor:pointer;color:var(--link);list-style:none;text-decor
 details.more summary::-webkit-details-marker{display:none;}
 details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 
-/* ---------- side gallery ---------- */
-
-.side-gallery{
-  position:fixed;
-  top:64px;
-  width:320px;
-  opacity:1;
-  transition:opacity 0.4s ease;
-  pointer-events:auto;
-}
-
-.side-gallery.right{right:40px;}
-
-.side-gallery.hidden{
-  opacity:0;
-  pointer-events:none;
-}
-
 /* ============================================================
    FRAME — carved wooden moulding (outer bevel, flat surface,
    inner bevel) around a paper-coloured mat with a thin gold edge.
@@ -209,9 +193,9 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
    <figure class="frame"><img></figure> (also noted there).
    ============================================================ */
 
-.side-gallery .frame{margin:0;}
+.frame{margin:6px 0 22px;max-width:340px;}
 
-.side-gallery .outerBevel{
+.frame .outerBevel{
   box-shadow:4px 6px 12px 0 rgba(0,0,0,0.5);
   border-width:5px;
   border-style:solid;
@@ -219,21 +203,21 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   transition:box-shadow 0.25s ease;
 }
 
-.side-gallery .frame:hover .outerBevel{
+.frame:hover .outerBevel{
   box-shadow:6px 10px 18px 0 rgba(0,0,0,0.55);
 }
 
-.side-gallery .flatSurface{
+.frame .flatSurface{
   border:12px solid rgb(65,40,16);
 }
 
-.side-gallery .innerBevel{
+.frame .innerBevel{
   border-width:5px;
   border-style:solid;
   border-color:rgb(24,19,13) rgb(109,84,58) rgb(109,84,58) rgb(24,19,13);
 }
 
-.side-gallery .mat{
+.frame .mat{
   display:block;
   padding:14px;
   background-color:rgb(255,249,224);
@@ -242,7 +226,7 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
   border-color:rgb(207,166,0) rgb(207,166,0) rgb(145,110,0) rgb(145,110,0);
 }
 
-.side-gallery .mat img{
+.frame .mat img{
   display:block;
   width:100%;
   height:auto;
@@ -251,236 +235,12 @@ details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
 
 
 
-/* hide on smaller screens */
-@media (max-width:1400px){ .side-gallery{display:none;} }
+/* ---------- Now (latest entry, inline) ---------- */
 
-/* ---------- side info widgets ---------- */
-
-.side-info{
-  position:fixed;
-  top:64px;
-  width:280px;
-  display:flex;
-  flex-direction:column;
-  gap:32px;
-  opacity:0;
-  transition:opacity 0.4s ease;
-  font-size:15px;
-  pointer-events:none;
-}
-
-.side-info.left{left:40px;}
-
-/* Now widget specifically gets a wider box than the default 280px,
-   pulling its right edge toward the middle so its bigger text has more
-   room to spread out instead of wrapping tightly. Scales with viewport
-   width (rather than a flat px value) so it keeps a constant ~30px gap
-   from main's left edge instead of overlapping it near the 1400px
-   breakpoint where the sidebar is hidden. */
-#now-widget{width:clamp(280px, calc(50vw - 380px), 440px);}
-.side-info.right{right:40px;}
-
-.side-info.visible{
-  opacity:1;
-  pointer-events:auto;
-}
-
-/* Now widget's toggle stays clickable at all times (even before the
-   scroll-triggered fade-in) so it can be opened without scrolling, or
-   closed while scrolled — overriding the automatic scroll behavior. */
-.side-info.left{
-  opacity:1;
-  pointer-events:none;
-}
-
-/* Not a button-with-a-border — instead borrows the site's own "start of a
-   section" marker (the same short accent line used above every article
-   header and every /now/ archive entry), so it reads as its own distinct
-   block. A real rotating chevron (not "+show"/"-hide" text) signals that
-   it's a dropdown. */
-.now-toggle{
-  display:block;
-  background:none;
-  border:none;
-  padding:0;
-  margin:0;
-  cursor:pointer;
-  font:inherit;
-  color:var(--ink);
-  text-align:left;
-  pointer-events:auto;
-  transition:color 0.2s ease;
-}
-
-.now-toggle:hover{color:var(--link);}
-
-.now-toggle::before{
-  content:'';
-  display:block;
-  width:28px;
-  height:2px;
-  margin-bottom:14px;
-  background:var(--ink);
-  opacity:0.5;
-}
-
-/* Scoped with the #now-widget id (not just .now-toggle h3) because
-   .info-widget h3 below is declared later in the file with the same
-   0-1-1 specificity — without the id bump it would silently win the
-   cascade and these overrides would never actually apply. */
-#now-widget .now-toggle h3{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  font-size:16px;
-  font-weight:600;
-  letter-spacing:0.6px;
-  opacity:1; /* .info-widget h3's opacity:0.4 was tuned for plain text with
-                nothing else marking it as a section — the accent line
-                above now does that job instead */
-}
-
-.now-toggle h3::after{
-  content:'';
-  display:inline-block;
-  width:7px;
-  height:7px;
-  border-right:1.5px solid currentColor;
-  border-bottom:1.5px solid currentColor;
-  opacity:0.7;
-  transform:rotate(45deg);
-  transition:transform 0.25s ease;
-}
-
-.now-toggle[aria-expanded="true"] h3::after{transform:rotate(225deg);}
-
-.now-body{
-  overflow:hidden;
-  max-height:0;
-  opacity:0;
-  margin-top:10px;
-  pointer-events:none;
-  transition:max-height 0.35s ease, opacity 0.25s ease;
-}
-
-.now-body.open{
-  max-height:min(800px, calc(100vh - 140px));
-  opacity:1;
-  pointer-events:auto;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  scrollbar-width:thin;
-  scrollbar-color:color-mix(in srgb, var(--ink) 25%, transparent) transparent;
-}
-
-.now-body.open::-webkit-scrollbar{width:5px;}
-.now-body.open::-webkit-scrollbar-track{background:transparent;}
-.now-body.open::-webkit-scrollbar-thumb{
-  background:color-mix(in srgb, var(--ink) 25%, transparent);
-  border-radius:3px;
-}
-
-.info-widget{
-  padding:0;
-}
-
-.info-widget h3{
-  font-size:10px;
-  font-weight:400;
-  margin-bottom:14px;
-  text-transform:uppercase;
-  letter-spacing:1.2px;
-  opacity:0.4;
-  font-family:monospace;
-}
-
-.now-timestamp{
-  text-transform:none;
-  letter-spacing:0.3px;
-  margin-left:6px;
-  font-size:12px;
-  font-weight:400;
-  font-family:monospace;
-  color:var(--ink-soft);
-}
-
-.info-widget p{
-  font-size:13px;
-  line-height:1.7;
-  margin-bottom:10px;
-}
-
-.info-widget p:last-child{margin-bottom:0;}
-
-/* Now widget's body text specifically — bumped above the shared
-   .info-widget p size so the actual now-content reads comfortably at
-   its fixed 280px width. */
-#now-content p{
-  font-size:15.5px;
-  line-height:1.75;
-  color:var(--ink);
-}
-
-.info-widget em{
-  font-style:italic;
-  color:var(--ink-soft);
-}
-
-.info-widget a{
-  color:var(--link);
-  text-decoration:none;
-  opacity:0.75;
-  font-size:12px;
-  transition:opacity 0.2s ease;
-  display:inline-block;
-}
-
-.info-widget a:hover{
-  opacity:1;
-}
-
-.progress-bar{
-  width:3px;
-  height:180px;
-  background:color-mix(in srgb, var(--ink) 8%, transparent);
-  border-radius:2px;
-  position:relative;
-  margin:0 auto;
-  overflow:hidden;
-}
-
-.progress-bar-fill{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:0%;
-  background:var(--ink);
-  opacity:0.8;
-  border-radius:2px;
-  transition:height 0.1s ease;
-}
-
-.meta-item{
-  font-size:12px;
-  color:var(--ink);
-  margin-bottom:12px;
-  font-family:monospace;
-  opacity:0.7;
-}
-
-.meta-item:last-child{margin-bottom:0;}
-
-.meta-label{
-  display:block;
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:1.5px;
-  margin-bottom:4px;
-  opacity:0.4;
-}
-
-@media (max-width:1400px){ .side-info{display:none;} }
+.now-stamp{font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
+.now-block{max-width:68ch;}
+.now-block p{margin-bottom:12px;}
+.now-block p:last-child{margin-bottom:0;}
 
 /* ---------- lightbox ---------- */
 
@@ -665,79 +425,6 @@ a.back:has(+ #search-trigger-row){margin-bottom:14px;}
 .site-search-empty{padding:12px 14px;color:var(--ink-soft);font-style:italic;font-size:14px;}
 
 /* ---------- mobile extras ---------- */
-
-.mobile-only-block{display:none;}
-@media (max-width:1400px){ .mobile-only-block{display:block;} }
-
-@media (min-width:1401px){
-  .mobile-only-block{display:none !important;}
-}
-
-/* Now widget — collapsed by default so it doesn't push the page down;
-   tap the summary chip to expand it in place. */
-.mobile-now-info{
-  padding:16px 0;
-}
-
-.mobile-now-info summary{
-  cursor:pointer;
-  list-style:none;
-  display:inline-flex;
-  align-items:baseline;
-  gap:6px;
-  font-size:15px;
-  font-weight:500;
-  color:var(--ink);
-  transition:color 0.2s ease;
-}
-
-.mobile-now-info summary:hover{color:var(--link);}
-
-/* <summary> gets a native disclosure marker in most browsers regardless of
-   list-style — Safari/Chrome both still render a ::marker triangle even
-   with list-style:none, on top of the -webkit-specific one below, so this
-   was rendering two indicators (a native triangle plus our own +/-)
-   unless both are explicitly killed. */
-.mobile-now-info summary::-webkit-details-marker{display:none;}
-.mobile-now-info summary::marker{content:'';display:none;}
-
-.mobile-now-info summary::after{
-  content:'+';
-  color:var(--ink-soft);
-  font-weight:400;
-  font-size:13px;
-}
-
-.mobile-now-info[open] summary::after{content:'\2212';}
-
-.mobile-now-info summary .now-timestamp{
-  font-size:12px;
-  font-weight:400;
-  font-family:monospace;
-  color:var(--ink-soft);
-}
-
-.mobile-now-info > div,
-.mobile-now-info .mobile-time{
-  margin-top:16px;
-}
-
-.mobile-now-info p{
-  font-size:16px;
-  line-height:1.7;
-  margin-bottom:10px;
-}
-
-.mobile-time{
-  font-size:15px;
-  font-family:monospace;
-}
-
-.time-label{
-  display:inline-block;
-  margin-right:8px;
-  color:var(--ink-soft);
-}
 
 /* Images — not important, tucked away at the bottom and kept low-key */
 .mobile-extras{
@@ -965,7 +652,6 @@ article.article-content:first-of-type{padding-top:0;}
 .now-entry p:last-child{margin-bottom:0;}
 
 #now-content img,
-#now-content-mobile img,
 .now-entry img{max-width:100%;height:auto;display:block;border-radius:6px;margin-top:10px;}
 
 /* ---------- bookmarks ---------- */
@@ -1248,7 +934,7 @@ article.article-content:first-of-type{padding-top:0;}
      never covers text: the width is whatever margin is available there */
   display:none;position:absolute;left:38px;top:-6px;z-index:5;
   box-sizing:border-box;
-  width:min(360px, calc((100vw - 572px) / 2 - 70px));padding:6px;
+  width:min(360px, calc((100vw - 852px) / 2 - 70px));padding:6px;
   background:var(--paper);border:1px solid var(--ink-soft);border-radius:3px;
   box-shadow:0 6px 18px rgba(0,0,0,0.18);
 }
@@ -1256,7 +942,7 @@ article.article-content:first-of-type{padding-top:0;}
 .project-preview img:last-child{margin-bottom:0;}
 .project-info:hover .project-preview,.project-info:focus-within .project-preview{display:block;}
 /* no room in the margin on narrow screens (and no hover on touch) */
-@media (max-width:1040px){ .project-preview{display:none !important;} }
+@media (max-width:1240px){ .project-preview{display:none !important;} }
 
 /* Articles — same table as Projects, with the date in the left column */
 .project--article{grid-template-columns:84px 1fr 40px;}
@@ -1273,7 +959,7 @@ article.article-content:first-of-type{padding-top:0;}
 .post-title a{color:var(--ink);text-decoration:none;}
 .post-title a:hover{color:var(--link);}
 .post-body-wrap{position:relative;overflow:hidden;transition:max-height .35s ease;}
-.post-body{max-width:none;}
+.post-body{max-width:70ch;}
 .post-fade{position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to bottom, transparent, var(--paper));pointer-events:none;}
 .post-more{
   display:inline-flex;align-items:center;gap:6px;margin:14px 18px 0 0;padding:6px 12px;
@@ -1303,13 +989,13 @@ h1,h2,h3,.project-name,.post-title,.feed-entry-title,.article-card-title{font-fa
 .project-name,.feed-entry-title,.article-card-title{font-size:16px;line-height:1.5;}
 .post-title{font-size:33px;line-height:1.2;}
 .id h1{font-size:33px;line-height:1.1;}
-section h2,.now-toggle h3,.info-widget h3,#now-widget .now-toggle h3{font-size:16px;}
+section h2{font-size:16px;}
 /* page title > h2 > h3 */
 .article-content .article-header h3{font-size:44px;line-height:1.1;overflow-wrap:break-word;}
 @media (max-width:700px){.article-header .article-meta{grid-column:1;margin-top:8px;}}
 .article-content h2{font-size:33px;line-height:1.2;}
 .article-content h3{font-size:22px;line-height:1.3;}
-.jumplinks,.id .role,.mobile-now-info summary,.now-toggle h3,.section-sub{font-family:var(--head);}
+.jumplinks,.id .role,.section-sub{font-family:var(--head);}
 
 /* ---------- bottom dock (dock.js) ---------- */
 .site-foot{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
