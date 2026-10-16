@@ -82,21 +82,17 @@ main{max-width:900px;margin:0 auto;padding:64px 24px 100px;}
 /* ---------- header ---------- */
 
 header{padding-bottom:4px;position:relative;}
-/* The picture is taken out of the flow, so whatever image is picked (or
-   while it's still loading) nothing else on the page can move. Its height
-   is fixed and no taller than the name/nav block beside it. */
-.frame--header{position:absolute;top:4px;right:0;width:190px;margin:0;}
-.frame--header .outerBevel{border-width:3px;}
-.frame--header .flatSurface{border-width:7px;}
-.frame--header .innerBevel{border-width:3px;}
-.frame--header .mat{padding:8px;border-width:2px;}
-.frame img{aspect-ratio:1 / 1;object-fit:cover;background:#111;}
-.frame--page{display:none;}
-.frame--page img{aspect-ratio:4 / 3;}
-/* no room beside the name on narrow screens: the picture moves down to Images */
+/* Now: the latest entry, to the right of the name. Out of the flow with a
+   capped height (<= the name/nav block beside it), so it can't push anything. */
+.now-card{position:absolute;top:4px;right:0;width:300px;font-size:15px;line-height:1.6;}
+.now-label{margin-bottom:6px;font-family:var(--mono);font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+/* however long the entry is, it never takes more than this many lines */
+.now-text{margin:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;line-clamp:5;overflow:hidden;color:var(--ink);}
+.now-more{display:inline-block;margin-top:6px;font-size:13px;}
+/* narrow screens: no room beside the name, so it sits under the nav, in the flow */
 @media (max-width:820px){
-  .frame--header{display:none;}
-  .frame--page{display:block;}
+  .now-card{position:static;width:auto;margin-top:22px;}
+  .now-text{-webkit-line-clamp:4;line-clamp:4;}
 }
 
 
@@ -200,133 +196,6 @@ details.more{margin-top:6px;font-size:17px;}
 details.more summary{cursor:pointer;color:var(--link);list-style:none;text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);}
 details.more summary::-webkit-details-marker{display:none;}
 details.more p{margin-top:10px;color:var(--ink-soft);max-width:58ch;}
-
-/* ============================================================
-   FRAME — carved wooden moulding (outer bevel, flat surface,
-   inner bevel) around a paper-coloured mat with a thin gold edge.
-   The polaroid-style frame tried below is commented out; to swap
-   back to it, comment this block out again and uncomment that one,
-   then swap the markup in index.html back to the plain
-   <figure class="frame"><img></figure> (also noted there).
-   ============================================================ */
-
-.frame{margin:6px 0 22px;max-width:340px;}
-
-.frame .outerBevel{
-  box-shadow:4px 6px 12px 0 rgba(0,0,0,0.5);
-  border-width:5px;
-  border-style:solid;
-  border-color:rgb(109,84,58) rgb(24,19,13) rgb(24,19,13) rgb(109,84,58);
-  transition:box-shadow 0.25s ease;
-}
-
-.frame:hover .outerBevel{
-  box-shadow:6px 10px 18px 0 rgba(0,0,0,0.55);
-}
-
-.frame .flatSurface{
-  border:12px solid rgb(65,40,16);
-}
-
-.frame .innerBevel{
-  border-width:5px;
-  border-style:solid;
-  border-color:rgb(24,19,13) rgb(109,84,58) rgb(109,84,58) rgb(24,19,13);
-}
-
-.frame .mat{
-  display:block;
-  padding:14px;
-  background-color:rgb(255,249,224);
-  border-width:3px;
-  border-style:solid;
-  border-color:rgb(207,166,0) rgb(207,166,0) rgb(145,110,0) rgb(145,110,0);
-}
-
-.frame .mat img{
-  display:block;
-  width:100%;
-  height:auto;
-  cursor:pointer;
-}
-
-
-
-/* ---------- Now (latest entry, inline) ---------- */
-
-.now-stamp{font-family:var(--mono);font-size:13px;color:var(--ink-soft);}
-.now-block{max-width:68ch;}
-.now-block p{margin-bottom:12px;}
-.now-block p:last-child{margin-bottom:0;}
-
-/* ---------- lightbox ---------- */
-
-.lightbox{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.85);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:1000;
-  cursor:pointer;
-}
-
-.lightbox.active{display:flex;}
-
-.lightbox-content{
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  max-width:90vw;
-  max-height:90vh;
-  cursor:default;
-}
-
-.lightbox img{
-  max-width:100%;
-  max-height:90vh;
-  width:auto;
-  height:auto;
-  object-fit:contain;
-  border:1px solid var(--line);
-  box-shadow:0 8px 32px rgba(0,0,0,0.6);
-}
-
-.lightbox-close:before{
-  content: "×";
-  font-size: 28px;
-  line-height: 1;
-  transform: translateY(-1.4px);
-}
-
-.lightbox-close{
-  position:absolute;
-  top:-35px;
-  right:0;
-  width:32px;
-  height:32px;
-  background:var(--paper);
-  color:var(--ink);
-  border:1px solid var(--line);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  font-size:30px;
-  font-weight:600;
-  transition:background-color 0.2s ease;
-}
-
-.lightbox-close:hover{
-  background:var(--ink);
-  color:var(--paper);
-}
 
 /* ---------- site search ---------- */
 
@@ -440,70 +309,6 @@ a.back:has(+ #search-trigger-row){margin-bottom:14px;}
 }
 
 .site-search-empty{padding:12px 14px;color:var(--ink-soft);font-style:italic;font-size:14px;}
-
-/* ---------- mobile extras ---------- */
-
-/* Images — not important, tucked away at the bottom and kept low-key */
-.mobile-extras{
-  margin-top:8px;
-  padding:12px 0 32px;
-  border-top:1px solid var(--line);
-}
-
-.mobile-extras summary{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  cursor:pointer;
-  list-style:none;
-  padding:9px 14px;
-  font-size:14px;
-  line-height:1.2;
-  color:var(--ink);
-  border:1px solid var(--line);
-  border-radius:6px;
-  user-select:none;
-}
-.mobile-extras summary:hover{background:color-mix(in srgb, var(--ink) 5%, transparent);}
-/* chevron: points down when closed, up when open */
-.mobile-extras summary::after{
-  content:'';
-  width:7px;height:7px;
-  margin-top:-3px;
-  border-right:1.5px solid currentColor;
-  border-bottom:1.5px solid currentColor;
-  transform:rotate(45deg);
-}
-.mobile-extras[open] summary::after{transform:rotate(-135deg);margin-top:3px;}
-.mobile-extras[open] summary{margin-bottom:14px;}
-.mobile-extras summary::marker{content:'';}
-.mobile-extras summary::-webkit-details-marker{display:none;}
-
-.mobile-gallery-grid{
-  display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:12px;
-  margin-top:14px;
-}
-
-.mobile-gallery-img{
-  width:100%;
-  height:auto;
-  display:block;
-  border:1px solid var(--line);
-  box-shadow:0 2px 8px rgba(0,0,0,0.08);
-  cursor:pointer;
-  transition:box-shadow 0.2s ease;
-}
-
-.mobile-gallery-img:hover{
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-
-@media (prefers-color-scheme: dark){
-  .mobile-gallery-img{box-shadow:0 2px 8px rgba(0,0,0,0.3);}
-  .mobile-gallery-img:hover{box-shadow:0 4px 12px rgba(0,0,0,0.5);}
-}
 
 /* ---------- article content formatting ---------- */
 /* Add class="article-content" to any <article> or <div> and just write
@@ -1130,7 +935,6 @@ input,textarea,select,button{overflow-wrap:normal;word-break:normal;}
 }
 /* older browsers: approximate with a small nudge up (~0.08em) */
 @supports not (text-box: trim-both cap alphabetic){
-  .mobile-extras summary{padding:calc(9px - .08em) 14px calc(9px + .08em);}
   .post-more{padding:calc(6px - .035em) 12px calc(6px + .035em);}
   .dock-link,.dock-pct{box-sizing:border-box;padding-bottom:.11em;}
   .dock-btn.dock-now{padding-bottom:.11em;}

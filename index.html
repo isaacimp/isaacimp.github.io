@@ -23,7 +23,7 @@
 
 <link rel="preload" href="/fonts/charter-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/win95fa-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=6f7845a3">
+<link rel="stylesheet" href="style.css?v=d2325248">
 
 <script type="application/ld+json">
 {
@@ -72,10 +72,15 @@
       <a href="mailto:mail@isaacmp.xyz">email</a>
     </nav>
    </div>
-    <!-- random picture on each load (script below); on narrow screens it moves to the Images section -->
-    <figure class="frame frame--header">
-      <div class="outerBevel"><div class="flatSurface"><div class="innerBevel"><div class="mat"><img alt=""></div></div></div></div>
-    </figure>
+    <!-- Now: latest entry, clamped to a fixed height (see style.css); the
+         full entry is one click away at /now/. Filled in by the script below. -->
+    <aside class="now-card" aria-label="Now">
+    <!--now-start-->
+      <div class="now-label">Now · <time datetime="2026-10-13">13 Oct 2026</time></div>
+      <p class="now-text">I haven&#39;t updated my now page recently since I was unwell for a while and did not really have the energy to write about much and not too much has changed for me anyway. I have been working and saving for my trip in less then two weeks and I am preparing for that. One of the ways I am preparing is getting a few of my own personal ideas and problems in order because everytime I do something big like this I like to go into it ready to make some change and make the most of it. The most notable change I made recently in regards to productivity type stuff is switching to a small physical notebook for my general notetaking. I have mine set up a bit like Tim Ferris does <a href="https://tim.blog/2007/12/05/how-to-take-notes-like-an-alpha-geek-plus-my-2600-date-challenge/">here</a> with an index and so on. I made this change for a couple main reasons.</p>
+      <a class="now-more" href="/now/">Full entry →</a>
+    <!--now-end-->
+    </aside>
   </header>
 
   <!-- Projects — a short, finite list, so it goes first. Each row: the name
@@ -114,13 +119,6 @@
         </span>
       </div>
     </div>
-  </section>
-
-  <!-- Now — the latest entry from now-data.js, in the page itself. -->
-  <section id="now">
-    <h2>Now</h2>
-    <p class="section-sub"><time id="now-timestamp" class="now-stamp"></time> · <a href="/now/">past entries →</a></p>
-    <div id="now-content" class="now-block"></div>
   </section>
 
   <!-- Articles — the long-form pieces. Few, so they're listed in full and
@@ -213,31 +211,6 @@
     </ul>
   </section> -->
 
-  <!-- Images — one framed picture (random on each load) with the rest
-       tucked behind a button. -->
-  <section id="images">
-    <h2>Images</h2>
-    <figure class="frame frame--page">
-      <div class="outerBevel"><div class="flatSurface"><div class="innerBevel"><div class="mat"><img alt=""></div></div></div></div>
-    </figure>
-    <details class="mobile-extras">
-      <summary><span class="trim">More images</span></summary>
-      <div class="mobile-gallery-grid">
-      <img src="img/baleknewton.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/centaphnewton.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/coolearth.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/erath.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/jup.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/jupiter.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/mve.jpeg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/punch.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/spcshp.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/tin.png" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/tkeoff.jpg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-      <img src="img/cat-window.jpeg" alt="" class="mobile-gallery-img" loading="lazy" decoding="async">
-    </div>
-    </details>
-  </section>
 <!--
   <section id="contact">
     <h2>Contact</h2>
@@ -245,61 +218,14 @@
     <p style="margin-top:24px;font-size:14px;color:var(--ink-soft);">© 2026 Isaac Morris-Perrott, Melbourne.</p>
   </section>
 -->
-  <p class="site-foot">Last updated <span id="last-updated">2026-10-15</span></p>
+  <p class="site-foot">Last updated <span id="last-updated">2026-10-16</span></p>
 </main>
 
-<div class="lightbox">
-  <div class="lightbox-content">
-    <button class="lightbox-close" aria-label="Close"></button>
-    <img src="" alt="">
-  </div>
-</div>
 
 <script src="now-data.js?v=35bd651e"></script>
 <script src="articles-data.js?v=ecc52912"></script>
 <script src="posts-data.js?v=e1da5299"></script>
 <script>
-  const galleryPool = [
-    'img/baleknewton.jpg',
-    'img/centaphnewton.jpg',
-    'img/coolearth.jpg',
-    'img/erath.jpg',
-    'img/jup.jpg',
-    'img/jupiter.jpg',
-    'img/mve.jpeg',
-    'img/punch.jpg',
-    'img/spcshp.jpg',
-    'img/tin.png',
-    'img/tkeoff.jpg',
-    'img/cat-window.jpeg'
-  ];
-  const pick = galleryPool[Math.floor(Math.random() * galleryPool.length)];
-  document.querySelectorAll('.frame img').forEach(img => { img.src = pick; });
-
-  // Lightbox functionality
-  const lightbox = document.querySelector('.lightbox');
-  const lightboxImg = lightbox.querySelector('img');
-  const lightboxClose = lightbox.querySelector('.lightbox-close');
-  const galleryImages = document.querySelectorAll('.frame img');
-
-  // Mobile extras functionality
-  const mobileGalleryImages = document.querySelectorAll('.mobile-gallery-img');
-
-  // "Now" is rendered from now-data.js (the same source /now/ reads from),
-  // so there's only one place to edit.
-  const nowContent = document.getElementById('now-content');
-  const nowTimestamp = document.getElementById('now-timestamp');
-  if (nowContent && typeof NOW_ENTRIES !== 'undefined' && NOW_ENTRIES.length) {
-    nowContent.innerHTML = NOW_ENTRIES[0].html;
-    if (nowTimestamp) {
-      nowTimestamp.textContent = fmtNowDate(NOW_ENTRIES[0].date);
-      nowTimestamp.setAttribute('datetime', NOW_ENTRIES[0].date);
-    }
-  }
-  function fmtNowDate(d) {
-    return new Date(d + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
-  }
-
   // Renders a tags array as clickable chips linking to /tags.html?t=<tag>,
   // used for both the Articles and Posts homepage lists.
   function tagLinksHtml(tags) {
@@ -426,42 +352,6 @@
   if (location.hash) {
     flashSectionHeading(location.hash.slice(1));
   }
-
-  // Mobile gallery images lightbox
-  mobileGalleryImages.forEach(img => {
-    img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightbox.classList.add('active');
-    });
-  });
-
-  galleryImages.forEach(img => {
-    img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightbox.classList.add('active');
-    });
-  });
-
-  // Close on background click
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-      lightbox.classList.remove('active');
-    }
-  });
-
-  // Close on X button click
-  lightboxClose.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-  });
-
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-      lightbox.classList.remove('active');
-    }
-  });
 </script>
 <script src="/search.js?v=df9f0342" defer></script>
 <script src="/prefetch.js?v=143384e0" defer></script>

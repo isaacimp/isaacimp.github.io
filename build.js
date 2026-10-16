@@ -527,7 +527,7 @@ function buildNow() {
   const finalEntries = [...built, ...carriedOver].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
   writeFileAtomic(NOW_REGISTRY_FILE, serializeNowRegistry(finalEntries));
 
-  return { built, errors, carriedOver: carriedOver.length };
+  return { built, errors, carriedOver: carriedOver.length, entries: finalEntries };
 }
 
 // ---------- cache-busting ----------
@@ -570,6 +570,29 @@ function versionAssets() {
 
 // Stamps today's date into the homepage's "Last Updated" field, so the page
 // needs no runtime API call to show it.
+// The Now card on the home page is written into index.html at build time
+// (between the <!--now-start--> / <!--now-end--> markers), so it is in the
+// page from the first byte: no script, no flash, nothing that can shift.
+// The entry's paragraphs run together as one block; CSS clamps it to a fixed
+// number of lines, so a long entry never takes more room.
+function stampNow(entries) {
+  const file = path.join(ROOT, 'index.html');
+  if (!fs.existsSync(file) || !entries || !entries.length) return;
+  const e = entries[0];
+  const text = [...e.html.matchAll(/<p>([\s\S]*?)<\/p>/g)].map(m => m[1].trim()).join(' ');
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const [y, m, d] = e.date.split('-');
+  const label = `${d ? String(Number(d)) + ' ' : ''}${MONTHS[Number(m) - 1]} ${y}`;
+  const block = `<!--now-start-->
+      <div class="now-label">Now · <time datetime="${escapeHtml(e.date)}">${label}</time></div>
+      <p class="now-text">${text}</p>
+      <a class="now-more" href="/now/">Full entry →</a>
+    <!--now-end-->`;
+  const html = fs.readFileSync(file, 'utf8');
+  const next = html.replace(/<!--now-start-->[\s\S]*?<!--now-end-->/, () => block);
+  if (next !== html) writeFileAtomic(file, next);
+}
+
 function stampLastUpdated() {
   const file = path.join(ROOT, 'index.html');
   if (!fs.existsSync(file)) return;
@@ -598,6 +621,7 @@ function main() {
     console.log(`  (no .md files found in now-md/)`);
   }
   const nowResult = buildNow();
+  stampNow(nowResult.entries);
   stampLastUpdated();
   versionAssets();
 
