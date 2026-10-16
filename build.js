@@ -583,10 +583,23 @@ function stampNow(entries) {
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const [y, m, d] = e.date.split('-');
   const label = `${d ? String(Number(d)) + ' ' : ''}${MONTHS[Number(m) - 1]} ${y}`;
+  const dateTag = `<time datetime="${escapeHtml(e.date)}">${label}</time>`;
+  // "Full entry" opens the whole entry in a native popover (no JS: the
+  // browser handles open, Esc and click-outside). Browsers without the
+  // popover API keep a plain link to /now/ instead.
   const block = `<!--now-start-->
-      <div class="now-label">Now · <time datetime="${escapeHtml(e.date)}">${label}</time></div>
+      <div class="now-label">Now · ${dateTag}</div>
       <p class="now-text">${text}</p>
-      <a class="now-more" href="/now/">Full entry →</a>
+      <button type="button" class="now-more" popovertarget="now-full">Full entry →</button>
+      <a class="now-more now-more--link" href="/now/">Full entry →</a>
+      <div id="now-full" class="now-pop" popover aria-label="Now">
+        <div class="now-pop-head">
+          <span class="now-label">Now · ${dateTag}</span>
+          <button type="button" class="now-pop-close" popovertarget="now-full" popovertargetaction="hide" aria-label="Close"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="now-pop-body">${e.html}</div>
+        <p class="now-pop-foot"><a href="/now/">Past entries →</a></p>
+      </div>
     <!--now-end-->`;
   const html = fs.readFileSync(file, 'utf8');
   const next = html.replace(/<!--now-start-->[\s\S]*?<!--now-end-->/, () => block);

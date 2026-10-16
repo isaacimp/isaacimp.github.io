@@ -89,6 +89,35 @@ header{padding-bottom:4px;position:relative;}
 /* however long the entry is, it never takes more than this many lines */
 .now-text{margin:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;line-clamp:5;overflow:hidden;color:var(--ink);}
 .now-more{display:inline-block;margin-top:6px;font-size:13px;}
+button.now-more{display:none;padding:0;border:0;background:none;font-family:inherit;color:var(--link);cursor:pointer;text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--link) 40%, transparent);text-underline-offset:2px;}
+button.now-more:hover{text-decoration-color:currentColor;}
+.now-pop{display:none;}
+@supports selector(:popover-open){
+  .now-more--link{display:none;}
+  button.now-more{display:inline-block;}
+  .now-pop:popover-open{display:block;}
+}
+/* the popover: centred by the browser (top layer), scrolls inside itself */
+.now-pop{
+  /* the site-wide margin reset removes the browser's auto margins that centre
+     a popover, so put them back */
+  position:fixed;top:0;right:0;bottom:0;left:0;margin:auto;height:fit-content;
+  box-sizing:border-box;
+  width:min(640px, calc(100vw - 32px));max-height:min(80vh, 720px);
+  padding:20px 24px 22px;overflow:auto;overscroll-behavior:contain;
+  background:var(--paper);color:var(--ink);
+  border:1px solid color-mix(in srgb, var(--ink) 25%, transparent);border-radius:8px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.25);
+  font-size:16px;line-height:1.65;text-align:left;
+}
+.now-pop::backdrop{background:rgba(0,0,0,0.35);}
+.now-pop-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.now-pop-head .now-label{margin:0;}
+.now-pop-close{display:flex;align-items:center;justify-content:center;width:32px;height:32px;margin:-6px -8px 0 0;padding:0;border:0;border-radius:50%;background:none;color:var(--ink-soft);cursor:pointer;}
+.now-pop-close:hover{color:var(--ink);background:color-mix(in srgb, var(--ink) 7%, transparent);}
+.now-pop-body p{margin:0 0 12px;}
+.now-pop-body img{max-width:100%;height:auto;display:block;border-radius:6px;margin:10px 0;}
+.now-pop-foot{margin:14px 0 0;font-size:14px;}
 /* narrow screens: no room beside the name, so it sits under the nav, in the flow */
 @media (max-width:820px){
   .now-card{position:static;width:auto;margin-top:22px;}
