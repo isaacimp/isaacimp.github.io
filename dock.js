@@ -4,12 +4,12 @@
 //            home:      section jumps (Projects · Articles · Posts), current one marked
 //            read page: ← Back · reading % · ‹ older / newer ›
 //            other:     Home · Writing
-//   right  Now (popover) · Search · ⋯ (time, copy email, top) · hide
+//   right  Search · ⋯ (time, copy email, top) · hide
 //
 // Popovers stay closed until opened, so the resting bar is small. "Hide"
 // collapses the whole dock to a single small button (remembered in
 // localStorage). No libraries; reads the same data files the site already
-// builds (now-data.js, posts-data.js, articles-data.js).
+// builds (posts-data.js, articles-data.js).
 
 (function () {
   'use strict';
@@ -59,9 +59,6 @@
   var ctx = el('div', 'dock-ctx');
   var tools = el('div', 'dock-tools');
 
-  var btnNow = el('button', 'dock-btn dock-now', '<span class="dock-dot" aria-hidden="true"></span><span class="trim">Now</span>');
-  btnNow.type = 'button';
-  btnNow.setAttribute('aria-expanded', 'false');
   var btnSearch = el('button', 'dock-btn dock-icon', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>');
   btnSearch.type = 'button';
   btnSearch.setAttribute('aria-label', 'Search (or press /)');
@@ -78,11 +75,9 @@
   btnHide.setAttribute('aria-label', 'Hide this bar');
   btnHide.title = 'Hide bar';
 
-  tools.append(btnNow, btnSearch, btnMore, btnHide);
+  tools.append(btnSearch, btnMore, btnHide);
   bar.append(progress, ctx, tools);
 
-  var panelNow = el('div', 'dock-panel dock-panel-now');
-  panelNow.hidden = true;
   var panelMore = el('div', 'dock-panel dock-panel-more');
   panelMore.hidden = true;
   panelMore.innerHTML =
@@ -91,7 +86,7 @@
     '<button type="button" class="dock-row dock-action" id="dock-top"><span class="dock-label">Page</span><span class="dock-go">Back to top <svg class="ico" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span></button>' +
     '<button type="button" class="dock-row dock-action" id="dock-hide"><span class="dock-label">Bar</span><span>Hide this bar</span></button>';
 
-  dock.append(panelNow, panelMore, bar);
+  dock.append(panelMore, bar);
 
   var restore = el('button', 'dock-restore', EYE_OFF);
   restore.type = 'button';
@@ -111,9 +106,7 @@
 
   // ---- popovers -----------------------------------------------------------
   function closePanels() {
-    panelNow.hidden = true;
     panelMore.hidden = true;
-    btnNow.setAttribute('aria-expanded', 'false');
     btnMore.setAttribute('aria-expanded', 'false');
   }
   function toggle(panel, btn, other, otherBtn, onOpen) {
@@ -131,25 +124,6 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closePanels();
   });
-
-  // Now: latest entry's first paragraph, same source as /now/
-  var nowReady = null;
-  function fillNow() {
-    if (nowReady) return;
-    nowReady = (typeof NOW_ENTRIES === 'undefined' ? loadScript('/now-data.js') : Promise.resolve()).then(function () {
-      if (typeof NOW_ENTRIES === 'undefined' || !NOW_ENTRIES.length) {
-        panelNow.innerHTML = '<a href="/now/">See the now page →</a>';
-        return;
-      }
-      var tmp = el('div', null, NOW_ENTRIES[0].html);
-      var p = tmp.querySelector('p');
-      panelNow.innerHTML =
-        '<div class="dock-label">Now · ' + NOW_ENTRIES[0].date + '</div>' +
-        (p ? '<p>' + p.innerHTML + '</p>' : '') +
-        '<a href="/now/">Read more and past entries →</a>';
-    });
-  }
-  btnNow.addEventListener('click', function () { fillNow(); toggle(panelNow, btnNow); });
 
   // More: live Melbourne time while open
   var timer = null;

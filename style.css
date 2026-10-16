@@ -889,7 +889,6 @@ section h2{font-size:16px;}
 .dock-icon svg{display:block;}
 .dock-ctx>*{line-height:1;}
 .dock-pct{display:inline-flex;align-items:center;height:34px;}
-.dock-dot{width:7px;height:7px;border-radius:50%;background:var(--link);}
 .dock-btn:focus-visible,.dock-link:focus-visible,.dock-restore:focus-visible{outline:2px solid var(--link);outline-offset:2px;}
 
 .dock-panel{
@@ -968,7 +967,6 @@ input,textarea,select,button{overflow-wrap:normal;word-break:normal;}
 @supports not (text-box: trim-both cap alphabetic){
   .post-more{padding:calc(6px - .035em) 12px calc(6px + .035em);}
   .dock-link,.dock-pct{box-sizing:border-box;padding-bottom:.11em;}
-  .dock-btn.dock-now{padding-bottom:.11em;}
 }
 
 /* chevron on Read more flips when open */
