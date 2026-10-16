@@ -113,11 +113,13 @@ button.now-more:hover{text-decoration-color:currentColor;}
 .now-pop::backdrop{background:rgba(0,0,0,0.35);}
 .now-pop-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .now-pop-head .now-label{margin:0;}
-.now-pop-close{display:flex;align-items:center;justify-content:center;width:32px;height:32px;margin:-6px -8px 0 0;padding:0;border:0;border-radius:50%;background:none;color:var(--ink-soft);cursor:pointer;}
+.now-pop-actions{display:flex;align-items:center;gap:8px;margin:-6px -8px 0 0;}
+.now-pop-all{display:inline-flex;align-items:center;gap:7px;height:32px;box-sizing:border-box;padding:0 12px;border:1px solid var(--line);border-radius:6px;font-size:13px;line-height:1;color:var(--ink);text-decoration:none;}
+.now-pop-all:hover{color:var(--link);border-color:var(--link);}
+.now-pop-close{display:flex;align-items:center;justify-content:center;width:32px;height:32px;margin:0;padding:0;border:0;border-radius:50%;background:none;color:var(--ink-soft);cursor:pointer;}
 .now-pop-close:hover{color:var(--ink);background:color-mix(in srgb, var(--ink) 7%, transparent);}
 .now-pop-body p{margin:0 0 12px;}
 .now-pop-body img{max-width:100%;height:auto;display:block;border-radius:6px;margin:10px 0;}
-.now-pop-foot{margin:14px 0 0;font-size:14px;}
 /* narrow screens: no room beside the name, so it sits under the nav, in the flow */
 @media (max-width:820px){
   .now-card{position:static;width:auto;margin-top:22px;}

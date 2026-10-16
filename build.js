@@ -595,10 +595,12 @@ function stampNow(entries) {
       <div id="now-full" class="now-pop" popover aria-label="Now">
         <div class="now-pop-head">
           <span class="now-label">Now · ${dateTag}</span>
-          <button type="button" class="now-pop-close" popovertarget="now-full" popovertargetaction="hide" aria-label="Close"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <span class="now-pop-actions">
+            <a class="now-pop-all" href="/now/"><span class="trim">All entries</span><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <button type="button" class="now-pop-close" popovertarget="now-full" popovertargetaction="hide" aria-label="Close"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          </span>
         </div>
         <div class="now-pop-body">${e.html}</div>
-        <p class="now-pop-foot"><a href="/now/">Past entries →</a></p>
       </div>
     <!--now-end-->`;
   const html = fs.readFileSync(file, 'utf8');
