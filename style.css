@@ -973,14 +973,15 @@ input,textarea,select,button{overflow-wrap:normal;word-break:normal;}
 .post-more[aria-expanded="true"] .ico{transform:rotate(180deg);}
 
 /* ---- landing page (index.html): one big paragraph, links in the text ---- */
-.landing{max-width:900px;}
-.landing h1{font-size:44px;line-height:1.1;margin:0 0 28px;}
-.landing .lead{font-size:clamp(22px,3.6vw,32px);line-height:1.4;max-width:30em;margin:0 0 .9em;}
-.landing .lead a,.landing .go a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em;}
+body:has(.landing){padding-bottom:0;}
+.landing{max-width:1400px;min-height:100vh;min-height:100svh;padding:6vh 5vw 6vh;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;}
+.landing h1{font-size:clamp(44px,min(8vw,10vh),88px);line-height:1;margin:0 0 .45em;}
+.landing .lead{font-size:clamp(26px,min(4.6vw,6.6vh),64px);line-height:1.25;max-width:24em;margin:0 0 .8em;}
+.landing .lead a,.landing .go a{color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.16em;}
 .landing .lead a:hover,.landing .go a:hover{color:var(--link);}
-.landing .go{list-style:none;margin:40px 0 0;padding:0;font-size:clamp(20px,3vw,26px);line-height:1.5;}
-.landing .go li{display:flex;gap:.6em;align-items:baseline;flex-wrap:wrap;}
-.landing .go .what{color:var(--ink-soft);font-size:.7em;}
+.landing .go{list-style:none;margin:1em 0 0;padding:0;font-size:clamp(22px,min(3vw,4.4vh),38px);line-height:1.4;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9em),1fr));gap:.6em 1.5em;max-width:none;}
+.landing .go li{display:flex;flex-direction:column;}
+.landing .go .what{color:var(--ink-soft);font-size:.55em;line-height:1.4;}
 .site-back{margin-bottom:14px;}
 .read-ways{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;margin:0 0 20px;font-size:15px;}
 .read-ways-label{color:var(--ink-soft);}
