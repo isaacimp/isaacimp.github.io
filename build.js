@@ -67,7 +67,7 @@ const TYPES = [
     registryVar: 'ARTICLES',
     urlDir: '',
     assetPrefix: '',
-    backLink: 'index.html#articles',
+    backLink: 'site.html#articles',
     articleIdAttr: '',
     defaultRobots: 'index, follow',
     reservedSlugs: RESERVED_ROOT_SLUGS
@@ -81,7 +81,7 @@ const TYPES = [
     registryVar: 'POSTS',
     urlDir: 'posts',
     assetPrefix: '../',
-    backLink: '../index.html#posts',
+    backLink: '../site.html#posts',
     articleIdAttr: ' id="post-body"',
     defaultRobots: 'index, follow'
   },
@@ -98,7 +98,7 @@ const TYPES = [
     registryVar: 'PROJECTS',
     urlDir: 'projects',
     assetPrefix: '../',
-    backLink: '../index.html#projects',
+    backLink: '../site.html#projects',
     articleIdAttr: '',
     defaultRobots: 'index, follow'
   }
@@ -570,13 +570,13 @@ function versionAssets() {
 
 // Stamps today's date into the homepage's "Last Updated" field, so the page
 // needs no runtime API call to show it.
-// The Now card on the home page is written into index.html at build time
+// The Now card on the home page is written into site.html at build time
 // (between the <!--now-start--> / <!--now-end--> markers), so it is in the
 // page from the first byte: no script, no flash, nothing that can shift.
 // The entry's paragraphs run together as one block; CSS clamps it to a fixed
 // number of lines, so a long entry never takes more room.
 function stampNow(entries) {
-  const file = path.join(ROOT, 'index.html');
+  const file = path.join(ROOT, 'site.html');
   if (!fs.existsSync(file) || !entries || !entries.length) return;
   const e = entries[0];
   const text = [...e.html.matchAll(/<p>([\s\S]*?)<\/p>/g)].map(m => m[1].trim()).join(' ');
@@ -609,7 +609,7 @@ function stampNow(entries) {
 }
 
 function stampLastUpdated() {
-  const file = path.join(ROOT, 'index.html');
+  const file = path.join(ROOT, 'site.html');
   if (!fs.existsSync(file)) return;
   const d = new Date();
   const pad = n => String(n).padStart(2, '0');

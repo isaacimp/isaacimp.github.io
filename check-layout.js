@@ -14,7 +14,7 @@ const { chromium, webkit } = require('playwright-core');
 const ROOT = __dirname;
 const CHROME = process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const SHOTS = process.argv.includes('--shots');
-const PAGES = ['/', '/posts/dust-mites.html', '/coercion.html', '/projects/transferfil.html', '/writing.html', '/now/', '/uses.html', '/bookmarks.html'];
+const PAGES = ['/', '/site.html', '/posts/dust-mites.html', '/coercion.html', '/projects/transferfil.html', '/writing.html', '/now/', '/uses.html', '/bookmarks.html'];
 const DEVICES = [
   { name: 'iphone-se', width: 320, height: 568, mobile: true },
   { name: 'phone', width: 360, height: 740, mobile: true },

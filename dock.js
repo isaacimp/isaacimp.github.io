@@ -1,7 +1,7 @@
 // The bottom dock: one slim bar on every page.
 //
 //   left   what's useful HERE
-//            home:      section jumps (Projects · Articles · Posts), current one marked
+//            site.html: section jumps (Projects · Articles · Posts), current one marked
 //            read page: ← Back · reading % · ‹ older / newer ›
 //            other:     Home · Writing
 //   right  Search · ⋯ (time, copy email, top) · hide
@@ -18,7 +18,8 @@
   var HIDE_KEY = 'dockHidden';
 
   var path = location.pathname.replace(/\/index\.html$/, '/');
-  var isHome = path === '/';
+  var isHome = path === '/site.html';
+  var isLanding = path === '/';
 
   function el(tag, cls, html) {
     var n = document.createElement(tag);
@@ -223,6 +224,11 @@
         if (newer) { var n = el('a', 'dock-link dock-ico dock-nav', '<span class="dock-nav-t">' + newer.title + '</span><svg class="ico" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>'); n.href = url(newer); n.title = 'Newer: ' + newer.title; n.setAttribute('aria-label', 'Newer: ' + newer.title); ctx.appendChild(n); }
       });
     }
+  } else if (isLanding) {
+    var lw = el('a', 'dock-link', 'Writing'); lw.href = '/writing.html';
+    var ln = el('a', 'dock-link', 'Now'); ln.href = '/now/';
+    var ls = el('a', 'dock-link', 'Site'); ls.href = '/site.html';
+    ctx.append(lw, ln, ls);
   } else {
     var h = el('a', 'dock-link', 'Home'); h.href = '/';
     var w = el('a', 'dock-link', 'Writing'); w.href = '/writing.html';
