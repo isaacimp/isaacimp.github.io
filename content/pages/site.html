@@ -1,0 +1,117 @@
+---
+title: "Isaac"
+description: "Personal site of Isaac"
+path: "/site.html"
+ogDescription: "Progress, energy, infinity."
+schema: {"@type":"Person","name":"Isaac","url":"https://isaacmp.xyz/","jobTitle":"Person","description":"Working on enhancing the human body and brain."}
+---
+<main>
+
+  <a href="/" class="back site-back">&larr; isaacmp.xyz</a>
+
+  <header>
+   <div class="header-main">
+    <div class="brand">
+      <div class="id">
+        <a href="https://isaacmp.xyz/" class="name-link" aria-label="Isaac — home">
+          <h1 class="name-zh-swap" data-zh="艾薩克">Isaac</h1>
+        </a>
+        <p class="role">Melbourne🇦🇺</p>
+        <p class="social-links">
+          <a href="https://x.com/urbrainonsugar">@urbrainonsugar</a> · <a href="https://youtube.com/@lemniscater">@Lemniscater</a>
+        </p>
+      </div>
+    </div>
+
+   </div>
+  </header>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+      <div class="project">
+        <span class="project-idx">01</span>
+        <span class="project-body"><a class="project-name" href="https://transferfil.es">transferfil.es</a><span class="project-desc">Smooth and private WiFi file share.</span></span>
+        <span class="project-side">
+          <a class="project-go" href="https://transferfil.es" aria-label="Visit transferfil.es"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          <span class="project-info"><a href="/projects/transferfil.html" aria-label="About transferfil.es: how it works and how it was made" title="About this project"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="1.2" fill="currentColor" stroke="none"/><path d="M12 11.5V18"/></svg></a>
+            <span class="project-preview"><img src="img/projects/transfer-1.jpg" alt="" width="800" height="510" loading="lazy" decoding="async"></span></span>
+        </span>
+      </div>
+      <div class="project">
+        <span class="project-idx">02</span>
+        <span class="project-body"><a class="project-name" href="https://bioenergetic.live/">bioenergetic.live</a><span class="project-desc">24/7 live loop of all the interviews and conversation with Ray Peat.</span></span>
+        <span class="project-side">
+          <a class="project-go" href="https://bioenergetic.live/" aria-label="Visit bioenergetic.live"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          <span class="project-info"><a href="/projects/bioenergetic.html" aria-label="About bioenergetic.live: how it works and how it was made" title="About this project"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="1.2" fill="currentColor" stroke="none"/><path d="M12 11.5V18"/></svg></a>
+            <span class="project-preview"><img src="img/projects/bioenergetic-1.jpg" alt="" width="800" height="400" loading="lazy" decoding="async"></span></span>
+        </span>
+      </div>
+      <div class="project">
+        <span class="project-idx">03</span>
+        <span class="project-body"><a class="project-name" href="https://fourpots.com/">fourpots.com</a><span class="project-desc">Health tracking tech.</span></span>
+        <span class="project-side">
+          <a class="project-go" href="https://fourpots.com/" aria-label="Visit fourpots.com"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          <span class="project-info"><a href="/projects/fourpots.html" aria-label="About fourpots.com: how it works and how it was made" title="About this project"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="1.2" fill="currentColor" stroke="none"/><path d="M12 11.5V18"/></svg></a></span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section id="articles">
+    <h2>Articles</h2>
+    <p class="section-sub">Long-form and slower; some are still in progress.</p>
+    <div id="articles-index" class="projects"></div>
+  </section>
+
+  <section id="posts">
+    <h2>Posts</h2>
+    <p class="section-sub">Shorter notes and thoughts. <a href="writing.html">Browse all writing by tag →</a></p>
+    <div id="posts-index" class="projects"></div>
+  </section>
+
+</main>
+
+<script src="articles-data.js"></script>
+<script src="posts-data.js"></script>
+<script>
+  function tagLinksHtml(tags) {
+    if (!tags || !tags.length) return '';
+    const chips = tags.map(t => `<a class="tag" href="/tags.html?t=${encodeURIComponent(t)}">${t}</a>`).join('');
+    return `<span class="tags">${chips}</span>`;
+  }
+
+  const fmtDate = d => new Date(d + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  const articlesEl = document.getElementById('articles-index');
+  if (articlesEl && typeof ARTICLES !== 'undefined') {
+    articlesEl.innerHTML = ARTICLES.map(a => `
+      <div class="project project--article">
+        <span class="project-idx">${a.dateLabel.replace(', ', ' ')}</span>
+        <span class="project-body">
+          <a class="project-name" href="${a.file}">${a.title}</a>
+          ${a.description ? `<span class="project-desc">${a.description}</span>` : ''}
+          ${(a.tags || []).length ? `<span class="project-tags">${a.tags.join(' · ')}</span>` : ''}
+        </span>
+        <span class="project-side"><a class="project-go" href="${a.file}" aria-label="Read ${a.title}"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
+      </div>`).join('');
+  }
+
+  const postsEl = document.getElementById('posts-index');
+  if (postsEl && typeof POSTS !== 'undefined') {
+    postsEl.innerHTML = [...POSTS].sort((x, y) => (x.date < y.date ? 1 : -1)).map(p => `
+      <div class="project project--article">
+        <span class="project-idx">${fmtDate(p.date).replace(/^\d+ /, '')}</span>
+        <span class="project-body">
+          <a class="project-name" href="posts/${p.slug}.html">${p.title}</a>
+          ${p.description ? `<span class="project-desc">${p.description}</span>` : ''}
+          ${(p.tags || []).length ? `<span class="project-tags">${p.tags.join(' · ')}</span>` : ''}
+        </span>
+        <span class="project-side"><a class="project-go" href="posts/${p.slug}.html" aria-label="Read ${p.title}"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
+      </div>`).join('');
+  }
+</script>
+<script src="/search.js" defer></script>
+<script src="/prefetch.js" defer></script>
+
+<script src="/dock.js" defer></script>

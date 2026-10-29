@@ -1,0 +1,30 @@
+---
+title: "Now — Archive — Isaac"
+description: "A timestamped history of what I have been doing now."
+path: "/now/"
+ogTitle: "Now — Archive"
+---
+<main>
+  <a href="https://isaacmp.xyz" class="back">&larr; isaacmp.xyz</a>
+
+  <section id="now-archive">
+    <h2>Now — Archive</h2>
+    <p>An archive of my 'now' entries. This is my version of a <a href="https://nownownow.com/about">now page</a></p> as described by <a href="https://sive.rs"> Derek Sivers</a>
+    <div id="now-list"></div>
+  </section>
+</main>
+
+<script src="../now-data.js"></script>
+<script>
+  const list = document.getElementById('now-list');
+  NOW_ENTRIES.forEach(entry => {
+    const block = document.createElement('div');
+    block.className = 'now-entry';
+    block.id = 'now-' + entry.date;
+    block.innerHTML = `<p class="now-entry-date"><time datetime="${entry.date}">${entry.date}</time></p>${entry.html}`;
+    list.appendChild(block);
+  });
+</script>
+<script src="/search.js"></script>
+
+<script src="/dock.js" defer></script>

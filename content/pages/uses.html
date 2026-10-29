@@ -1,0 +1,72 @@
+---
+title: "Uses — Isaac"
+description: "Tech, gadgets, and other things I actually use."
+path: "/uses.html"
+---
+<main>
+  <a href="https://isaacmp.xyz" class="back">&larr; isaacmp.xyz</a>
+
+  <section id="uses">
+    <h2>Uses</h2>
+    <p>Things I use and like.</p>
+
+    <div class="bookmark-filters bookmark-type-filters" id="uses-filters"></div>
+    <div class="uses-grid" id="uses-grid"></div>
+  </section>
+</main>
+
+<script src="uses-data.js"></script>
+<script>
+  const grid = document.getElementById('uses-grid');
+  const filters = document.getElementById('uses-filters');
+  let activeCategory = 'all';
+
+  function cardHtml(item) {
+    return `
+      ${item.image ? `<img class="uses-card-img" src="${item.image}" alt="">` : ''}
+      <div class="uses-card-body">
+        <div class="uses-card-category">${item.category}</div>
+        <div class="uses-card-name">${item.name}</div>
+        ${item.blurb ? `<p class="uses-card-blurb">${item.blurb}</p>` : ''}
+        ${item.link ? `<a class="uses-card-link" href="${item.link}" target="_blank" rel="noopener">Visit &#8599;</a>` : ''}
+      </div>
+    `;
+  }
+
+  function render() {
+    grid.innerHTML = '';
+    const items = USES.filter(item => activeCategory === 'all' || item.category === activeCategory);
+    items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'uses-card';
+      card.innerHTML = cardHtml(item);
+      grid.appendChild(card);
+    });
+    if (!items.length) {
+      grid.innerHTML = '<p class="bookmark-empty">Nothing here yet.</p>';
+    }
+  }
+
+  function renderFilters() {
+    const categories = ['all', ...new Set(USES.map(i => i.category))];
+    filters.innerHTML = '';
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'bookmark-filter-btn bookmark-type-filter-btn' + (cat === activeCategory ? ' active' : '');
+      btn.textContent = cat === 'all' ? 'all' : cat;
+      btn.addEventListener('click', () => {
+        activeCategory = cat;
+        filters.querySelectorAll('.bookmark-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+      });
+      filters.appendChild(btn);
+    });
+  }
+
+  renderFilters();
+  render();
+</script>
+<script src="/back.js"></script>
+<script src="/search.js"></script>
+<script src="/dock.js" defer></script>

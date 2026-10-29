@@ -1,0 +1,56 @@
+{
+  "name": "Isaac",
+  "url": "https://isaacmp.xyz",
+  "author": "Isaac Morris-Perrott",
+  "titleSuffix": " — Isaac",
+  "backLabel": "isaacmp.xyz",
+  "theme": {
+    "fonts": {
+      "serif": "'Charter','Bitstream Charter','Sitka Text',Cambria,Georgia,serif",
+      "head": "var(--serif)",
+      "mono": "var(--serif)",
+      "pixel": "'Win95FA',var(--head)"
+    },
+    "light": {
+      "paper": "#F7F7F5",
+      "ink": "#1A1A18",
+      "ink-soft": "#5C5A52",
+      "line": "#E9E7E0",
+      "link": "#2C5AA0",
+      "hl": "#B07F00"
+    },
+    "dark": {
+      "paper": "#17171A",
+      "ink": "#EDECE6",
+      "ink-soft": "#ADAA9F",
+      "line": "#302F29",
+      "link": "#8CB4E8",
+      "hl": "#FFD43B"
+    }
+  },
+  "preload": [
+    "/fonts/charter-regular.woff2",
+    "/fonts/win95fa-latin-400-normal.woff2"
+  ],
+  "articleScripts": [
+    {
+      "src": "/back.js"
+    },
+    {
+      "src": "/search.js",
+      "defer": true
+    },
+    {
+      "src": "/prefetch.js",
+      "defer": true
+    },
+    {
+      "src": "/dock.js",
+      "defer": true
+    }
+  ],
+  "admin": {
+    "repo": "isaacimp/isaacimp.github.io",
+    "branch": "main"
+  }
+}

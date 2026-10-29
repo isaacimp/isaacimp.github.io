@@ -1,0 +1,77 @@
+---
+title: "Bookmarks — Isaac"
+description: "Articles, videos, and posts I've read and saved."
+path: "/bookmarks.html"
+---
+<main>
+  <a href="https://isaacmp.xyz" class="back">&larr; isaacmp.xyz</a>
+
+  <section id="bookmarks">
+    <h2>Bookmarks</h2>
+    <p>Things I've read, watched, enjoyed, and saved — I keep them here so people can see what I've liked, and so that I can go back to them anytime. It's also a way to reduce the number of tabs cluttering my browser.</p>
+
+
+    <div class="bookmark-filters" id="bookmark-filters"></div>
+    <div id="bookmark-list"></div>
+  </section>
+</main>
+
+<script src="bookmarks-data.js"></script>
+<script>
+  const list = document.getElementById('bookmark-list');
+  const filters = document.getElementById('bookmark-filters');
+  let activeType = 'all';
+
+  function hostname(url) {
+    try { return new URL(url).hostname.replace(/^www\./, ''); }
+    catch (e) { return ''; }
+  }
+
+  function render() {
+    list.innerHTML = '';
+    const entries = BOOKMARKS.filter(b => activeType === 'all' || (b.type || 'link') === activeType);
+    entries.forEach(entry => {
+      const type = entry.type || 'link';
+      const item = document.createElement('div');
+      item.className = 'bookmark-entry';
+      item.innerHTML = `
+        <div class="bookmark-entry-title"><a href="${entry.url}">${entry.title}</a></div>
+        <div class="bookmark-entry-meta">
+          <span class="bookmark-entry-type">${type}</span>
+          <span>${hostname(entry.url)}</span>
+          <time datetime="${entry.date}">${entry.date}</time>
+        </div>
+        ${entry.note ? `<p class="bookmark-entry-note">${entry.note}</p>` : ''}
+        ${entry.enhancedUrl ? `<div class="bookmark-entry-enhanced"><a href="${entry.enhancedUrl}">view enhanced version</a> · <a href="${entry.enhancedUrl}" download>download</a></div>` : ''}
+      `;
+      list.appendChild(item);
+    });
+    if (!entries.length) {
+      list.innerHTML = '<p class="bookmark-empty">Nothing here yet.</p>';
+    }
+  }
+
+  function renderFilters() {
+    const types = ['all', ...new Set(BOOKMARKS.map(b => b.type || 'link'))];
+    filters.innerHTML = '';
+    types.forEach(type => {
+      const btn = document.createElement('button');
+      btn.className = 'bookmark-filter-btn' + (type === activeType ? ' active' : '');
+      btn.textContent = type;
+      btn.addEventListener('click', () => {
+        activeType = type;
+        filters.querySelectorAll('.bookmark-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+      });
+      filters.appendChild(btn);
+    });
+  }
+
+  renderFilters();
+  render();
+</script>
+<script src="/back.js"></script>
+<script src="/search.js"></script>
+
+<script src="/dock.js" defer></script>
