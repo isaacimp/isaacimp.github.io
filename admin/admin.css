@@ -94,3 +94,7 @@ textarea.raw{min-height:70vh;white-space:pre;overflow:auto}
 .toast.ok{border-color:var(--ok)}
 .toast.err{border-color:var(--danger);color:var(--danger)}
 .toast button{font-size:1.2rem;text-decoration:none}
+.split-panel{margin-bottom:1rem}
+.panel+.panel{margin-top:1rem}
+.preview.short{height:22rem}
+.texts .panel h2{margin-top:0}

@@ -338,22 +338,55 @@ const eq = (a, b, msg) => assert(a === b, `${msg || 'mismatch'}\n   expected: ${
     assert(!files.has('content/media/img/my-cool-pic.png'), 'file should be deleted');
   });
 
-  await step('pages: raw edit saves; a page without title/path is refused', async () => {
+  await step('pages: title/description fields + HTML body save; title is required', async () => {
     await clearToasts();
     await tab('pages');
-    await page.waitForSelector('.rows li');
     eq(await page.locator('.rows li').count(), 10, 'page count');
     await page.click('text=Tags — Isaac');
-    await page.waitForSelector('textarea.raw');
-    await page.fill('textarea.raw', 'no front matter');
+    await page.waitForSelector('#p-title');
+    await shot('11-page-editor');
+    await page.fill('#p-title', '');
     await save();
-    assert(/title: and path:/i.test(await lastToast()), 'expected front matter warning');
-    await page.reload(); await page.fill('#pw', PASS); await page.click('button[type=submit]');
-    await page.waitForSelector('textarea.raw');
+    assert(/needs a title/i.test(await lastToast()), 'expected a title-required message');
+    await page.fill('#p-title', 'Tags — Isaac (edited)');
+    await page.fill('#p-description', 'Filter: "by tag"');
+    await page.fill('#p-body', (await page.inputValue('#p-body')) + '\n<!-- edited via admin -->\n');
+    await save();
+    const t = text('content/pages/tags.html');
+    assert(t.includes('title: Tags — Isaac (edited)') && t.includes('description: "Filter: \\"by tag\\""'), `page front matter wrong:\n${t.slice(0, 300)}`);
+    assert(t.includes('path: "/tags.html"') && t.includes('robots: "noindex, follow"'), 'untouched front matter lines must survive');
+    assert(t.endsWith('<!-- edited via admin -->\n'), 'page body not saved');
+  });
+
+  await step('home & text: edit the home paragraph with a live preview; other text untouched', async () => {
     await clearToasts();
-    await page.fill('textarea.raw', (await page.inputValue('textarea.raw')) + '\n<!-- edited via admin -->\n');
+    await tab('text');
+    await page.waitForSelector('#t-home-lead');
+    const before = JSON.parse(text('content/text.json'));
+    const lead = "Hello, it's me. See my [writing](/writing.html) and [email](mailto:a@b.co).";
+    await page.fill('#t-home-lead', lead);
+    await page.fill('#t-home-heading', 'Isaac M');
+    const frame = page.frameLocator('iframe.preview');
+    await frame.locator('h1', { hasText: 'Isaac M' }).waitFor();
+    await frame.locator('p.lead a[href="mailto:a@b.co"]').waitFor();
+    await shot('10-home-text');
     await save();
-    assert(text('content/pages/tags.html').endsWith('<!-- edited via admin -->\n'), 'page not saved');
+    const after = JSON.parse(text('content/text.json'));
+    eq(after.home.lead, lead, 'lead saved verbatim'); eq(after.home.heading, 'Isaac M');
+    after.home = before.home;
+    eq(JSON.stringify(after), JSON.stringify(before), 'all other page text must be identical');
+  });
+
+  await step('projects: the order field writes a bare number and keeps the other lines', async () => {
+    await clearToasts();
+    await page.goto(`${BASE}/admin/#/projects/fourpots`); await page.reload();
+    await page.fill('#pw', PASS); await page.click('button[type=submit]');
+    await page.waitForSelector('#f-order');
+    eq(await page.inputValue('#f-order'), '3', 'existing order is shown');
+    await page.fill('#f-order', '0');
+    await save();
+    const t = text('content/projects/fourpots.md');
+    assert(/\norder: 0\n/.test(t) && t.includes('robots: "noindex, follow"') && t.includes('url: https://fourpots.com/'), `project front matter wrong:\n${t.slice(0, 260)}`);
   });
 
   await step('delete: removes the post and returns to the list', async () => {
@@ -402,6 +435,10 @@ const eq = (a, b, msg) => assert(a === b, `${msg || 'mismatch'}\n   expected: ${
     assert(rd('now-data.js').includes('2026-11-01') && rd('now-data.js').includes('Second paragraph'), 'now entry missing');
     assert(rd('bookmarks-data.js').includes('Test link'), 'bookmark missing');
     assert(rd('index.html').includes('--link:#112233'), 'new colour missing from page head');
+    assert(rd('index.html').includes('Hello, it&#39;s me. See my <a href="/writing.html">writing</a>') && rd('index.html').includes('<h1>Isaac M</h1>'), 'edited home text missing from the home page');
+    const names = [...rd('site.html').matchAll(/class="project-name" href="[^"]*">([^<]*)</g)].map(m => m[1]);
+    eq(names[0], 'fourpots.com', 'project with order 0 should be listed first on the site page');
+    assert(rd('tags.html').includes('<title>Tags — Isaac (edited)</title>') && rd('tags.html').includes('content="Filter: &quot;by tag&quot;"'), 'edited page title/description missing');
     fs.rmSync(tmp, { recursive: true, force: true });
   });
 

@@ -53,7 +53,7 @@ export function setKey(lines, key, value) {
     if (i >= 0) out.splice(i, j - i);
     return out;
   }
-  const text = Array.isArray(value) ? `[${value.map(v => scalar(v, true)).join(', ')}]` : (key === 'date' && DATE.test(value) ? value : scalar(value));
+  const text = Array.isArray(value) ? `[${value.map(v => scalar(v, true)).join(', ')}]` : ((key === 'date' && DATE.test(value)) || (key === 'order' && /^\d+$/.test(value)) ? value : scalar(value));
   const line = `${key}: ${text}`;
   if (i >= 0) {
     out.splice(i, j - i, line);

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var EMAIL = 'mail@isaacmp.xyz';
+  var EMAIL = '__EMAIL__';
   var HIDE_KEY = 'dockHidden';
 
   var path = location.pathname.replace(/\/index\.html$/, '/');

@@ -4,7 +4,7 @@ const HEX = /^#[0-9a-fA-F]{6}$/;
 const COLOR_LABELS = { paper: 'Background', ink: 'Text', 'ink-soft': 'Soft text', line: 'Lines', link: 'Links', hl: 'Highlight' };
 const GENERAL = [
   ['name', 'Site name'], ['author', 'Author (for search engines)'], ['url', 'Site address'],
-  ['titleSuffix', 'Title suffix'], ['backLabel', 'Back-link text']
+  ['titleSuffix', 'Title suffix'], ['backLabel', 'Back-link text'], ['email', 'Contact email (shown in the menu)']
 ];
 
 export async function view(ctx, sec) {

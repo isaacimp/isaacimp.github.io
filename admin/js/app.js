@@ -7,6 +7,7 @@ import * as list from './views/list.js';
 import * as raw from './views/raw.js';
 import * as media from './views/media.js';
 import * as settings from './views/settings.js';
+import * as pageText from './views/text.js';
 
 if (window.top !== window.self) throw new Error('The admin cannot be embedded.');
 
@@ -91,11 +92,11 @@ async function start(token) {
     reload() { route(); },
     toast,
     published(msg) { toast(`${msg} Publishing now; it goes live in about a minute.`, 'ok', { href: `https://github.com/${cfg.repo}/actions`, label: 'Watch deploy' }); },
-    previewDoc(html) {
+    previewDoc(html, full) {
       const t = ctx.site.theme, vars = o => Object.entries(o).map(([k, v]) => `--${k}:${v};`).join('');
       let body = html;
       for (const [p, blob] of ctx.pendingImages) body = body.split(`src="${p}"`).join(`src="${blob}"`);
-      return `<!DOCTYPE html><html><head><meta charset="utf-8"><base href="${location.origin}/"><style>:root{${vars(t.fonts)}${vars(t.light)}}@media (prefers-color-scheme: dark){:root{${vars(t.dark)}}}</style><link rel="stylesheet" href="/style.css"></head><body><main><article class="article-content">${body}</article></main></body></html>`;
+      return `<!DOCTYPE html><html><head><meta charset="utf-8"><base href="${location.origin}/"><style>:root{${vars(t.fonts)}${vars(t.light)}}@media (prefers-color-scheme: dark){:root{${vars(t.dark)}}}</style><link rel="stylesheet" href="/style.css"></head><body>${full ? body : `<main><article class="article-content">${body}</article></main>`}</body></html>`;
     }
   };
 
@@ -130,6 +131,7 @@ async function route() {
     else if (sec.kind === 'list') v = await list.view(ctx, sec);
     else if (sec.kind === 'raw') v = slug === undefined ? await raw.list(ctx, sec) : await raw.edit(ctx, sec, slug);
     else if (sec.kind === 'media') v = await media.view(ctx, sec);
+    else if (sec.kind === 'text') v = await pageText.view(ctx, sec);
     else v = await settings.view(ctx, sec);
     if (id !== routeId) return;
     current = v;

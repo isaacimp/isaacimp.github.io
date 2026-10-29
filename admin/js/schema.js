@@ -4,14 +4,15 @@ export const FIELDS = {
   description: { key: 'description', label: 'Description', type: 'textarea', rows: 2, hint: 'One or two sentences: shown in search results and link previews.' },
   tags: { key: 'tags', label: 'Tags', type: 'tags', hint: 'Comma separated, e.g. health, philosophy' },
   url: { key: 'url', label: 'Link', type: 'text', hint: 'The live site, e.g. https://example.com' },
-  images: { key: 'images', label: 'Screenshots', type: 'lines', rows: 2, hint: 'One path per line, e.g. img/projects/name-1.jpg' }
+  images: { key: 'images', label: 'Screenshots', type: 'lines', rows: 2, hint: 'One path per line, e.g. img/projects/name-1.jpg. The first one is the hover preview on the site page.' },
+  order: { key: 'order', label: 'Order on the site', type: 'text', hint: 'A number: 1 comes first in the project list on the full site page.' }
 };
 
 export const SECTIONS = [
   { id: 'now', label: 'Now', kind: 'md', dir: 'content/now', noun: 'entry', slugBy: 'date', fields: [] },
   { id: 'posts', label: 'Posts', kind: 'md', dir: 'content/posts', noun: 'post', slugBy: 'title', fields: ['title', 'date', 'description', 'tags'] },
   { id: 'articles', label: 'Articles', kind: 'md', dir: 'content/articles', noun: 'article', slugBy: 'title', fields: ['title', 'date', 'description', 'tags'] },
-  { id: 'projects', label: 'Projects', kind: 'md', dir: 'content/projects', noun: 'project', slugBy: 'title', fields: ['title', 'date', 'description', 'url', 'tags', 'images'] },
+  { id: 'projects', label: 'Projects', kind: 'md', dir: 'content/projects', noun: 'project', slugBy: 'title', fields: ['title', 'date', 'description', 'url', 'order', 'tags', 'images'] },
   {
     id: 'bookmarks', label: 'Bookmarks', kind: 'list', file: 'content/data/bookmarks.json', noun: 'bookmark', titleKey: 'title', addAtTop: true,
     fields: [
@@ -33,6 +34,7 @@ export const SECTIONS = [
       { key: 'image', label: 'Image', type: 'text', hint: 'e.g. img/macbook.jpg' }
     ]
   },
+  { id: 'text', label: 'Home & text', kind: 'text', file: 'content/text.json' },
   { id: 'pages', label: 'Pages', kind: 'raw', dir: 'content/pages', ext: '.html' },
   { id: 'media', label: 'Images', kind: 'media', dir: 'content/media/img', urlPrefix: '/img/' },
   { id: 'settings', label: 'Settings', kind: 'settings', file: 'content/site.json' }

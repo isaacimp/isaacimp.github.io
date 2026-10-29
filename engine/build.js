@@ -16,6 +16,7 @@ const theme = (...p) => path.join(ROOT, 'theme', ...p);
 marked.setOptions({ gfm: true, breaks: false });
 
 const site = JSON.parse(fs.readFileSync(src('site.json'), 'utf8'));
+const text = fs.existsSync(src('text.json')) ? JSON.parse(fs.readFileSync(src('text.json'), 'utf8')) : {};
 const errors = [];
 const out = new Map();
 
@@ -168,7 +169,8 @@ function buildType(name, type) {
         tags: Array.isArray(fm.tags) ? fm.tags.map(String) : [],
         description: fm.description ? String(fm.description) : '',
         url: fm.url ? String(fm.url) : '',
-        images: Array.isArray(fm.images) ? fm.images.map(String) : []
+        images: Array.isArray(fm.images) ? fm.images.map(String) : [],
+        order: fm.order != null && fm.order !== '' && !Number.isNaN(Number(fm.order)) ? Number(fm.order) : 999
       };
       let html = marked.parse(content || '');
       let toc = '';
@@ -219,14 +221,68 @@ function buildNow() {
   return entries;
 }
 
-function buildPages() {
+const ICON_GO = '<svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+const ICON_INFO = '<svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="1.2" fill="currentColor" stroke="none"/><path d="M12 11.5V18"/></svg>';
+
+function imageSize(file) {
+  try {
+    const b = fs.readFileSync(file);
+    if (b[0] === 0x89 && b.toString('latin1', 1, 4) === 'PNG') return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+    if (b[0] === 0xff && b[1] === 0xd8) {
+      let i = 2;
+      while (i + 9 < b.length) {
+        if (b[i] !== 0xff) { i++; continue; }
+        const m = b[i + 1];
+        if (m === 0xff) { i++; continue; }
+        if (m === 0xd8 || m === 0x01 || (m >= 0xd0 && m <= 0xd7)) { i += 2; continue; }
+        if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) return { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) };
+        i += 2 + b.readUInt16BE(i + 2);
+      }
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function projectRows(projects) {
+  const sorted = [...projects].sort((a, b) => a.order - b.order || (a.date < b.date ? 1 : a.date > b.date ? -1 : 0) || (a.slug < b.slug ? -1 : 1));
+  return sorted.map((p, i) => {
+    const link = p.url || `/projects/${p.slug}.html`;
+    const img = p.images[0];
+    const dims = img && imageSize(path.join(ROOT, 'content', 'media', img.replace(/^\//, '')));
+    const preview = img
+      ? `\n            <span class="project-preview"><img src="${esc(img)}" alt=""${dims ? ` width="${dims.w}" height="${dims.h}"` : ''} loading="lazy" decoding="async"></span></span>`
+      : '</span>';
+    return `      <div class="project">
+        <span class="project-idx">${String(i + 1).padStart(2, '0')}</span>
+        <span class="project-body"><a class="project-name" href="${esc(link)}">${esc(p.title)}</a><span class="project-desc">${esc(p.description)}</span></span>
+        <span class="project-side">
+          <a class="project-go" href="${esc(link)}" aria-label="Visit ${esc(p.title)}">${ICON_GO}</a>
+          <span class="project-info"><a href="/projects/${p.slug}.html" aria-label="About ${esc(p.title)}: how it works and how it was made" title="About this project">${ICON_INFO}</a>${preview}
+        </span>
+      </div>`;
+  }).join('\n');
+}
+
+function fillTokens(html, file, projects) {
+  return html.replace(/\{\{(!?)([\w.-]+)\}\}/g, (m, plain, key) => {
+    if (key === 'projects') return projectRows(projects);
+    const value = key.split('.').reduce((o, k) => (o == null ? o : o[k]), text);
+    if (typeof value !== 'string') throw new Error(`no text for {{${key}}}; add it to content/text.json`);
+    if (plain) return esc(value);
+    return /\n\s*\n/.test(value) ? marked.parse(value).trim() : marked.parseInline(value);
+  });
+}
+
+function buildPages(projects) {
   const pages = [];
   for (const file of files(src('pages'), '.html')) {
     guard(`content/pages/${file}`, () => {
       const { data: fm, content } = matter(fs.readFileSync(src('pages', file), 'utf8'));
       if (!fm.title) throw new Error('missing "title" in front matter');
       if (!fm.path || !fm.path.startsWith('/')) throw new Error('missing "path" (e.g. /uses.html or /now/)');
-      emit(outFile(fm.path), renderPage(fm, content));
+      emit(outFile(fm.path), renderPage(fm, fillTokens(content, file, projects)));
       pages.push(fm);
     });
   }
@@ -273,13 +329,14 @@ function buildAdmin() {
 }
 
 console.log('Building...');
-const pages = buildPages();
 const dated = [];
-for (const [name, type] of Object.entries(TYPES)) dated.push(...buildType(name, type));
+const built = {};
+for (const [name, type] of Object.entries(TYPES)) { built[name] = buildType(name, type); dated.push(...built[name]); }
 buildNow();
+const pages = buildPages(built.project || []);
 
 emit('style.css', fs.readFileSync(theme('style.css')));
-for (const f of files(theme('js'), '.js')) emit(f, fs.readFileSync(theme('js', f)));
+for (const f of files(theme('js'), '.js')) emit(f, fs.readFileSync(theme('js', f), 'utf8').replace(/__EMAIL__/g, site.email || ''));
 for (const f of files(src('data'), '.json')) {
   const name = f.replace(/\.json$/, '');
   guard(`content/data/${f}`, () => emit(`${name}-data.js`, registryJs(name.toUpperCase(), JSON.parse(fs.readFileSync(src('data', f), 'utf8')))));
