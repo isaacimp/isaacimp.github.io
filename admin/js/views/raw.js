@@ -2,9 +2,9 @@ import { h, pool } from '../util.js';
 import * as fm from '../frontmatter.js';
 
 const FIELDS = [
-  { key: 'title', label: 'Page title', required: true, hint: 'Shown in the browser tab and in search results.' },
-  { key: 'description', label: 'Description', long: true, hint: 'Shown in search results and link previews.' },
-  { key: 'ogDescription', label: 'Link preview text', hint: 'Optional: the text shown when the page is shared.' }
+  { key: 'title', label: 'Page title', required: true },
+  { key: 'description', label: 'Description', long: true },
+  { key: 'ogDescription', label: 'Link preview text' }
 ];
 
 export async function list(ctx, sec) {
@@ -16,7 +16,6 @@ export async function list(ctx, sec) {
   });
   return { el: h('section', { class: 'view' },
     h('div', { class: 'view-head' }, h('h1', {}, sec.label)),
-    h('p', { class: 'muted' }, 'Page titles, descriptions and layout. The words on each page are under Home & text; the HTML is for changing structure, so edit it carefully.'),
     h('ul', { class: 'rows' }, rows.map(r => h('li', {},
       h('a', { href: `#/${sec.id}/${encodeURIComponent(r.name)}` }, h('span', { class: 'row-title' }, r.title), h('span', { class: 'row-sub' }, r.path)),
       h('time', {}, r.name))))) };
@@ -28,7 +27,7 @@ export async function edit(ctx, sec, name) {
   let sha = f.sha, busy = false;
   let parts = fm.split(f.text);
   let original = fm.read(parts.lines);
-  if (!parts.had || !original.path) throw new Error('This page has no title/path block at the top, so it cannot be edited here.');
+  if (!parts.had || !original.path) throw new Error('No title/path block at the top of this page.');
 
   const inputs = {};
   const body = h('textarea', { class: 'body mono raw', spellcheck: 'false', onInput: () => dirty() });
@@ -46,7 +45,7 @@ export async function edit(ctx, sec, name) {
     const input = x.long ? h('textarea', { id, rows: 2, spellcheck: 'true', onInput: () => dirty() }) : h('input', { id, type: 'text', autocomplete: 'off', onInput: () => dirty() });
     input.value = original[x.key] || '';
     inputs[x.key] = input;
-    return h('div', { class: 'field' }, h('label', { htmlFor: id }, x.label, x.required ? ' *' : ''), input, h('small', {}, x.hint));
+    return h('div', { class: 'field' }, h('label', { htmlFor: id }, x.label, x.required ? ' *' : ''), input);
   });
 
   async function save() {
@@ -70,10 +69,10 @@ export async function edit(ctx, sec, name) {
     h('div', { class: 'view-head' },
       h('div', {}, h('a', { class: 'crumb', href: `#/${sec.id}` }, `← ${sec.label}`), h('h1', {}, original.title || name)),
       h('div', { class: 'actions' }, status, saveBtn)),
-    h('p', { class: 'muted' }, `Address: ${original.path} (set in the code). The words on this page are edited under Home & text.`),
+    h('p', { class: 'muted' }, original.path),
     rows,
     h('div', { class: 'field' }, h('label', { htmlFor: 'p-body' }, 'Page HTML (advanced)'), body,
-      h('small', {}, 'Parts like {{home.lead}} are filled in from Home & text. A mistake here can break the page; git history can undo it.')));
+      h('small', {}, '{{ }} bits are filled in from Home & text.')));
   body.id = 'p-body';
   return { el, save };
 }

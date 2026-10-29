@@ -10,11 +10,11 @@ const enc = p => p.split('/').map(encodeURIComponent).join('/');
 
 function explain(status, data) {
   const msg = (data && data.message) || '';
-  if (status === 401) return 'GitHub rejected the token (expired or revoked). Lock, then reconnect with a new one.';
-  if (status === 404) return 'Not found, or the token has no access to this repository.';
-  if ((status === 409 || status === 422) && /sha|does not match/i.test(msg)) return 'This file changed on GitHub after you opened it. Reload it, then re-apply your edit.';
-  if (status === 403 && /rate limit/i.test(msg)) return 'GitHub rate limit reached. Try again in a few minutes.';
-  if (status === 403) return `GitHub refused this (${msg || 'permission'}). The token needs Contents: read and write on this repo.`;
+  if (status === 401) return 'GitHub rejected the token. It may have expired.';
+  if (status === 404) return 'Not found, or the token can\'t see this repo.';
+  if ((status === 409 || status === 422) && /sha|does not match/i.test(msg)) return 'This file changed on GitHub since you opened it. Reload and redo your edit.';
+  if (status === 403 && /rate limit/i.test(msg)) return 'GitHub rate limit. Try again in a bit.';
+  if (status === 403) return `GitHub refused it. The token needs Contents read and write.`;
   return msg || `GitHub error ${status}`;
 }
 

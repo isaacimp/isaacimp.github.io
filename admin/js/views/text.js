@@ -7,19 +7,19 @@ const inline = md => {
 
 const GROUPS = {
   home: {
-    label: 'Home page', note: 'The first page people see when they visit the site.', preview: true,
+    label: 'Home page', preview: true,
     fields: {
       heading: { label: 'Heading' },
-      lead: { label: 'Main text', long: true, hint: 'Make a link with [words](https://address). Link to your own pages like [articles](/site.html#articles). For email use [email me](mailto:you@example.com).' }
+      lead: { label: 'Main text', long: true, hint: 'Links: [words](address)' }
     }
   },
   site: {
-    label: 'Full site page', note: 'The longer page at /site.html: your name, links and section headings.',
+    label: 'Full site page',
     fields: {
       name: { label: 'Name' },
-      nameHover: { label: 'Name shown on hover', hint: 'For example your name in another language.' },
+      nameHover: { label: 'Name shown on hover' },
       role: { label: 'Line under your name' },
-      links: { label: 'Social links', long: true, hint: 'Example: [@handle](https://x.com/handle) · [@channel](https://youtube.com/@channel)' },
+      links: { label: 'Social links', long: true },
       projectsHeading: { label: 'Projects heading' },
       articlesHeading: { label: 'Articles heading' },
       articlesIntro: { label: 'Articles intro' },
@@ -73,7 +73,6 @@ export async function view(ctx, sec) {
     const g = GROUPS[group] || {};
     return h('div', { class: group === 'home' ? 'panel split-panel' : 'panel' },
       h('h2', {}, g.label || humanize(group)),
-      g.note ? h('p', { class: 'muted' }, g.note) : null,
       group === 'home'
         ? h('div', { class: 'split' },
             h('div', { class: 'pane' }, Object.keys(draft[group]).map(k => field(group, k, (g.fields || {})[k] || {}))),
@@ -94,7 +93,6 @@ export async function view(ctx, sec) {
 
   const el = h('section', { class: 'view texts' },
     h('div', { class: 'view-head' }, h('h1', {}, sec.label), h('div', { class: 'actions' }, status, saveBtn)),
-    h('p', { class: 'muted' }, 'The words on your pages. Links are written as [words](address). Projects on the full site page come from the Projects tab.'),
     blocks);
   if (draft.home) homePreview();
   dirty();

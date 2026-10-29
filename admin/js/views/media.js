@@ -56,7 +56,7 @@ export async function view(ctx, sec) {
           try { await navigator.clipboard.writeText(`![](${url})`); ctx.toast('Copied markdown for the image.'); } catch { ctx.toast(`![](${url})`); }
         } }, 'Copy markdown'),
         h('button', { type: 'button', class: 'btn small danger', onClick: async () => {
-          if (!confirm(`Delete ${f.name}? Pages still using it will show a broken image.`)) return;
+          if (!confirm(`Delete ${f.name}?`)) return;
           try { await ctx.gh.remove(`${sec.dir}/${f.name}`, f.sha, `admin: delete image ${f.name}`); ctx.published(`Deleted ${f.name}.`); ctx.reload(); } catch (e) { ctx.toast(e.message, 'err'); }
         } }, 'Delete')));
   };
@@ -64,7 +64,6 @@ export async function view(ctx, sec) {
   const el = h('section', { class: 'view' },
     h('div', { class: 'view-head' }, h('h1', {}, sec.label),
       h('button', { type: 'button', class: 'btn primary', onClick: () => fileInput.click() }, 'Upload images'), fileInput),
-    files.length ? h('div', { class: 'tiles' }, files.map(card)) : h('p', { class: 'muted' }, 'No images yet.'),
-    h('p', { class: 'muted' }, 'Large photos are scaled to 2000px wide before upload. New images appear on the site after the next publish.'));
+    files.length ? h('div', { class: 'tiles' }, files.map(card)) : h('p', { class: 'muted' }, 'No images yet.'));
   return { el };
 }

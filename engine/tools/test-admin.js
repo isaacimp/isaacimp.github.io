@@ -341,7 +341,7 @@ const eq = (a, b, msg) => assert(a === b, `${msg || 'mismatch'}\n   expected: ${
   await step('pages: title/description fields + HTML body save; title is required', async () => {
     await clearToasts();
     await tab('pages');
-    eq(await page.locator('.rows li').count(), 10, 'page count');
+    eq(await page.locator('.rows li').count(), 9, 'page count');
     await page.click('text=Tags — Isaac');
     await page.waitForSelector('#p-title');
     await shot('11-page-editor');
@@ -370,6 +370,15 @@ const eq = (a, b, msg) => assert(a === b, `${msg || 'mismatch'}\n   expected: ${
     await frame.locator('h1', { hasText: 'Isaac M' }).waitFor();
     await frame.locator('p.lead a[href="mailto:a@b.co"]').waitFor();
     await shot('10-home-text');
+    await page.setViewportSize({ width: 700, height: 800 });
+    await page.locator('#t-home-lead').focus();
+    await page.waitForTimeout(300);
+    const pbox = await page.locator('iframe.preview').boundingBox();
+    const tbox = await page.locator('#t-home-lead').boundingBox();
+    assert(pbox && pbox.y >= 0 && pbox.y + pbox.height <= 800 && pbox.width > 300, `preview must stay on screen on a narrow window: ${JSON.stringify(pbox)}`);
+    assert(tbox && tbox.y >= pbox.y + pbox.height - 2 && tbox.y < 800, `text box must be visible below the preview, not hidden under it: ${JSON.stringify([pbox, tbox])}`);
+    await shot('12-home-text-narrow');
+    await page.setViewportSize({ width: 1280, height: 900 });
     await save();
     const after = JSON.parse(text('content/text.json'));
     eq(after.home.lead, lead, 'lead saved verbatim'); eq(after.home.heading, 'Isaac M');

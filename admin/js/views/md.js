@@ -82,11 +82,11 @@ export async function edit(ctx, sec, slug) {
   let nameRow = null;
   if (isNew && sec.slugBy === 'date') {
     dateSlug = h('input', { id: 'f-date-name', type: 'text', value: today(), onInput: onAny, autocomplete: 'off' });
-    nameRow = h('div', { class: 'field' }, h('label', { htmlFor: 'f-date-name' }, 'Date *'), dateSlug, h('small', {}, 'The entry is filed under this date (YYYY-MM-DD).'));
+    nameRow = h('div', { class: 'field' }, h('label', { htmlFor: 'f-date-name' }, 'Date *'), dateSlug);
   } else if (isNew) {
     slugInput = h('input', { id: 'f-slug', type: 'text', autocomplete: 'off', onInput: () => { slugTouched = true; onAny(); } });
     inputs.title.addEventListener('input', () => { if (!slugTouched) { slugInput.value = slugify(inputs.title.value); dirtyCheck(); } });
-    nameRow = h('div', { class: 'field' }, h('label', { htmlFor: 'f-slug' }, 'URL name *'), slugInput, h('small', {}, 'Becomes the address, e.g. /posts/<name>.html. Cannot be changed later.'));
+    nameRow = h('div', { class: 'field' }, h('label', { htmlFor: 'f-slug' }, 'URL name *'), slugInput, h('small', {}, 'Can\'t change this later.'));
   }
 
   const wrap = (a, b, ph) => {
@@ -147,13 +147,13 @@ export async function edit(ctx, sec, slug) {
       sha = r.sha; parts = fm.split(text); original = fm.read(parts.lines);
       status.textContent = 'Saved';
     } catch (e) {
-      ctx.toast(isNew && e.status === 422 ? 'A file with that name already exists. Pick another name.' : e.message, 'err');
+      ctx.toast(isNew && e.status === 422 ? 'That name already exists.' : e.message, 'err');
       status.textContent = '';
     } finally { busy = false; dirtyCheck(); }
   }
 
   async function del() {
-    if (!confirm(`Delete this ${sec.noun}? It will be removed from the site (git keeps the history).`)) return;
+    if (!confirm(`Delete this ${sec.noun}?`)) return;
     busy = true; delBtn.disabled = true;
     try {
       await ctx.gh.remove(`${sec.dir}/${slug}.md`, sha, `admin: delete ${sec.id}/${slug}`);
@@ -168,8 +168,7 @@ export async function edit(ctx, sec, slug) {
       h('div', {}, h('a', { class: 'crumb', href: `#/${sec.id}` }, `← ${sec.label}`), h('h1', {}, isNew ? `New ${sec.noun}` : (original.title || slug))),
       h('div', { class: 'actions' }, status, delBtn, saveBtn)),
     h('div', { class: 'split' },
-      h('div', { class: 'pane' }, nameRow, fieldRows, h('div', { class: 'field' }, h('label', { htmlFor: 'f-body' }, 'Text (markdown)'), toolbar, body,
-        h('small', {}, 'A blank line starts a new paragraph. Type apostrophes and quotes normally.'))),
+      h('div', { class: 'pane' }, nameRow, fieldRows, h('div', { class: 'field' }, h('label', { htmlFor: 'f-body' }, 'Text (markdown)'), toolbar, body)),
       h('div', { class: 'pane' }, h('div', { class: 'label' }, 'Preview'), preview)));
 
   refresh();

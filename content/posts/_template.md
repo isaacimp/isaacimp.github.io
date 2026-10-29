@@ -5,4 +5,4 @@ description: One sentence summarizing the post.
 tags: [idea]
 ---
 
-Write the post here. Can be a single paragraph or several — there's no minimum length.
+Write the post here.

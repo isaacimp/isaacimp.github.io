@@ -1,11 +1,11 @@
 export const FIELDS = {
   title: { key: 'title', label: 'Title', type: 'text', required: true },
   date: { key: 'date', label: 'Date', type: 'date', required: true },
-  description: { key: 'description', label: 'Description', type: 'textarea', rows: 2, hint: 'One or two sentences: shown in search results and link previews.' },
-  tags: { key: 'tags', label: 'Tags', type: 'tags', hint: 'Comma separated, e.g. health, philosophy' },
-  url: { key: 'url', label: 'Link', type: 'text', hint: 'The live site, e.g. https://example.com' },
-  images: { key: 'images', label: 'Screenshots', type: 'lines', rows: 2, hint: 'One path per line, e.g. img/projects/name-1.jpg. The first one is the hover preview on the site page.' },
-  order: { key: 'order', label: 'Order on the site', type: 'text', hint: 'A number: 1 comes first in the project list on the full site page.' }
+  description: { key: 'description', label: 'Description', type: 'textarea', rows: 2 },
+  tags: { key: 'tags', label: 'Tags', type: 'tags', hint: 'Separate with commas.' },
+  url: { key: 'url', label: 'Link', type: 'text' },
+  images: { key: 'images', label: 'Screenshots', type: 'lines', rows: 2, hint: 'One per line.' },
+  order: { key: 'order', label: 'Order on the site', type: 'text', hint: '1 is first.' }
 };
 
 export const SECTIONS = [
@@ -21,7 +21,7 @@ export const SECTIONS = [
       { key: 'date', label: 'Date', type: 'date', required: true },
       { key: 'type', label: 'Type', type: 'combo', options: ['article', 'video', 'post', 'paper', 'tool', 'website', 'link'] },
       { key: 'note', label: 'Note', type: 'textarea', rows: 2 },
-      { key: 'enhancedUrl', label: 'Enhanced URL', type: 'text', hint: 'Optional alternative link.' }
+      { key: 'enhancedUrl', label: 'Enhanced URL', type: 'text' }
     ]
   },
   {
@@ -31,7 +31,7 @@ export const SECTIONS = [
       { key: 'category', label: 'Category', type: 'combo', required: true, optionsFrom: 'category' },
       { key: 'blurb', label: 'Blurb', type: 'textarea', rows: 3 },
       { key: 'link', label: 'Link', type: 'text' },
-      { key: 'image', label: 'Image', type: 'text', hint: 'e.g. img/macbook.jpg' }
+      { key: 'image', label: 'Image', type: 'text' }
     ]
   },
   { id: 'text', label: 'Home & text', kind: 'text', file: 'content/text.json' },

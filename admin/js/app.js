@@ -28,7 +28,7 @@ function showConnect(note) {
     err.textContent = '';
     const t = token.value.trim();
     if (!t) return (err.textContent = 'Paste your GitHub token.');
-    if (pass.value.length < 10) return (err.textContent = 'Choose a passphrase of at least 10 characters (a few random words is ideal).');
+    if (pass.value.length < 10) return (err.textContent = 'Passphrase needs at least 10 characters.');
     if (pass.value !== pass2.value) return (err.textContent = 'The passphrases do not match.');
     btn.disabled = true; btn.textContent = 'Checking…';
     try {
@@ -40,17 +40,11 @@ function showConnect(note) {
   const btn = h('button', { class: 'btn primary', type: 'submit' }, 'Connect');
   form.append(
     h('div', { class: 'field' }, h('label', { htmlFor: 'tok' }, 'GitHub token'), token),
-    h('div', { class: 'field' }, h('label', { htmlFor: 'pw' }, 'Choose a passphrase'), pass, h('small', {}, 'Locks the token on this device. You will enter it each time you open the admin.')),
+    h('div', { class: 'field' }, h('label', { htmlFor: 'pw' }, 'Choose a passphrase'), pass, h('small', {}, 'Locks the token on this device.')),
     h('div', { class: 'field' }, h('label', { htmlFor: 'pw2' }, 'Repeat passphrase'), pass2), err, btn);
   screen(
     h('h1', {}, `${cfg.name} admin`),
-    h('p', {}, 'Sign in with a GitHub token that can edit this site’s repository. Only that token can publish, so nobody else can change the site.'),
-    h('details', {}, h('summary', {}, 'How to create the token (once)'),
-      h('ol', {},
-        h('li', {}, 'Open ', h('a', { href: 'https://github.com/settings/personal-access-tokens/new', target: '_blank', rel: 'noopener' }, 'GitHub → Fine-grained token'), '.'),
-        h('li', {}, 'Repository access: “Only select repositories” → ', h('code', {}, cfg.repo), '.'),
-        h('li', {}, 'Repository permissions: ', h('strong', {}, 'Contents → Read and write'), ' (nothing else).'),
-        h('li', {}, 'Pick an expiry, generate, and paste the token below.'))),
+    h('details', {}, h('summary', {}, 'Make a token'), h('p', {}, 'GitHub → Settings → Developer settings → Fine-grained tokens. Only ', h('code', {}, cfg.repo), ', Contents read and write.')),
     form);
   token.focus();
 }
@@ -71,7 +65,7 @@ function showUnlock(note) {
 async function verify(token) {
   const gh = createClient({ repo: cfg.repo, branch: cfg.branch, token });
   const info = await gh.repoInfo();
-  if (info.permissions && info.permissions.push === false) throw new Error('This token can read the repository but not edit it. Give it Contents: Read and write.');
+  if (info.permissions && info.permissions.push === false) throw new Error('This token can\'t edit the repo. It needs Contents read and write.');
 }
 
 async function start(token) {
@@ -91,7 +85,7 @@ async function start(token) {
     go(hash) { location.hash = hash; },
     reload() { route(); },
     toast,
-    published(msg) { toast(`${msg} Publishing now; it goes live in about a minute.`, 'ok', { href: `https://github.com/${cfg.repo}/actions`, label: 'Watch deploy' }); },
+    published(msg) { toast(`${msg} Live in about a minute.`, 'ok', { href: `https://github.com/${cfg.repo}/actions`, label: 'Watch deploy' }); },
     previewDoc(html, full) {
       const t = ctx.site.theme, vars = o => Object.entries(o).map(([k, v]) => `--${k}:${v};`).join('');
       let body = html;
@@ -172,7 +166,7 @@ window.addEventListener('keydown', e => {
     if (!r.ok) throw new Error();
     cfg = await r.json();
   } catch {
-    return root.replaceChildren(h('p', { class: 'error pad' }, 'Admin is not configured (config.json missing). Add an "admin" block to content/site.json and rebuild.'));
+    return root.replaceChildren(h('p', { class: 'error pad' }, 'Admin isn\'t set up (config.json missing).'));
   }
   document.title = `${cfg.name} admin`;
   vault.exists() ? showUnlock() : showConnect();

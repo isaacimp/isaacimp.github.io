@@ -98,3 +98,5 @@ textarea.raw{min-height:70vh;white-space:pre;overflow:auto}
 .panel+.panel{margin-top:1rem}
 .preview.short{height:22rem}
 .texts .panel h2{margin-top:0}
+@media(max-width:820px){.split-panel .pane:last-child{order:-1;position:sticky;top:4.5rem;z-index:4;background:var(--panel);padding-bottom:.5rem}.preview.short{height:13rem}}
+@media(max-width:820px){.split-panel textarea,.split-panel input{scroll-margin-top:19rem}}

@@ -3,8 +3,8 @@ import { h } from '../util.js';
 const HEX = /^#[0-9a-fA-F]{6}$/;
 const COLOR_LABELS = { paper: 'Background', ink: 'Text', 'ink-soft': 'Soft text', line: 'Lines', link: 'Links', hl: 'Highlight' };
 const GENERAL = [
-  ['name', 'Site name'], ['author', 'Author (for search engines)'], ['url', 'Site address'],
-  ['titleSuffix', 'Title suffix'], ['backLabel', 'Back-link text'], ['email', 'Contact email (shown in the menu)']
+  ['name', 'Site name'], ['author', 'Author'], ['url', 'Site address'],
+  ['titleSuffix', 'Title suffix'], ['backLabel', 'Back-link text'], ['email', 'Contact email']
 ];
 
 export async function view(ctx, sec) {
@@ -72,7 +72,6 @@ export async function view(ctx, sec) {
 
   const el = h('section', { class: 'view settings' },
     h('div', { class: 'view-head' }, h('h1', {}, sec.label), h('div', { class: 'actions' }, status, saveBtn)),
-    h('p', { class: 'muted' }, 'These settings change the look of every page. Colours follow the visitor’s light or dark setting.'),
     h('h2', {}, 'General'),
     h('div', { class: 'grid2' }, GENERAL.map(([k, label]) => text(label, () => draft[k] || '', v => { draft[k] = v; }))),
     h('h2', {}, 'Colours'),
@@ -80,9 +79,8 @@ export async function view(ctx, sec) {
       ['light', 'dark'].map(mode => h('div', { class: 'panel' }, h('h3', {}, mode === 'light' ? 'Light mode' : 'Dark mode'),
         swatch(mode), Object.keys(draft.theme[mode]).map(k => colorRow(mode, k))))),
     h('h2', {}, 'Fonts'),
-    h('p', { class: 'muted' }, 'CSS font stacks. The font files themselves are added in code (engine/tools/add-font.js).'),
     h('div', { class: 'grid2' }, Object.keys(draft.theme.fonts).map(k => text(k, () => draft.theme.fonts[k], v => { draft.theme.fonts[k] = v; }))),
-    h('div', { class: 'field' }, h('label', { htmlFor: 'f-preload' }, 'Fonts to preload'), preload, h('small', {}, 'One file path per line. Speeds up first paint.')));
+    h('div', { class: 'field' }, h('label', { htmlFor: 'f-preload' }, 'Fonts to preload'), preload));
   refresh();
   return { el, save };
 }
