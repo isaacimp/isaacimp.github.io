@@ -57,15 +57,27 @@ function largest(element, fits) {
   }
   return low;
 }
+function textRight() {
+  const range = document.createRange();
+  let right = 0;
+  for (const paragraph of landing.querySelectorAll('.lead')) {
+    range.selectNodeContents(paragraph);
+    for (const line of range.getClientRects()) right = Math.max(right, line.right);
+  }
+  return right;
+}
 function fit() {
+  nameRow.style.width = '';
   const widest = largest(nameRow, () => nameRow.scrollWidth <= nameRow.clientWidth);
-  const rowSize = size => Math.min(widest, size * 1.4) + 'px';
+  const rowSize = size => Math.min(widest, size * 1.4);
   const size = largest(landing, size => {
-    nameRow.style.fontSize = rowSize(size);
+    nameRow.style.fontSize = rowSize(size) + 'px';
     return landing.scrollHeight <= landing.clientHeight && landing.scrollWidth <= landing.clientWidth;
   });
   landing.style.fontSize = size + 'px';
-  nameRow.style.fontSize = rowSize(size);
+  nameRow.style.width = textRight() - nameRow.getBoundingClientRect().left + 'px';
+  const fitsText = largest(nameRow, () => nameRow.scrollWidth <= nameRow.clientWidth);
+  nameRow.style.fontSize = Math.min(rowSize(size), fitsText) + 'px';
 }
 fit();
 addEventListener('resize', () => requestAnimationFrame(fit));

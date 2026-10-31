@@ -135,7 +135,7 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 .landing .lead a { text-decoration: underline var(--accent) 2px; text-underline-offset: 0.16em; }
 .landing .lead a:hover, .landing .lead a:focus-visible { background: none; color: var(--accent); }
 .landing .lead + .lead { margin-top: 0.6em; }
-.landing .lead a { hyphens: manual; -webkit-hyphens: manual; }
+.landing .lead { text-wrap: pretty; }
 .landing.fit { height: 100svh; min-height: 0; max-width: none; padding: clamp(1rem, 5vmin, 3.5rem); overflow: hidden; }
 .landing.fit .top { flex-wrap: nowrap; }
 .landing.fit h1, .landing.fit .index { font-size: 1em; }
@@ -143,10 +143,6 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 
 @view-transition { navigation: auto; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.12s; }
-
-@media (min-width: 56rem) {
-  .landing .lead { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
-}
 
 @media (max-width: 36rem) {
   .rows.dated li { grid-template-columns: 1fr auto; }
