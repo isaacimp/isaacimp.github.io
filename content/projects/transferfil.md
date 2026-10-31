@@ -3,11 +3,10 @@ title: transferfil.es
 date: 2026-10-14
 description: Smooth and private WiFi file share.
 url: https://transferfil.es
-tags: [project]
 order: 1
-images: [img/projects/transfer-1.jpg]
 robots: "noindex, follow"
 ---
+![](/img/projects/transfer-1.jpg)
 
 ## What it is
 

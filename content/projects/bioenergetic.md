@@ -3,11 +3,10 @@ title: bioenergetic.live
 date: 2026-10-14
 description: 24/7 live loop of all the interviews and conversation with Ray Peat.
 url: https://bioenergetic.live/
-tags: [project]
 order: 2
-images: [img/projects/bioenergetic-1.jpg]
 robots: "noindex, follow"
 ---
+![](/img/projects/bioenergetic-1.jpg)
 
 ## What it is
 

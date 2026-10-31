@@ -2,20 +2,14 @@
   "name": "personal-website",
   "version": "1.0.0",
   "private": true,
-  "description": "isaacmp.xyz: content/ + theme/ built into dist/ by engine/build.js",
+  "description": "isaacmp.xyz: markdown in content/ built into dist/ by engine/build.js",
   "scripts": {
     "build": "node engine/build.js",
-    "dev": "node engine/tools/serve.js",
-    "check": "node engine/build.js && node engine/tools/check-layout.js",
-    "test:admin": "node engine/tools/test-admin.js"
+    "dev": "node engine/serve.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gray-matter": "^4.0.3",
     "marked": "^18.0.9"
-  },
-  "devDependencies": {
-    "playwright-core": "^1.64.0"
   }
 }

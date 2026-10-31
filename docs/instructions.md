@@ -1,49 +1,34 @@
 # Notes
 
 ## Layout
-- `content/` is everything written
-  - `site.json`: site name, address, email, colours, fonts
-  - `text.json`: page wording (home paragraph, headings, intros)
-  - `now/`: one markdown file per entry, named by date
-  - `posts/`, `articles/`, `projects/`: markdown with front matter
-  - `pages/`: hand-written pages
-  - `data/`: `bookmarks.json`, `uses.json`
-  - `media/`: images and pdfs
-- `theme/`: stylesheet, browser scripts, fonts, favicon
-- `public/`: `CNAME`, `robots.txt`
-- `admin/`: the `/admin/` page
-- `engine/`: `build.js` and tools
-- `dist/`: the built site, not committed
-
-## Commands
-- `npm run dev`: builds, previews at localhost:8000, rebuilds on save
-- `npm run build`: builds into `dist/`
-- `npm run check`: builds, then layout check in Chrome and Safari engines
-- `npm run test:admin`: admin test against a fake GitHub
+- `content/index.md` is the home page, plain text and links
+- `content/bookmarks.md` and `content/uses.md` are pages written as markdown lists
+- `content/articles/`, `posts/`, `projects/` hold one markdown file per item
+- `content/now/` holds one file per entry, named by date
+- Each of those folders has an `index.md` (the intro on its list page) and a `_template.md`
+- `content/site.json` has the name, address, email, nav links and social links
+- `content/img/` and `content/pdfs/` are copied as they are
+- `theme/style.css` is all the CSS, inlined into every page
+- `engine/build.js` reads the content and writes the pages
+- `engine/templates.js` is all the HTML
+- `engine/lib.js` has the helpers, `engine/serve.js` is the preview
+- `public/` has `CNAME` and `robots.txt`
 
 ## How it works
-- Push to `main`, the GitHub Action builds and deploys `dist/`
-- The build never edits source files, `dist/` is rebuilt every time
-- Page wording comes from `text.json` through tokens in the page HTML
-  - `{{home.lead}}` is markdown, so `[words](address)` makes a link
-  - `{{!site.name}}` is plain text, used inside attributes
-  - `{{projects}}` is the project list, built from `content/projects/`
-- Project order comes from `order:` in each project's front matter
-- Each content folder has a `_template.md`
-- New now entry is `content/now/<date>.md`
-- Colours and fonts are in `site.json`
-- Font files are added with `node engine/tools/add-font.js <fontsource-id>`
+- A page is a markdown file, or a list of markdown files
+- Front matter: `title`, `date`, `description`, `tags: [a, b]`
+- Projects also have `url` and `order`
+- `robots: "noindex, follow"` keeps a page out of search and the sitemap
+- `/site.html` and `/tags/` are built from everything else
+- No JavaScript on any page
+- `speculationrules` in the head prerenders a link when it is hovered
+- Push to `main`, the GitHub Action runs `node engine/build.js` and publishes `dist/`
 
-## Admin
-- `/admin/` edits through the GitHub API, each save is a commit to `main`
-- Tabs: Now, Posts, Articles, Projects, Bookmarks, Uses, Home & text, Pages, Images, Settings
-- Pages tab has title and description fields, with the raw HTML underneath
-- Sign-in is a fine-grained token for this repo only, Contents read and write
-- The token is stored on the device encrypted with a passphrase, and only sent to api.github.com
-- Edits go straight to `main`, so a local `git pull` comes first
-- Branch protection that blocks direct pushes would stop saves
+## URLs
+- Articles are `/<slug>.html`, posts `/posts/<slug>.html`, projects `/projects/<slug>.html`
+- Lists are `/articles/`, `/posts/`, `/projects/`, `/now/`
+- Also `/bookmarks.html`, `/uses.html`, `/site.html`, `/tags/`
 
-## Engine and admin
-- The GitHub address is hard-coded in `admin/js/github.js`, if it came from the URL a link could send the token elsewhere
-- Content goes into the admin page as text, never HTML, and the preview stays in the sandboxed iframe
-- Values written to front matter have to read back exactly, `npm run test:admin` checks this, worth running after changing `admin/js/frontmatter.js`
+## Commands
+- `npm run dev`: preview at localhost:8000, rebuilds on save
+- `npm run build`: builds into `dist/`

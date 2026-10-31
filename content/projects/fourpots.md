@@ -3,7 +3,6 @@ title: fourpots.com
 date: 2026-10-14
 description: Health tracking tech.
 url: https://fourpots.com/
-tags: [project]
 order: 3
 robots: "noindex, follow"
 ---
