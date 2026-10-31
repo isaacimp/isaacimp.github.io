@@ -128,9 +128,9 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 .landing .top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.3em; margin: 0 0 0.45em; }
 .landing .leader { flex: 1; min-width: 1em; border-bottom: 0.1em dotted var(--muted); }
 .landing h1 { font-size: clamp(44px, min(8vw, 10vh), 88px); line-height: 1; margin: 0; }
-.landing .index { font: 700 clamp(44px, min(8vw, 10vh), 88px)/1 var(--display); white-space: nowrap; padding: 0.06em 0.18em; background: var(--highlight); color: var(--on-highlight); text-decoration: none; }
+.landing .index { font: 400 clamp(22px, min(4vw, 5vh), 44px)/1 var(--display); white-space: nowrap; padding: 0.3em 0.15em; color: var(--muted); text-decoration: underline var(--accent) 0.08em; text-underline-offset: 0.2em; }
 .landing .index::after { content: " \2192"; content: " \2192" / ""; }
-.landing .index:hover, .landing .index:focus-visible { background: var(--fg); color: var(--bg); }
+.landing .index:hover, .landing .index:focus-visible { background: var(--highlight); color: var(--on-highlight); text-decoration: none; }
 .landing .lead { max-width: 26em; margin: 0; font: clamp(26px, min(4.6vw, 6.6vh), 64px)/1.25 var(--read); }
 .landing .lead a { text-decoration: underline var(--accent) 2px; text-underline-offset: 0.16em; }
 .landing .lead a:hover, .landing .lead a:focus-visible { background: none; color: var(--accent); }
@@ -138,7 +138,8 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 .landing .lead { text-wrap: pretty; }
 .landing.fit { height: 100svh; min-height: 0; max-width: none; padding: clamp(1rem, 5vmin, 3.5rem); overflow: hidden; }
 .landing.fit .top { flex-wrap: nowrap; }
-.landing.fit h1, .landing.fit .index { font-size: 1em; }
+.landing.fit h1 { font-size: 1em; }
+.landing.fit .index { font-size: 0.5em; }
 .landing.fit .lead { max-width: none; font-size: 1em; }
 
 @view-transition { navigation: auto; }

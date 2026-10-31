@@ -5,7 +5,7 @@
   "email": "mail@isaacmp.xyz",
   "nav": [
     {
-      "label": "Site",
+      "label": "index",
       "path": "/site.html"
     },
     {
