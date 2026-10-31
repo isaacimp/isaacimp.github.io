@@ -43,6 +43,26 @@ ${landing ? body : `${header(here)}\n<main id="main">\n${body}\n</main>\n${foote
 </html>
 `;
 
+  const fitToScreen = `<script>
+const landing = document.querySelector('.landing');
+landing.classList.add('fit');
+function fit() {
+  let low = 8;
+  let high = 400;
+  while (high - low > 0.5) {
+    const size = (low + high) / 2;
+    landing.style.fontSize = size + 'px';
+    const fits = landing.scrollHeight <= landing.clientHeight && landing.scrollWidth <= landing.clientWidth;
+    if (fits) low = size;
+    else high = size;
+  }
+  landing.style.fontSize = low + 'px';
+}
+fit();
+addEventListener('resize', () => requestAnimationFrame(fit));
+document.fonts.ready.then(fit);
+</script>`;
+
   const home = doc => shell({
     title: doc.title,
     description: doc.description,
@@ -50,7 +70,8 @@ ${landing ? body : `${header(here)}\n<main id="main">\n${body}\n</main>\n${foote
     landing: true,
     body: `<main class="landing" id="main">
 <h1>${esc(doc.title)}</h1>
-${doc.html.replace(/<p>/g, '<p class="lead">')}</main>`
+${doc.html.replace(/<p>/g, '<p class="lead">')}</main>
+${fitToScreen}`
   });
 
   const page = doc => shell({

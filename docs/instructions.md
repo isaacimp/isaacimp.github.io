@@ -25,7 +25,7 @@
 - Articles with three or more `##` headings get a contents box
 - Item pages link to the newer and older item in the same list
 - Task lists `- [ ]` render as labelled checkboxes
-- No JavaScript on any page
+- The only JavaScript is on the home page: it sizes the text to fill the screen, and the page looks normal without it
 - `speculationrules` in the head prerenders a link when it is hovered
 - Push to `main`, the GitHub Action runs `node engine/build.js` and publishes `dist/`
 
