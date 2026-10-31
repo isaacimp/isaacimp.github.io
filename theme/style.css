@@ -125,13 +125,17 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 .tag { scroll-margin-top: 1rem; }
 
 .landing { max-width: 1400px; min-height: 100svh; margin: 0 auto; padding: 4vh 5vw; display: flex; flex-direction: column; justify-content: center; }
-.landing h1 { font-size: clamp(44px, min(8vw, 10vh), 88px); line-height: 1; margin: 0 0 0.45em; }
+.landing .top { display: flex; align-items: baseline; gap: 0.6em; margin: 0 0 0.45em; }
+.landing h1 { font-size: clamp(44px, min(8vw, 10vh), 88px); line-height: 1; margin: 0; }
+.landing .index { font: 700 clamp(16px, 2.4vw, 28px) var(--ui); text-decoration: underline var(--accent) 2px; text-underline-offset: 0.2em; }
+.landing .index:hover, .landing .index:focus-visible { background: none; color: var(--accent); }
 .landing .lead { max-width: 26em; margin: 0; font: clamp(26px, min(4.6vw, 6.6vh), 64px)/1.25 var(--read); }
 .landing .lead a { text-decoration: underline var(--accent) 2px; text-underline-offset: 0.16em; }
 .landing .lead a:hover, .landing .lead a:focus-visible { background: none; color: var(--accent); }
 .landing .lead + .lead { margin-top: 0.6em; }
 .landing.fit { height: 100svh; min-height: 0; max-width: none; padding: clamp(1rem, 5vmin, 3.5rem); overflow: hidden; }
 .landing.fit h1 { font-size: 1.4em; }
+.landing.fit .index { font-size: 0.7em; }
 .landing.fit .lead { max-width: none; font-size: 1em; }
 
 @view-transition { navigation: auto; }
