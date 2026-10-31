@@ -125,10 +125,13 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 .tag { scroll-margin-top: 1rem; }
 
 .landing { max-width: 1400px; min-height: 100svh; margin: 0 auto; padding: 4vh 5vw; display: flex; flex-direction: column; justify-content: center; }
-.landing .top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.3em; margin: 0 0 0.45em; }
-.landing .leader { flex: 1; min-width: 1em; border-bottom: 0.1em dotted var(--muted); }
+.landing .top { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.3em; margin: 0 0 0.45em; }
+.landing .leader { flex: 1; min-width: 2em; align-self: center; position: relative; display: flex; justify-content: center; overflow: hidden; container-type: inline-size; }
+.landing .leader::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid var(--line); }
+.landing .maxim { display: grid; justify-items: center; row-gap: 0.7em; padding: 0 0.8em; font: 400 clamp(9px, min(0.2em, 6cqi), 16px)/1.2 var(--ui); color: var(--muted); white-space: nowrap; }
+@container (max-width: 9rem) { .landing .maxim { visibility: hidden; } }
 .landing h1 { font-size: clamp(44px, min(8vw, 10vh), 88px); line-height: 1; margin: 0; }
-.landing .index { font: 400 clamp(22px, min(4vw, 5vh), 44px)/1 var(--display); white-space: nowrap; padding: 0.3em 0.15em; color: var(--muted); text-decoration: underline var(--accent) 0.08em; text-underline-offset: 0.2em; }
+.landing .index { font: 400 clamp(22px, min(4vw, 5vh), 44px)/1 var(--display); white-space: nowrap; padding: 0.3em 0; color: var(--muted); text-decoration: underline var(--accent) 0.08em; text-underline-offset: 0.2em; }
 .landing .index::after { content: " \2192"; content: " \2192" / ""; }
 .landing .index:hover, .landing .index:focus-visible { background: var(--highlight); color: var(--on-highlight); text-decoration: none; }
 .landing .lead { max-width: 26em; margin: 0; font: clamp(26px, min(4.6vw, 6.6vh), 64px)/1.25 var(--read); }
