@@ -9,7 +9,7 @@ module.exports = function createTemplates({ site, css }) {
   const header = here => `<a class="skip" href="#main">Skip to content</a>
 <header class="bar">
 <a class="name" href="/">${esc(site.name)}</a>
-<button class="theme" type="button" aria-label="Switch between light and dark mode" title="Light or dark" hidden>◐</button>
+<button class="theme" type="button" aria-label="Switch between light and dark mode" title="Light or dark" data-switch>◐</button>
 <nav aria-label="Site">
 ${site.nav.map(item => `<a href="${item.path}"${isHere(item.path, here)}>${esc(item.label)}</a>`).join('\n')}
 </nav>
@@ -40,9 +40,9 @@ function applyTheme() {
   else delete document.documentElement.dataset.theme;
 }
 applyTheme();
+document.documentElement.classList.add('js');
 addEventListener('pageshow', applyTheme);
 document.addEventListener('prerenderingchange', applyTheme);
-document.addEventListener('DOMContentLoaded', () => document.querySelectorAll('.theme').forEach(button => { button.hidden = false; }));
 document.addEventListener('click', event => {
   if (!event.target.closest('.theme')) return;
   const root = document.documentElement;
@@ -114,7 +114,7 @@ addEventListener('resize', () => requestAnimationFrame(fit));
 <span class="leader"><span class="maxim" title="David Deutsch, The Beginning of Infinity"><span>Problems are inevitable.</span> <span>Problems are soluble.</span></span></span>
 <a class="index" href="/site.html">Index</a>
 </div>
-${doc.html.replace(/<p>/g, '<p class="lead">')}</main>
+${doc.html.replace(/<p>/g, '<p class="lead">').replace(/<\/p>\s*$/, ` <span class="switch" data-switch><button class="theme" type="button">Switch to <span class="to-dark">dark</span><span class="to-light">light</span> mode</button>.</span></p>\n`)}</main>
 ${fitToScreen}`
   });
 

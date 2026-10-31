@@ -12,6 +12,7 @@
 - Colours, fonts and widths are the variables at the top of `theme/style.css`
 - Dark mode colours are written twice below them, once for the system setting and once for the ◐ switch, so change both
 - The ◐ switch saves the choice in the visitor's browser, without it the site follows the system setting
+- The home page ends with "Switch to dark mode" (or light), added by the `home` template, not part of `content/index.md`
 - `--ui` is the monospace font for structure, `--read` the serif for long text, `--display` the font for titles (all are fonts already on the device, nothing downloads)
 - `engine/build.js` reads the content and writes the pages
 - `engine/templates.js` is all the HTML
