@@ -125,14 +125,17 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 .tag { scroll-margin-top: 1rem; }
 
 .landing { max-width: 1400px; min-height: 100svh; margin: 0 auto; padding: 4vh 5vw; display: flex; flex-direction: column; justify-content: center; }
-.landing .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 1em; margin: 0 0 0.45em; }
+.landing .top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.3em; margin: 0 0 0.45em; }
+.landing .leader { flex: 1; min-width: 1em; border-bottom: 0.1em dotted var(--muted); }
 .landing h1 { font-size: clamp(44px, min(8vw, 10vh), 88px); line-height: 1; margin: 0; }
-.landing .index { font: 700 clamp(44px, min(8vw, 10vh), 88px)/1 var(--display); text-decoration: underline var(--accent) 0.06em; text-underline-offset: 0.12em; }
-.landing .index:hover, .landing .index:focus-visible { background: none; color: var(--accent); }
+.landing .index { font: 700 clamp(44px, min(8vw, 10vh), 88px)/1 var(--display); white-space: nowrap; padding: 0.06em 0.18em; background: var(--highlight); color: var(--on-highlight); text-decoration: none; }
+.landing .index::after { content: " \2192"; content: " \2192" / ""; }
+.landing .index:hover, .landing .index:focus-visible { background: var(--fg); color: var(--bg); }
 .landing .lead { max-width: 26em; margin: 0; font: clamp(26px, min(4.6vw, 6.6vh), 64px)/1.25 var(--read); }
 .landing .lead a { text-decoration: underline var(--accent) 2px; text-underline-offset: 0.16em; }
 .landing .lead a:hover, .landing .lead a:focus-visible { background: none; color: var(--accent); }
 .landing .lead + .lead { margin-top: 0.6em; }
+.landing .lead a { hyphens: manual; -webkit-hyphens: manual; }
 .landing.fit { height: 100svh; min-height: 0; max-width: none; padding: clamp(1rem, 5vmin, 3.5rem); overflow: hidden; }
 .landing.fit .top { flex-wrap: nowrap; }
 .landing.fit h1, .landing.fit .index { font-size: 1em; }
@@ -140,6 +143,10 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 
 @view-transition { navigation: auto; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.12s; }
+
+@media (min-width: 56rem) {
+  .landing .lead { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+}
 
 @media (max-width: 36rem) {
   .rows.dated li { grid-template-columns: 1fr auto; }

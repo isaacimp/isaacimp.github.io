@@ -79,6 +79,7 @@ addEventListener('resize', () => requestAnimationFrame(fit));
     body: `<main class="landing" id="main">
 <div class="top">
 <h1>${esc(doc.title)}</h1>
+<span class="leader"></span>
 <a class="index" href="/site.html">Index</a>
 </div>
 ${doc.html.replace(/<p>/g, '<p class="lead">')}</main>
