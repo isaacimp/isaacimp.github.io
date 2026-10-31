@@ -16,7 +16,7 @@ ${site.nav.map(item => `<a href="${item.path}"${isHere(item.path, here)}>${esc(i
 
   const footer = `<footer class="bar">
 <a href="#top">↑ Top</a>
-<a href="/site.html">Every page</a>
+<a href="/site.html">Index</a>
 <a href="/feed.xml">Feed</a>
 <a href="mailto:${esc(site.email)}">Email</a>
 </footer>`;
@@ -170,11 +170,11 @@ ${children.map(([childLabel, childPath]) => `<li><a href="${esc(childPath)}">${e
   };
 
   const everything = ({ pages, collections, tags }) => shell({
-    title: `Every page — ${site.name}`,
-    description: `Every page on ${site.name} in one list.`,
+    title: `Index — ${site.name}`,
+    description: `Index page for ${site.name}.`,
     path: '/site.html',
     here: '/site.html',
-    body: `<h1>Every page</h1>
+    body: `<h1>Index</h1>
 <ul class="tree">
 ${branch('Home', '/')}
 ${collections.map(({ collection, docs }) => collection.dir === 'now'
@@ -207,7 +207,7 @@ ${group.docs.map(doc => `<li><time datetime="${doc.date}">${doc.date}</time><a c
     robots: 'noindex',
     here: '',
     body: `<h1>Not found</h1>
-<p>Nothing lives at this address. <a href="/site.html">Every page</a> is listed in one place.</p>`
+<p>Nothing lives at this address. <a href="/site.html">Index</a> for all links.</p>`
   });
 
   const feed = docs => `<?xml version="1.0" encoding="utf-8"?>
