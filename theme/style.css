@@ -1,10 +1,12 @@
 :root {
   --bg: #f4f4ee;
-  --fg: #1d3a1d;
+  --fg: #000;
   --muted: #4d6a4d;
   --accent: #985000;
   --line: #d3dccf;
-  --hover: #e7ede2;
+  --hover: #fff4c2;
+  --highlight: #ffd400;
+  --on-highlight: #000;
   --ui: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   --read: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --display: var(--ui);
@@ -20,20 +22,22 @@
     --muted: #86b386;
     --accent: #ffb000;
     --line: #213821;
-    --hover: #132013;
+    --hover: #262200;
+    --highlight: #ffd400;
+    --on-highlight: #000;
   }
 }
 
 * { box-sizing: border-box; }
 html { background: var(--bg); -webkit-text-size-adjust: 100%; }
 body { margin: 0; color: var(--fg); font: 400 0.95rem/1.6 var(--ui); font-variant-ligatures: none; }
-::selection { background: var(--accent); color: var(--bg); }
+::selection { background: var(--highlight); color: var(--on-highlight); }
 
 a { color: inherit; text-decoration: underline dotted var(--muted); text-underline-offset: 0.2em; }
-a:hover { background: var(--fg); color: var(--bg); text-decoration: none; }
+a:hover { background: var(--highlight); color: var(--on-highlight); text-decoration: none; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.skip { position: absolute; left: 0.5rem; top: -4rem; padding: 0.5rem 0.8rem; background: var(--fg); color: var(--bg); z-index: 10; }
+.skip { position: absolute; left: 0.5rem; top: -4rem; padding: 0.5rem 0.8rem; background: var(--highlight); color: var(--on-highlight); z-index: 10; }
 .skip:focus { top: 0.5rem; }
 
 h1, h2, h3 { font-weight: 400; line-height: 1.3; }
@@ -45,7 +49,7 @@ h3 { font-size: 1rem; margin: 1.6rem 0 0.4rem; }
 .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; max-width: var(--width); margin: 0 auto; padding: 0.7rem 1.25rem; }
 .bar a { text-decoration: none; padding: 0.4rem 0.45rem; }
 .bar nav { display: flex; flex-wrap: wrap; gap: 0.1rem; margin-left: -0.45rem; }
-.bar [aria-current] { background: var(--fg); color: var(--bg); }
+.bar [aria-current] { background: var(--highlight); color: var(--on-highlight); }
 header.bar { border-bottom: 1px solid var(--line); }
 footer.bar { border-top: 1px solid var(--line); margin-top: 3rem; padding-bottom: 2rem; color: var(--muted); }
 .name { font-family: var(--display); font-size: 1.05rem; font-weight: 700; margin-right: auto; margin-left: -0.45rem; }
