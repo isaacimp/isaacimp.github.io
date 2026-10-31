@@ -33,7 +33,6 @@ ${description ? `<meta property="og:description" content="${esc(description)}">\
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/atom+xml" title="${esc(site.name)}" href="/feed.xml">
-<link rel="preload" href="/fonts/win95fa-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>${css}</style>
 <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
@@ -60,7 +59,6 @@ function fit() {
 }
 fit();
 addEventListener('resize', () => requestAnimationFrame(fit));
-document.fonts.ready.then(fit);
 </script>`;
 
   const home = doc => shell({

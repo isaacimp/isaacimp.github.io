@@ -99,7 +99,7 @@ function sitemap() {
 }
 
 function copyStatic() {
-  const copies = [['theme/favicon.svg', 'favicon.svg'], ['theme/fonts', 'fonts'], ['content/img', 'img'], ['content/pdfs', 'pdfs']];
+  const copies = [['theme/favicon.svg', 'favicon.svg'], ['content/img', 'img'], ['content/pdfs', 'pdfs']];
   for (const [from, to] of copies) {
     if (fs.existsSync(path.join(root, from))) fs.cpSync(path.join(root, from), path.join(distDir, to), { recursive: true });
   }

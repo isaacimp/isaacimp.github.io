@@ -10,7 +10,7 @@
 - `content/img/` and `content/pdfs/` are copied as they are
 - `theme/style.css` is all the CSS, inlined into every page
 - Colours, fonts and widths are the variables at the top of `theme/style.css`, dark mode just below them
-- `--ui` is the monospace font for structure, `--read` the serif for long text, `--display` the pixel font for titles
+- `--ui` is the monospace font for structure, `--read` the serif for long text, `--display` the font for titles (all are fonts already on the device, nothing downloads)
 - `engine/build.js` reads the content and writes the pages
 - `engine/templates.js` is all the HTML
 - `engine/lib.js` has the helpers, `engine/serve.js` is the preview
