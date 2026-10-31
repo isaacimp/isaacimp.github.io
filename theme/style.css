@@ -125,7 +125,7 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 .tag { scroll-margin-top: 1rem; }
 
 .landing { max-width: 1400px; min-height: 100svh; margin: 0 auto; padding: 4vh 5vw; display: flex; flex-direction: column; justify-content: center; }
-.landing .top { display: flex; align-items: baseline; gap: 0.6em; margin: 0 0 0.45em; }
+.landing .top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.6em; margin: 0 0 0.45em; }
 .landing h1 { font-size: clamp(44px, min(8vw, 10vh), 88px); line-height: 1; margin: 0; }
 .landing .index { font: 700 clamp(16px, 2.4vw, 28px) var(--ui); text-decoration: underline var(--accent) 2px; text-underline-offset: 0.2em; }
 .landing .index:hover, .landing .index:focus-visible { background: none; color: var(--accent); }
