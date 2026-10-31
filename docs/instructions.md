@@ -9,7 +9,9 @@
 - `content/site.json` has the name, address, email, nav links and social links
 - `content/img/` and `content/pdfs/` are copied as they are
 - `theme/style.css` is all the CSS, inlined into every page
-- Colours, fonts and widths are the variables at the top of `theme/style.css`, dark mode just below them
+- Colours, fonts and widths are the variables at the top of `theme/style.css`
+- Dark mode colours are written twice below them, once for the system setting and once for the ◐ switch, so change both
+- The ◐ switch saves the choice in the visitor's browser, without it the site follows the system setting
 - `--ui` is the monospace font for structure, `--read` the serif for long text, `--display` the font for titles (all are fonts already on the device, nothing downloads)
 - `engine/build.js` reads the content and writes the pages
 - `engine/templates.js` is all the HTML
@@ -25,7 +27,7 @@
 - Articles with three or more `##` headings get a contents box
 - Item pages link to the newer and older item in the same list
 - Task lists `- [ ]` render as labelled checkboxes
-- The only JavaScript is on the home page: it sizes the text to fill the screen, and the page looks normal without it
+- JavaScript is only used for the ◐ switch and for sizing the home page text to the screen, everything works without it
 - `speculationrules` in the head prerenders a link when it is hovered
 - Push to `main`, the GitHub Action runs `node engine/build.js` and publishes `dist/`
 

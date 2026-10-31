@@ -9,6 +9,7 @@ module.exports = function createTemplates({ site, css }) {
   const header = here => `<a class="skip" href="#main">Skip to content</a>
 <header class="bar">
 <a class="name" href="/">${esc(site.name)}</a>
+<button class="theme" type="button" aria-label="Switch between light and dark mode" title="Light or dark" hidden>◐</button>
 <nav aria-label="Site">
 ${site.nav.map(item => `<a href="${item.path}"${isHere(item.path, here)}>${esc(item.label)}</a>`).join('\n')}
 </nav>
@@ -31,6 +32,25 @@ ${description ? `<meta name="description" content="${esc(description)}">\n` : ''
 ${robots ? `<meta name="robots" content="${esc(robots)}">\n` : ''}<meta property="og:title" content="${esc(title)}">
 ${description ? `<meta property="og:description" content="${esc(description)}">\n` : ''}<meta property="og:url" content="${site.url}${path}">
 <meta name="color-scheme" content="light dark">
+<script>
+function applyTheme() {
+  let theme = null;
+  try { theme = localStorage.getItem('theme'); } catch {}
+  if (theme) document.documentElement.dataset.theme = theme;
+  else delete document.documentElement.dataset.theme;
+}
+applyTheme();
+addEventListener('pageshow', applyTheme);
+document.addEventListener('prerenderingchange', applyTheme);
+document.addEventListener('DOMContentLoaded', () => document.querySelectorAll('.theme').forEach(button => { button.hidden = false; }));
+document.addEventListener('click', event => {
+  if (!event.target.closest('.theme')) return;
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark';
+  try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+});
+</script>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/atom+xml" title="${esc(site.name)}" href="/feed.xml">
 <style>${css}</style>
