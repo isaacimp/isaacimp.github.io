@@ -6,7 +6,7 @@ url: https://bioenergetic.live/
 order: 2
 robots: "noindex, follow"
 ---
-![](/img/projects/bioenergetic-1.jpg)
+![Screenshot of bioenergetic.live](/img/projects/bioenergetic-1.jpg)
 
 ## What it is
 

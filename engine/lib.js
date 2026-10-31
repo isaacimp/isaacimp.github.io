@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WORDS_PER_MINUTE = 230;
 
 const escapeHtml = value => String(value ?? '')
   .replace(/&/g, '&amp;')
@@ -9,13 +10,29 @@ const escapeHtml = value => String(value ?? '')
   .replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
-const stripTags = html => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+const stripTags = html => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
-const tagId = tag => tag.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const slugify = text => text.toLowerCase().replace(/&[a-z]+;/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+const readingMinutes = html => Math.max(1, Math.round(stripTags(html).split(' ').length / WORDS_PER_MINUTE));
 
 function formatDate(iso) {
   const [year, month, day] = iso.split('-');
   return day ? `${MONTHS[month - 1]} ${Number(day)}, ${year}` : `${MONTHS[month - 1]} ${year}`;
+}
+
+function addHeadingIds(html) {
+  const headings = [];
+  const used = new Set();
+  const result = html.replace(/<h2>([\s\S]*?)<\/h2>/g, (match, inner) => {
+    const text = stripTags(inner);
+    let id = slugify(text) || 'section';
+    while (used.has(id)) id += '-';
+    used.add(id);
+    headings.push({ id, text });
+    return `<h2 id="${id}">${inner}</h2>`;
+  });
+  return { html: result, headings };
 }
 
 function unquote(text) {
@@ -56,4 +73,4 @@ function writeFile(file, content) {
   fs.writeFileSync(file, content);
 }
 
-module.exports = { escapeHtml, stripTags, tagId, formatDate, readFile, readFolder, writeFile };
+module.exports = { escapeHtml, stripTags, slugify, readingMinutes, formatDate, addHeadingIds, readFile, readFolder, writeFile };

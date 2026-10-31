@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { marked } = require('marked');
-const { readFile, readFolder, writeFile } = require('./lib');
+const { readFile, readFolder, writeFile, stripTags, readingMinutes, addHeadingIds } = require('./lib');
 const createTemplates = require('./templates');
 
 const root = path.resolve(__dirname, '..');
@@ -26,7 +26,8 @@ const errors = [];
 const output = new Map();
 const listed = [];
 
-const render = markdown => marked.parse(markdown, { gfm: true });
+const render = markdown => marked.parse(markdown, { gfm: true })
+  .replace(/<li><input ((?:checked="" )?)disabled="" type="checkbox">([\s\S]*?)<\/li>/g, '<li class="task"><label><input $1disabled type="checkbox">$2</label></li>');
 
 function add(urlPath, html, robots) {
   const file = urlPath.endsWith('/') ? `${urlPath.slice(1)}index.html` : urlPath.slice(1);
@@ -39,9 +40,8 @@ function toDoc({ slug, data, body }, collection) {
   const isNow = collection.dir === 'now';
   const date = data.date || (isNow ? slug : '');
   if (!isNow && !data.title) throw new Error('missing title');
-  if (collection.showDate || isNow) {
-    if (!/^\d{4}-\d{2}(-\d{2})?$/.test(date)) throw new Error(`date "${date}" is not like 2026-10-28`);
-  }
+  if ((collection.showDate || isNow) && !/^\d{4}-\d{2}(-\d{2})?$/.test(date)) throw new Error(`date "${date}" is not like 2026-10-28`);
+  const { html, headings } = addHeadingIds(render(body));
   return {
     slug,
     title: data.title,
@@ -52,12 +52,14 @@ function toDoc({ slug, data, body }, collection) {
     url: data.url,
     order: data.order === undefined ? 999 : Number(data.order),
     path: collection.url ? collection.url(slug) : null,
-    html: render(body)
+    minutes: readingMinutes(html),
+    headings,
+    html
   };
 }
 
 function load(collection) {
-  const intro = readFile(path.join(contentDir, collection.dir, 'index.md'));
+  const intro = render(readFile(path.join(contentDir, collection.dir, 'index.md')).body).trim();
   const docs = [];
   for (const source of readFolder(path.join(contentDir, collection.dir))) {
     try {
@@ -67,7 +69,7 @@ function load(collection) {
     }
   }
   docs.sort(collection.sort);
-  return { collection, intro: { html: render(intro.body) }, docs };
+  return { collection, introHtml: intro, introText: stripTags(intro) || undefined, docs };
 }
 
 function loadPages() {
@@ -83,12 +85,12 @@ function loadPages() {
 function tagGroups(loaded) {
   const groups = new Map();
   for (const { collection, docs } of loaded) {
-    if (collection.dir === 'now') continue;
+    if (!collection.showDate) continue;
     for (const doc of docs) {
       for (const tag of doc.tags) groups.set(tag, [...(groups.get(tag) || []), doc]);
     }
   }
-  return [...groups.keys()].sort().map(tag => ({ tag, docs: groups.get(tag) }));
+  return [...groups.keys()].sort().map(tag => ({ tag, docs: groups.get(tag).sort(byDate) }));
 }
 
 function sitemap() {
@@ -110,20 +112,23 @@ function copyStatic() {
 const home = readFile(path.join(contentDir, 'index.md'));
 const pages = loadPages();
 const loaded = collections.map(load);
+const tags = tagGroups(loaded);
+const writing = loaded.filter(({ collection }) => collection.showDate).flatMap(({ docs }) => docs).sort(byDate);
 
 add('/', templates.home({ ...home.data, html: render(home.body) }));
 for (const page of pages) add(page.path, templates.page(page), page.robots);
-for (const { collection, intro, docs } of loaded) {
+for (const { collection, introHtml, introText, docs } of loaded) {
   if (collection.dir === 'now') {
-    add(collection.index, templates.now(collection, intro, docs));
+    add(collection.index, templates.now(collection, introHtml, introText, docs));
     continue;
   }
-  add(collection.index, templates.list(collection, intro, docs));
-  for (const doc of docs) add(doc.path, templates.item(doc, collection), doc.robots);
+  add(collection.index, templates.list(collection, introHtml, introText, docs));
+  docs.forEach((doc, i) => add(doc.path, templates.item(doc, collection, docs[i - 1], docs[i + 1]), doc.robots));
 }
-add('/site.html', templates.everything({ pages, collections: loaded }));
-add('/tags/', templates.tags(tagGroups(loaded)));
+add('/site.html', templates.everything({ pages, collections: loaded, tags }));
+add('/tags/', templates.tags(tags));
 add('/404.html', templates.notFound());
+output.set('feed.xml', templates.feed(writing));
 output.set('sitemap.xml', sitemap());
 
 fs.rmSync(distDir, { recursive: true, force: true });
