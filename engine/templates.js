@@ -44,18 +44,28 @@ ${landing ? body : `${header(here)}\n<main id="main">\n${body}\n</main>\n${foote
 
   const fitToScreen = `<script>
 const landing = document.querySelector('.landing');
+const nameRow = landing.querySelector('.top');
 landing.classList.add('fit');
-function fit() {
+function largest(element, fits) {
   let low = 8;
   let high = 400;
   while (high - low > 0.5) {
     const size = (low + high) / 2;
-    landing.style.fontSize = size + 'px';
-    const fits = landing.scrollHeight <= landing.clientHeight && landing.scrollWidth <= landing.clientWidth;
-    if (fits) low = size;
+    element.style.fontSize = size + 'px';
+    if (fits(size)) low = size;
     else high = size;
   }
-  landing.style.fontSize = low + 'px';
+  return low;
+}
+function fit() {
+  const widest = largest(nameRow, () => nameRow.scrollWidth <= nameRow.clientWidth);
+  const rowSize = size => Math.min(widest, size * 1.4) + 'px';
+  const size = largest(landing, size => {
+    nameRow.style.fontSize = rowSize(size);
+    return landing.scrollHeight <= landing.clientHeight && landing.scrollWidth <= landing.clientWidth;
+  });
+  landing.style.fontSize = size + 'px';
+  nameRow.style.fontSize = rowSize(size);
 }
 fit();
 addEventListener('resize', () => requestAnimationFrame(fit));
