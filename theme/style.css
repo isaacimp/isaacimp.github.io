@@ -2,14 +2,14 @@
   --light-paper: #f7f6f1;
   --light-ink: #161512;
   --light-muted: #5f5d55;
-  --light-gold: #8a6200;
-  --light-yellow: #f2c200;
+  --light-blue: #1d4ed8;
+  --light-yellow: #e0a800;
   --light-line: #e3e0d6;
 
   --dark-paper: #161512;
   --dark-ink: #ece9e1;
   --dark-muted: #a6a398;
-  --dark-gold: #f0c445;
+  --dark-cyan: #5ad4e6;
   --dark-yellow: #ffd84d;
   --dark-line: #312f29;
 
@@ -22,7 +22,7 @@
   --bg: var(--light-paper);
   --fg: var(--light-ink);
   --muted: var(--light-muted);
-  --accent: var(--light-gold);
+  --accent: var(--light-blue);
   --highlight: var(--light-yellow);
   --line: var(--light-line);
   --on-highlight: #000;
@@ -34,7 +34,7 @@
     --bg: var(--dark-paper);
     --fg: var(--dark-ink);
     --muted: var(--dark-muted);
-    --accent: var(--dark-gold);
+    --accent: var(--dark-cyan);
     --highlight: var(--dark-yellow);
     --line: var(--dark-line);
   }
@@ -44,7 +44,7 @@
   --bg: var(--dark-paper);
   --fg: var(--dark-ink);
   --muted: var(--dark-muted);
-  --accent: var(--dark-gold);
+  --accent: var(--dark-cyan);
   --highlight: var(--dark-yellow);
   --line: var(--dark-line);
   color-scheme: dark;
@@ -63,14 +63,14 @@ body { margin: 0; color: var(--fg); font: 400 0.95rem/1.6 var(--ui); font-varian
 ::selection { background: var(--highlight); color: var(--on-highlight); }
 
 a { color: inherit; text-decoration: underline dotted var(--muted); text-underline-offset: 0.2em; }
-a:hover { text-decoration: underline var(--highlight) 0.15em; }
+a:hover { color: var(--accent); text-decoration: underline var(--accent) 0.12em; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .skip { position: absolute; left: 0.5rem; top: -4rem; padding: 0.5rem 0.8rem; background: var(--highlight); color: var(--on-highlight); z-index: 10; }
 .skip:focus { top: 0.5rem; }
 
 .theme { font: inherit; color: var(--muted); background: none; border: 0; padding: 0.4rem 0.45rem; margin-right: auto; cursor: pointer; }
-.theme:hover { color: var(--fg); }
+.theme:hover { color: var(--accent); }
 .theme:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 [data-switch] { display: none; }
 .js [data-switch] { display: revert; }
@@ -83,7 +83,7 @@ h3 { font-size: 1rem; margin: 1.6rem 0 0.4rem; }
 
 .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; max-width: var(--width); margin: 0 auto; padding: 0.7rem 1.25rem; }
 .bar a { text-decoration: none; padding: 0.4rem 0.45rem; }
-.bar a:hover { text-decoration: underline var(--highlight) 0.15em; text-underline-offset: 0.35em; }
+.bar a:hover { color: var(--accent); text-decoration: underline var(--accent) 0.15em; text-underline-offset: 0.35em; }
 .bar nav { display: flex; flex-wrap: wrap; gap: 0.1rem; margin-left: -0.45rem; }
 .bar [aria-current] { color: var(--fg); font-weight: 700; text-decoration: underline var(--highlight) 0.2em; text-underline-offset: 0.35em; }
 header.bar { border-bottom: 1px solid var(--line); }
@@ -99,7 +99,7 @@ main { max-width: var(--width); margin: 0 auto; padding: 2rem 1.25rem; }
 .rows.dated li { grid-template-columns: 6.5rem 1fr auto; }
 .rows li:has(.title:focus-visible) { outline: 2px solid var(--accent); outline-offset: -2px; }
 .rows .title { font-weight: 600; text-decoration: none; }
-.rows li:hover .title { text-decoration: underline var(--highlight) 0.15em; text-underline-offset: 0.25em; }
+.rows li:hover .title { color: var(--accent); text-decoration: underline var(--accent) 0.15em; text-underline-offset: 0.25em; }
 .rows .title::after { content: ""; position: absolute; inset: 0; }
 .rows .title:focus-visible { outline: none; }
 .rows time, .rows .size { font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -114,8 +114,8 @@ main { max-width: var(--width); margin: 0 auto; padding: 2rem 1.25rem; }
 .toc a { display: inline-block; padding: 0.2rem 0; }
 
 .prose { max-width: var(--measure); font: 1.12rem/1.7 var(--read); }
-.prose a { text-decoration: underline var(--accent) 1px; }
-.prose a:hover { text-decoration-color: var(--highlight); text-decoration-thickness: 0.12em; }
+.prose a { text-decoration: underline var(--highlight) 0.12em; text-underline-offset: 0.18em; }
+.prose a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .prose h2, .prose h3 { font-family: var(--ui); }
 .prose h2 { font-size: 1rem; scroll-margin-top: 1rem; }
 .prose img { max-width: 100%; height: auto; border: 1px solid var(--line); }
@@ -136,7 +136,7 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 
 .pager { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: start; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.9rem; }
 .pager a { text-decoration: none; padding: 0.3rem 0; }
-.pager a:hover { text-decoration: underline var(--highlight) 0.15em; text-underline-offset: 0.25em; }
+.pager a:hover { color: var(--accent); text-decoration: underline var(--accent) 0.15em; text-underline-offset: 0.25em; }
 .pager span { display: block; font-size: 0.8rem; color: var(--muted); }
 .pager [rel="next"] { text-align: right; }
 
@@ -166,15 +166,15 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 .landing .maxim { display: grid; justify-items: center; row-gap: 0.7em; padding: 0 0.8em; font: 400 clamp(9px, min(0.2em, 6cqi), 16px)/1.2 var(--ui); color: var(--muted); white-space: nowrap; }
 @container (max-width: 9rem) { .landing .maxim { visibility: hidden; } }
 .landing h1 { font-size: clamp(44px, min(8vw, 10vh), 88px); line-height: 1; margin: 0; }
-.landing .index { font: 400 clamp(22px, min(4vw, 5vh), 44px)/1 var(--display); white-space: nowrap; padding: 0.3em 0; color: var(--muted); text-decoration: underline var(--accent) 0.08em; text-underline-offset: 0.2em; }
-.landing .index:hover { color: var(--fg); text-decoration-color: var(--highlight); }
+.landing .index { font: 400 clamp(22px, min(4vw, 5vh), 44px)/1 var(--display); white-space: nowrap; padding: 0.3em 0; color: var(--muted); text-decoration: underline var(--highlight) 0.08em; text-underline-offset: 0.2em; }
+.landing .index:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .landing .index::after { content: " \2192"; content: " \2192" / ""; }
 .landing .lead { max-width: 26em; margin: 0; font: clamp(26px, min(4.6vw, 6.6vh), 64px)/1.25 var(--read); }
-.landing .lead a { text-decoration: underline var(--accent) 2px; text-underline-offset: 0.16em; }
-.landing .lead a:hover { text-decoration-color: var(--highlight); }
+.landing .lead a { text-decoration: underline var(--highlight) 2px; text-underline-offset: 0.16em; }
+.landing .lead a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .landing .lead + .lead { margin-top: 0.6em; }
-.landing .theme { font: inherit; color: inherit; padding: 0; text-decoration: underline var(--accent) 2px; text-underline-offset: 0.16em; }
-.landing .theme:hover { text-decoration-color: var(--highlight); }
+.landing .theme { font: inherit; color: inherit; padding: 0; text-decoration: underline var(--highlight) 2px; text-underline-offset: 0.16em; }
+.landing .theme:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .to-light { display: none; }
 :root[data-theme="dark"] .to-dark { display: none; }
 :root[data-theme="dark"] .to-light { display: inline; }

@@ -10,7 +10,8 @@
 - `content/img/` and `content/pdfs/` are copied as they are
 - `theme/style.css` is all the CSS, inlined into every page
 - All colours are in the palette at the top of `theme/style.css`: `--light-…` and `--dark-…`, each colour once
-- Paper is the background, ink the text, muted the grey details, gold the headings and underlines, yellow the highlights
+- Paper is the background, ink the text, muted the grey details
+- Yellow underlines links and marks the current page, blue (light) or cyan (dark) is the hover colour and the headings
 - Fonts and widths are just below the palette
 - The ◐ switch saves the choice in the visitor's browser, without it the site follows the system setting
 - The home page ends with "Switch to dark mode" (or light), added by the `home` template, not part of `content/index.md`
