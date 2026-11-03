@@ -1,39 +1,52 @@
 :root {
-  --bg: #f4f4ee;
-  --fg: #000;
-  --muted: #5c5c56;
-  --accent: #985000;
-  --line: #dcdcd4;
-  --highlight: #ffd400;
-  --on-highlight: #000;
+  --light-paper: #f7f6f1;
+  --light-ink: #161512;
+  --light-muted: #5f5d55;
+  --light-gold: #8a6200;
+  --light-yellow: #f2c200;
+  --light-line: #e3e0d6;
+
+  --dark-paper: #161512;
+  --dark-ink: #ece9e1;
+  --dark-muted: #a6a398;
+  --dark-gold: #f0c445;
+  --dark-yellow: #ffd84d;
+  --dark-line: #312f29;
+
   --ui: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   --read: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --display: var(--ui);
   --width: 48rem;
   --measure: 68ch;
+
+  --bg: var(--light-paper);
+  --fg: var(--light-ink);
+  --muted: var(--light-muted);
+  --accent: var(--light-gold);
+  --highlight: var(--light-yellow);
+  --line: var(--light-line);
+  --on-highlight: #000;
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #171614;
-    --fg: #e8e6df;
-    --muted: #a19f96;
-    --accent: #f5a524;
-    --line: #33312c;
-    --highlight: #ffd400;
-    --on-highlight: #000;
+    --bg: var(--dark-paper);
+    --fg: var(--dark-ink);
+    --muted: var(--dark-muted);
+    --accent: var(--dark-gold);
+    --highlight: var(--dark-yellow);
+    --line: var(--dark-line);
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #171614;
-  --fg: #e8e6df;
-  --muted: #a19f96;
-  --accent: #f5a524;
-  --line: #33312c;
-  --highlight: #ffd400;
-  --on-highlight: #000;
+  --bg: var(--dark-paper);
+  --fg: var(--dark-ink);
+  --muted: var(--dark-muted);
+  --accent: var(--dark-gold);
+  --highlight: var(--dark-yellow);
+  --line: var(--dark-line);
   color-scheme: dark;
 }
 
