@@ -54,6 +54,47 @@ document.addEventListener('click', event => {
   if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(flip);
   else flip();
 });
+let openTerm = null;
+function hideTip() {
+  if (openTerm) openTerm.classList.remove('show');
+  openTerm = null;
+}
+function showTip(term) {
+  if (term === openTerm) return;
+  hideTip();
+  term.classList.add('show');
+  openTerm = term;
+  const tip = term.querySelector('.tip');
+  const word = term.getClientRects()[0];
+  const gap = 8;
+  const left = Math.min(Math.max(gap, word.left + word.width / 2 - tip.offsetWidth / 2), innerWidth - tip.offsetWidth - gap);
+  const above = word.top - tip.offsetHeight - gap;
+  tip.style.left = left + 'px';
+  tip.style.top = (above >= gap ? above : word.bottom + gap) + 'px';
+}
+document.addEventListener('pointerover', event => {
+  const term = event.target.closest('.term');
+  if (term) showTip(term);
+});
+document.addEventListener('pointerout', event => {
+  const term = event.target.closest('.term');
+  if (term && event.pointerType !== 'touch' && !term.contains(event.relatedTarget) && document.activeElement !== term) hideTip();
+});
+document.addEventListener('focusin', event => {
+  const term = event.target.closest('.term');
+  if (term) showTip(term);
+});
+document.addEventListener('focusout', event => {
+  if (event.target.closest('.term')) hideTip();
+});
+document.addEventListener('pointerdown', event => {
+  if (openTerm && !openTerm.contains(event.target)) hideTip();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') hideTip();
+});
+addEventListener('scroll', hideTip, { passive: true });
+addEventListener('resize', hideTip);
 </script>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/atom+xml" title="${esc(site.name)}" href="/feed.xml">
@@ -271,7 +312,7 @@ ${docs.map(doc => `<entry>
 <link href="${site.url}${doc.path}"/>
 <id>${site.url}${doc.path}</id>
 <updated>${doc.date}T00:00:00Z</updated>
-${doc.description ? `<summary>${esc(doc.description)}</summary>\n` : ''}<content type="html">${esc(doc.html)}</content>
+${doc.description ? `<summary>${esc(doc.description)}</summary>\n` : ''}<content type="html">${esc(doc.html.replace(/<span class="tip"[^>]*>([\s\S]*?)<\/span>/g, ' ($1)'))}</content>
 </entry>`).join('\n')}
 </feed>
 `;

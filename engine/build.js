@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { marked } = require('marked');
-const { readFile, readFolder, writeFile, stripTags, readingMinutes, addHeadingIds } = require('./lib');
+const { readFile, readFolder, writeFile, stripTags, readingMinutes, addHeadingIds, escapeHtml } = require('./lib');
 const createTemplates = require('./templates');
 
 const root = path.resolve(__dirname, '..');
@@ -26,7 +26,15 @@ const errors = [];
 const output = new Map();
 const listed = [];
 
-const render = markdown => marked.parse(markdown, { gfm: true })
+let termCount = 0;
+
+const markTerms = markdown => markdown.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, (match, word, explanation) => {
+  termCount += 1;
+  const id = `term-${termCount}`;
+  return `<span class="term" tabindex="0" aria-describedby="${id}">${escapeHtml(word.trim())}<span class="tip" id="${id}" role="tooltip">${escapeHtml(explanation.trim())}</span></span>`;
+});
+
+const render = markdown => marked.parse(markTerms(markdown), { gfm: true })
   .replace(/<li><input ((?:checked="" )?)disabled="" type="checkbox">([\s\S]*?)<\/li>/g, '<li class="task"><label><input $1disabled type="checkbox">$2</label></li>');
 
 function add(urlPath, html, robots) {

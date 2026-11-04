@@ -75,6 +75,13 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 [data-switch] { display: none; }
 .js [data-switch] { display: revert; }
 
+.js .term { text-decoration: underline dotted var(--accent) 0.12em; text-underline-offset: 0.2em; cursor: help; }
+.js .term:hover, .js .term.show { color: var(--accent); }
+.term:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tip { display: none; }
+.term.show .tip { display: block; position: fixed; z-index: 20; max-width: min(22rem, calc(100vw - 16px)); padding: 0.55rem 0.75rem; border-radius: 6px; background: var(--fg); color: var(--bg); font: 400 0.85rem/1.45 var(--ui); text-align: left; text-decoration: none; cursor: auto; box-shadow: 0 6px 24px rgb(0 0 0 / 0.18); transition: opacity 0.14s ease, transform 0.14s ease; }
+@starting-style { .term.show .tip { opacity: 0; transform: translateY(4px); } }
+
 h1, h2, h3 { font-weight: 400; line-height: 1.3; }
 h1 { font-family: var(--display); font-size: 1.9rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 0.6rem; }
 h2 { font-size: 1.05rem; color: var(--accent); margin: 2.2rem 0 0.6rem; }
@@ -198,6 +205,7 @@ th, td { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--line); text-ali
 
 @media (prefers-reduced-motion: reduce) {
   @view-transition { navigation: none; }
+  .term.show .tip { transition: none; }
 }
 
 @media (forced-colors: active) {
