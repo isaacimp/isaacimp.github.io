@@ -7,7 +7,7 @@ tags: [food, diet, health]
 
 No matter what I do I cannot escape the potato. Everything I learn about them makes me more and more fascinated with how this one vegetable can provide so much nutrition with so little downsides. I have yet to find a perfect food that meets my criteria and I don’t think there is such thing as a perfect naturally occurring food but the Potato is very high up on the list. 
 
-The nutritional content of a good potato is outstanding. The potato provides meaningful amounts of many nutrients. It contains all essential amino acids, excellent vitamin C and B6, substantial potassium and other minerals. While potatoes don't contain every vitamin (they're missing B12, A, D, and E like all plant foods), they come closer to nutritional completeness than nearly any other single staple food.
+The nutritional content of the potato is really quite good especially when you take into consideration the quantities of potato that can be eaten in a sitting without issue. They contains all essential amino acids, significant amounts of vitamin C and B6, as well as potassium and other minerals. Although they lack B12 and D (like all plant foods) and don't contain much A and E, they still come closer to nutritional completeness than nearly any other staple whole food.
 
 They are also very cheap and easy to grow in lots of different environments. Many people throughout history have lived almost exclusively on potatoes for a long time.
 
