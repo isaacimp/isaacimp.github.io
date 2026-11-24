@@ -58,6 +58,7 @@ function toDoc({ slug, data, body }, collection) {
     tags: data.tags || [],
     robots: data.robots,
     url: data.url,
+    download: data.download,
     order: data.order === undefined ? 999 : Number(data.order),
     path: collection.url ? collection.url(slug) : null,
     minutes: readingMinutes(html),

@@ -180,7 +180,8 @@ ${doc.html}</div>`
     const when = collection.showDate ? `<time datetime="${doc.date}">${doc.date}</time>` : '';
     const side = collection.showDate
       ? `<span class="size">${doc.minutes} min</span>`
-      : doc.url ? `<a class="out" href="${esc(doc.url)}">${esc(host(doc.url))}</a>` : '';
+      : doc.url ? `<a class="out" href="${esc(doc.url)}">${esc(host(doc.url))}</a>`
+      : doc.download ? `<span class="size">macOS app</span>` : '';
     const about = doc.description ? `<p>${esc(doc.description)}</p>` : '';
     return `<li>${when}<a class="title" href="${doc.path}"${motion(collection, doc)}>${esc(doc.title)}</a>${side}${about}</li>`;
   };
@@ -207,7 +208,7 @@ ${headings.map(heading => `<li><a href="#${heading.id}">${esc(heading.text)}</a>
   const meta = (doc, collection) => {
     const parts = collection.showDate
       ? [`<time datetime="${doc.date}">${formatDate(doc.date)}</time>`, `${doc.minutes} min read`, doc.tags.length && tagLinks(doc.tags)]
-      : [doc.url && `<a class="out" href="${esc(doc.url)}">${esc(host(doc.url))}</a>`, doc.description && esc(doc.description)];
+      : [doc.url && `<a class="out" href="${esc(doc.url)}">${esc(host(doc.url))}</a>`, doc.download && `<a href="${esc(doc.download)}" download>macOS (.dmg)</a>`, doc.description && esc(doc.description)];
     return parts.filter(Boolean).join(' · ');
   };
 

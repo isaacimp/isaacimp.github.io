@@ -132,6 +132,12 @@ main { max-width: var(--width); margin: 0 auto; padding: 2rem 1.25rem; }
 .prose li small { display: block; font: 0.8rem var(--ui); color: var(--muted); }
 .prose blockquote { margin: 1.4rem 0; padding-left: 1rem; border-left: 3px solid var(--accent); color: var(--muted); }
 .prose hr { border: 0; border-top: 1px dashed var(--line); margin: 2rem 0; }
+.download-box { margin: 1.5rem 0; padding: 1rem 1.15rem; border: 1px solid var(--line); font-family: var(--ui); }
+.download-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.65rem 1rem; }
+.prose a.download-btn { display: inline-block; padding: 0.45rem 0.9rem; background: var(--fg); color: var(--bg); font: 600 0.88rem/1.4 var(--ui); text-decoration: none; border: 1px solid var(--fg); }
+.prose a.download-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.download-meta { font-size: 0.8rem; color: var(--muted); }
+.download-note { margin: 0.75rem 0 0; font-size: 0.8rem; line-height: 1.55; color: var(--muted); }
 code, pre { font-family: var(--ui); font-size: 0.88em; background: color-mix(in srgb, var(--fg) 7%, transparent); }
 code { padding: 0.1em 0.3em; }
 pre { padding: 1rem; overflow-x: auto; }
